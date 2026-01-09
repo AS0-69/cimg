@@ -1,0 +1,61 @@
+/* ========================================
+   BOUTON DON STICKY
+======================================== */
+
+.sticky-don-btn {
+    position: fixed;
+    left: var(--spacing-xl);
+    bottom: var(--spacing-xl);
+    z-index: 99;
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--radius-full);
+    border: none;
+    cursor: pointer;
+    box-shadow: var(--shadow-xl);
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    opacity: 1;
+    visibility: visible;
+}
+
+.sticky-don-btn:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 153, 114, 0.4);
+    color: var(--color-white);
+}
+
+.sticky-don-btn i {
+    font-size: 1.125rem;
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.15); }
+    50% { transform: scale(1); }
+}
+
+@media (max-width: 768px) {
+    .sticky-don-btn {
+        left: var(--spacing-md);
+        bottom: var(--spacing-md);
+        padding: var(--spacing-sm) var(--spacing-lg);
+        font-size: 0.9rem;
+    }
+    
+    .sticky-don-btn span {
+        display: none;
+    }
+    
+    .sticky-don-btn i {
+        margin: 0;
+    }
+}

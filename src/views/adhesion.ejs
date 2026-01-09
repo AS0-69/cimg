@@ -1,0 +1,398 @@
+<%- include('partials/head.ejs') %>
+
+<!-- Hero Section -->
+<section class="hero hero-page">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Adhésion à la Mosquée</h1>
+            <p class="hero-subtitle">Rejoignez notre communauté et participez à la vie de la mosquée</p>
+        </div>
+    </div>
+</section>
+
+<!-- Adhesion Section -->
+<section class="adhesion-section">
+    <div class="container">
+        <div class="adhesion-intro">
+            <h2>Devenir membre de la Mosquée Bleue</h2>
+            <p class="lead">
+                En devenant membre, vous soutenez durablement les activités de votre mosquée 
+                et bénéficiez d'un engagement régulier au service de la communauté.
+            </p>
+            <div class="adhesion-benefits">
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Soutien mensuel automatique</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Participation à la vie de la mosquée</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Reçu fiscal annuel</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Information sur les activités</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulaire d'adhésion -->
+        <div class="adhesion-form-container">
+            <h3>Formulaire d'adhésion</h3>
+            
+            <form id="adhesionForm" class="adhesion-form">
+                <!-- Civilité -->
+                <div class="form-section">
+                    <h4>Informations personnelles</h4>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="civility">Civilité *</label>
+                            <select id="civility" name="civility" required class="form-control">
+                                <option value="">Sélectionner</option>
+                                <option value="mr">M.</option>
+                                <option value="mrs">Mme</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="lastName">Nom *</label>
+                            <input 
+                                type="text" 
+                                id="lastName" 
+                                name="lastName" 
+                                required 
+                                class="form-control"
+                                placeholder="Votre nom de famille"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="firstName">Prénom *</label>
+                            <input 
+                                type="text" 
+                                id="firstName" 
+                                name="firstName" 
+                                required 
+                                class="form-control"
+                                placeholder="Votre prénom"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="birthDate">Date de naissance *</label>
+                            <input 
+                                type="date" 
+                                id="birthDate" 
+                                name="birthDate" 
+                                required 
+                                class="form-control"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="birthPlace">Lieu de naissance *</label>
+                            <input 
+                                type="text" 
+                                id="birthPlace" 
+                                name="birthPlace" 
+                                required 
+                                class="form-control"
+                                placeholder="Ville de naissance"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nationality">Nationalité *</label>
+                            <input 
+                                type="text" 
+                                id="nationality" 
+                                name="nationality" 
+                                required 
+                                class="form-control"
+                                placeholder="Votre nationalité"
+                            >
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Coordonnées -->
+                <div class="form-section">
+                    <h4>Coordonnées</h4>
+                    
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="address">Adresse *</label>
+                            <input 
+                                type="text" 
+                                id="address" 
+                                name="address" 
+                                required 
+                                class="form-control"
+                                placeholder="Numéro et nom de rue"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="postalCode">Code postal *</label>
+                            <input 
+                                type="text" 
+                                id="postalCode" 
+                                name="postalCode" 
+                                required 
+                                pattern="[0-9]{5}"
+                                class="form-control"
+                                placeholder="69400"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="city">Ville *</label>
+                            <input 
+                                type="text" 
+                                id="city" 
+                                name="city" 
+                                required 
+                                class="form-control"
+                                placeholder="Villefranche-sur-Saône"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="country">Pays *</label>
+                            <input 
+                                type="text" 
+                                id="country" 
+                                name="country" 
+                                required 
+                                class="form-control"
+                                value="France"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Téléphone *</label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                name="phone" 
+                                required 
+                                pattern="[0-9]{10}"
+                                class="form-control"
+                                placeholder="0612345678"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Adresse e-mail *</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                required 
+                                class="form-control"
+                                placeholder="votre@email.com"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="emailConfirm">Confirmer l'e-mail *</label>
+                            <input 
+                                type="email" 
+                                id="emailConfirm" 
+                                name="emailConfirm" 
+                                required 
+                                class="form-control"
+                                placeholder="votre@email.com"
+                            >
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cotisation -->
+                <div class="form-section">
+                    <h4>Cotisation mensuelle</h4>
+                    <p class="section-description">
+                        <i class="fas fa-info-circle"></i>
+                        Choisissez le montant de votre cotisation mensuelle. Votre générosité nous permet 
+                        de maintenir et développer nos activités.
+                    </p>
+                    
+                    <div class="contribution-options">
+                        <label class="contribution-card">
+                            <input type="radio" name="contribution" value="10" required>
+                            <span class="contribution-content">
+                                <span class="contribution-amount">10 €</span>
+                                <span class="contribution-label">par mois</span>
+                            </span>
+                        </label>
+                        
+                        <label class="contribution-card">
+                            <input type="radio" name="contribution" value="20">
+                            <span class="contribution-content">
+                                <span class="contribution-amount">20 €</span>
+                                <span class="contribution-label">par mois</span>
+                            </span>
+                        </label>
+                        
+                        <label class="contribution-card">
+                            <input type="radio" name="contribution" value="50">
+                            <span class="contribution-content">
+                                <span class="contribution-amount">50 €</span>
+                                <span class="contribution-label">par mois</span>
+                            </span>
+                        </label>
+                        
+                        <label class="contribution-card">
+                            <input type="radio" name="contribution" value="custom">
+                            <span class="contribution-content">
+                                <span class="contribution-amount">Autre</span>
+                                <span class="contribution-label">montant</span>
+                            </span>
+                        </label>
+                    </div>
+                    
+                    <div class="form-group" id="customContributionGroup" style="display: none;">
+                        <label for="customContribution">Montant personnalisé (€) *</label>
+                        <input 
+                            type="number" 
+                            id="customContribution" 
+                            name="customContribution" 
+                            min="5"
+                            class="form-control"
+                            placeholder="Votre montant"
+                        >
+                    </div>
+                </div>
+                
+                <!-- Coordonnées bancaires -->
+                <div class="form-section">
+                    <h4>Mandat de prélèvement SEPA</h4>
+                    <p class="section-description">
+                        <i class="fas fa-lock"></i>
+                        Vos informations bancaires sont sécurisées et utilisées uniquement pour 
+                        le prélèvement automatique de votre cotisation.
+                    </p>
+                    
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="iban">IBAN *</label>
+                            <input 
+                                type="text" 
+                                id="iban" 
+                                name="iban" 
+                                required 
+                                pattern="[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}"
+                                class="form-control"
+                                placeholder="FR76 1234 5678 9012 3456 7890 123"
+                                maxlength="34"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bic">BIC / SWIFT *</label>
+                            <input 
+                                type="text" 
+                                id="bic" 
+                                name="bic" 
+                                required 
+                                pattern="[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?"
+                                class="form-control"
+                                placeholder="BNPAFRPPXXX"
+                                maxlength="11"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="form-check-group">
+                        <label class="form-check">
+                            <input type="checkbox" name="bankAuth" required>
+                            <span>
+                                J'autorise la Mosquée Bleue à envoyer des instructions à ma banque 
+                                pour débiter mon compte et ma banque à débiter mon compte conformément 
+                                aux instructions de la Mosquée Bleue. *
+                            </span>
+                        </label>
+                    </div>
+                    
+                    <div class="sepa-info">
+                        <p>
+                            <strong>Note:</strong> Vous bénéficiez du droit d'être remboursé par votre banque 
+                            suivant les conditions décrites dans la convention que vous avez passée avec elle. 
+                            Une demande de remboursement doit être présentée dans les 8 semaines suivant 
+                            la date de débit de votre compte.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Conditions -->
+                <div class="form-section">
+                    <div class="form-check-group">
+                        <label class="form-check">
+                            <input type="checkbox" name="terms" required>
+                            <span>
+                                J'accepte les conditions d'adhésion et je m'engage à soutenir 
+                                la Mosquée Bleue par une cotisation mensuelle régulière. *
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Boutons -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-check-circle"></i>
+                        Valider mon adhésion
+                    </button>
+                    <p class="form-note">
+                        * Champs obligatoires
+                    </p>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Informations complémentaires -->
+        <div class="adhesion-footer">
+            <div class="info-cards">
+                <div class="info-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Sécurité garantie</h4>
+                    <p>Vos données sont protégées et ne seront jamais partagées avec des tiers.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-file-invoice"></i>
+                    <h4>Reçu fiscal</h4>
+                    <p>Vous recevrez un reçu fiscal annuel pour votre déclaration d'impôts.</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-times-circle"></i>
+                    <h4>Résiliation simple</h4>
+                    <p>Vous pouvez mettre fin à votre adhésion à tout moment par simple email.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer.ejs') %>
+<%- include('partials/foot.ejs') %>

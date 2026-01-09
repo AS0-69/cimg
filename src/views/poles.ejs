@@ -1,0 +1,46 @@
+<%- include('partials/head.ejs') %>
+
+<!-- Hero Section -->
+<section class="hero hero-page">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Nos Pôles d'activités</h1>
+            <p class="hero-subtitle">Découvrez les différents pôles qui structurent notre mosquée</p>
+        </div>
+    </div>
+</section>
+
+<!-- Poles Grid -->
+<section class="poles-page-section">
+    <div class="container">
+        <div class="poles-page-grid">
+            <% poles.forEach(pole => { %>
+                <article class="pole-page-card">
+                    <div class="pole-page-image">
+                        <img src="<%= pole.image %>" alt="<%= pole.nom %>">
+                    </div>
+                    <div class="pole-page-content">
+                        <h2><%= pole.nom %></h2>
+                        <p><%= pole.description %></p>
+                        <ul class="pole-activities">
+                            <% pole.activites.slice(0, 3).forEach(activite => { %>
+                                <li>
+                                    <i class="fas fa-check-circle"></i>
+                                    <span><%= activite %></span>
+                                </li>
+                            <% }); %>
+                        </ul>
+                        <a href="/poles/<%= pole.slug %>" class="btn btn-primary">
+                            En savoir plus
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+            <% }); %>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer.ejs') %>
+<%- include('partials/foot.ejs') %>

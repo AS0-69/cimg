@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <%- include('partials/head') %>
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <div class="container" style="min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 60px 20px;">
+        <div>
+            <h1 style="font-size: 4rem; color: var(--color-primary); margin-bottom: 20px;">Erreur</h1>
+            <p style="font-size: 1.2rem; color: var(--color-gray-600); margin-bottom: 30px;">
+                Une erreur est survenue. Veuillez réessayer plus tard.
+            </p>
+            <% if (error && error.message) { %>
+                <div style="background: #f8d7da; color: #721c24; padding: 20px; border-radius: 8px; margin: 20px auto; max-width: 600px;">
+                    <strong>Détails :</strong> <%= error.message %>
+                </div>
+            <% } %>
+            <a href="/" class="btn btn-primary">Retour à l'accueil</a>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+    <%- include('partials/foot') %>
+</body>
+</html>

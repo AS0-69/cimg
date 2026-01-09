@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; }
+        .header { background: #009972; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 1.5rem; }
+        .nav { display: flex; gap: 2rem; }
+        .nav a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: background 0.2s; }
+        .nav a:hover, .nav a.active { background: rgba(255,255,255,0.2); }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; }
+        .form-card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 2rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem; transition: border 0.2s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #009972; }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+        .conditional-field { display: none; margin-top: 0.5rem; }
+        .conditional-field.show { display: block; }
+        .image-upload-area { border: 2px dashed #cbd5e0; border-radius: 8px; padding: 2rem; text-align: center; background: #f7fafc; cursor: pointer; transition: all 0.2s; }
+        .image-upload-area:hover { border-color: #009972; background: #e6f7f2; }
+        .image-preview { margin-top: 1rem; text-align: center; }
+        .image-preview img { max-width: 200px; border-radius: 50%; }
+        .btn { padding: 0.75rem 2rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .btn-primary { background: #009972; color: white; }
+        .btn-primary:hover { background: #007d5e; transform: translateY(-1px); }
+        .btn-secondary { background: #e2e8f0; color: #4a5568; }
+        .btn-secondary:hover { background: #cbd5e0; }
+        .form-actions { display: flex; gap: 1rem; margin-top: 2rem; }
+        .required { color: #e53e3e; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-user-plus"></i> <%= member ? 'Modifier' : 'Nouveau' %> membre</h1>
+        <div class="nav">
+            <a href="/admin/dashboard">Dashboard</a>
+            <a href="/admin/members" class="active">Membres</a>
+            <a href="/">Retour au site</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-card">
+            <form method="POST" action="<%= member ? `/admin/members/${member.id}` : '/admin/members' %>" enctype="multipart/form-data">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Prénom <span class="required">*</span></label>
+                        <input type="text" name="first_name" value="<%= member ? member.first_name : '' %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nom <span class="required">*</span></label>
+                        <input type="text" name="last_name" value="<%= member ? member.last_name : '' %>" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Pôle <span class="required">*</span></label>
+                        <select name="pole" id="pole" required>
+                            <option value="">-- Sélectionner --</option>
+                            <% poles.forEach(pole => { %>
+                                <option value="<%= pole.name %>" <%= member && member.pole === pole.name ? 'selected' : '' %>>
+                                    <%= pole.name %>
+                                </option>
+                            <% }); %>
+                            <option value="autre">➕ Autre (nouveau pôle)</option>
+                        </select>
+                        <div class="conditional-field" id="new_pole_field">
+                            <input type="text" name="new_pole" placeholder="Nom du nouveau pôle">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Fonction <span class="required">*</span></label>
+                        <select name="role" id="role" required>
+                            <option value="">-- Sélectionner --</option>
+                            <% roles.forEach(role => { %>
+                                <option value="<%= role.name %>" <%= member && member.role === role.name ? 'selected' : '' %>>
+                                    <%= role.name %>
+                                </option>
+                            <% }); %>
+                            <option value="autre">➕ Autre (nouvelle fonction)</option>
+                        </select>
+                        <div class="conditional-field" id="new_role_field">
+                            <input type="text" name="new_role" placeholder="Nom de la nouvelle fonction">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row-3">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" value="<%= member ? member.email : '' %>">
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone</label>
+                        <input type="tel" name="phone" value="<%= member ? member.phone : '' %>">
+                    </div>
+                    <div class="form-group">
+                        <label>Ordre d'affichage</label>
+                        <input type="number" name="order" value="<%= member ? member.order : 0 %>" min="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description"><%= member ? member.description : '' %></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Photo</label>
+                    <div class="image-upload-area" id="uploadArea">
+                        <i class="fas fa-user-circle" style="font-size: 3rem; color: #009972;"></i>
+                        <p><strong>Cliquez pour téléverser une photo</strong></p>
+                    </div>
+                    <input type="file" name="image" id="image" accept="image/*" style="display:none">
+                    
+                    <div class="image-preview" id="preview">
+                        <% if (member && member.image) { %>
+                            <img src="<%= member.image %>" alt="Photo actuelle">
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                    <a href="/admin/members" class="btn btn-secondary">Annuler</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('uploadArea').addEventListener('click', function() {
+            document.getElementById('image').click();
+        });
+
+        document.getElementById('image').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const preview = document.getElementById('preview');
+                preview.innerHTML = `<img src="${URL.createObjectURL(file)}" alt="Aperçu">`;
+            }
+        });
+        
+        // Scripts pour les champs conditionnels
+        document.getElementById('pole').addEventListener('change', function() {
+            document.getElementById('new_pole_field').classList.toggle('show', this.value === 'autre');
+        });
+        
+        document.getElementById('role').addEventListener('change', function() {
+            document.getElementById('new_role_field').classList.toggle('show', this.value === 'autre');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<svg width="1200" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="eventGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#059669;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#34d399;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="islamicPattern" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+      <circle cx="40" cy="40" r="3" fill="white" opacity="0.15"/>
+      <path d="M 40 20 L 50 40 L 40 60 L 30 40 Z" fill="white" opacity="0.1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="600" fill="url(#eventGrad)"/>
+  <rect width="1200" height="600" fill="url(#islamicPattern)"/>
+  <g transform="translate(600, 250)">
+    <circle r="120" fill="none" stroke="white" stroke-width="4" opacity="0.3"/>
+    <circle r="100" fill="none" stroke="white" stroke-width="3" opacity="0.4"/>
+    <path d="M 0 -80 L 20 -40 L 0 -20 L -20 -40 Z M 0 80 L 20 40 L 0 20 L -20 40 Z M -80 0 L -40 20 L -20 0 L -40 -20 Z M 80 0 L 40 20 L 20 0 L 40 -20 Z" fill="white" opacity="0.5"/>
+  </g>
+  <text x="600" y="360" text-anchor="middle" font-family="Arial, sans-serif" font-size="72" fill="white" font-weight="bold">Mosquée Bleue</text>
+  <text x="600" y="420" text-anchor="middle" font-family="Arial, sans-serif" font-size="36" fill="white" opacity="0.95">Événements & Activités</text>
+</svg>

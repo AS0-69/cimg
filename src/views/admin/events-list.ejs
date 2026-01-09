@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des événements - Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            color: #2d3748;
+        }
+        .admin-header {
+            background: #009972;
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .admin-header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .admin-nav {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .admin-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .admin-nav a:hover, .admin-nav a.active {
+            background: rgba(255,255,255,0.2);
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .page-header h2 {
+            font-size: 2rem;
+            color: #1a202c;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: #009972;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #007d5e;
+            transform: translateY(-1px);
+        }
+        .btn-danger {
+            background: #e53e3e;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        .btn-danger:hover {
+            background: #c53030;
+        }
+        .btn-edit {
+            background: #3182ce;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+        }
+        .btn-edit:hover {
+            background: #2c5aa0;
+        }
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background: #f7fafc;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #4a5568;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        tr:hover {
+            background: #f7fafc;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .badge-event {
+            background: #bee3f8;
+            color: #2c5aa0;
+        }
+        .badge-activity {
+            background: #c6f6d5;
+            color: #276749;
+        }
+        .img-thumb {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #718096;
+        }
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <h1><i class="fas fa-shield-alt"></i> Administration - Mosquée Bleue</h1>
+        <div class="admin-nav">
+            <a href="/admin/dashboard">Dashboard</a>
+            <a href="/admin/events" class="active">Événements</a>
+            <a href="/">Retour au site</a>
+            <a href="/admin/logout">Déconnexion</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <h2>Gestion des événements</h2>
+            <a href="/admin/events/new" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Nouvel événement
+            </a>
+        </div>
+
+        <div class="table-container">
+            <% if (events && events.length > 0) { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Type</th>
+                            <th>Titre</th>
+                            <th>Date</th>
+                            <th>Catégorie</th>
+                            <th>Lieu</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% events.forEach(event => { %>
+                            <tr>
+                                <td>
+                                    <% if (event.images && event.images.length > 0) { %>
+                                        <img src="<%= event.images[0] %>" alt="<%= event.title %>" class="img-thumb">
+                                    <% } else { %>
+                                        <div class="img-thumb" style="background: #e2e8f0; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-image" style="color: #a0aec0;"></i>
+                                        </div>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <span class="badge <%= event.type === 'event' ? 'badge-event' : 'badge-activity' %>">
+                                        <%= event.type === 'event' ? 'Événement' : 'Activité' %>
+                                    </span>
+                                </td>
+                                <td><strong><%= event.title %></strong></td>
+                                <td><%= new Date(event.date).toLocaleDateString('fr-FR') %></td>
+                                <td><%= event.category %></td>
+                                <td><%= event.location %></td>
+                                <td>
+                                    <a href="/admin/events/<%= event.id %>/edit" class="btn btn-edit">
+                                        <i class="fas fa-edit"></i> Modifier
+                                    </a>
+                                    <form method="POST" action="/admin/events/<%= event.id %>/delete" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger delete-btn" data-message="Supprimer cet événement ?">
+                                            <i class="fas fa-trash"></i> Supprimer
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <div class="empty-state">
+                    <i class="far fa-calendar-times"></i>
+                    <h3>Aucun événement</h3>
+                    <p>Commencez par créer votre premier événement</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+    
+    <script>
+        // Confirmation de suppression
+        document.querySelectorAll('.delete-btn, .delete-form').forEach(element => {
+            const isForm = element.classList.contains('delete-form');
+            const eventType = isForm ? 'submit' : 'click';
+            
+            element.addEventListener(eventType, function(e) {
+                const message = this.dataset.message || 'Êtes-vous sûr de vouloir supprimer cet élément ?';
+                if (!confirm(message)) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

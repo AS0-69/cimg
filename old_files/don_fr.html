@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Don - Mosquée Bleue de Villefranche-sur-Saône</title>
+ <link rel="shortcut icon" href="logo_vert.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="app.js"></script>
+
+</head>
+
+<body>
+  <div class="btn_up">
+    <img src="arrow-up-solid.svg" class="icone_up">
+
+  </div>
+
+  <div class="btn_donation">
+    <a href="don_fr.html">Faire un don</a>
+  </div>
+
+
+  <header>
+    <div class="container">
+      <div class="header-contenue">
+        <div class="logo">
+          <div class="logo-icon">
+            <a href="index.html"><img src="logo_cimg.png" width="200" height="40" alt="Logo CIMG Mosquée Bleu" /></a>
+          </div>
+          <div class="logo-text">
+            <h1>Mosquée Bleu</h1>
+            <p>Villefranche-sur-Saône</p>
+          </div>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li>
+              <div class="dropdown">
+                <a class="dropbtn" href="pole_fr.html">Nos Pôles ▼</a>
+                <div class="dropdown-content">
+                  <a href="poleAT_fr.html">Pôle Principal(AT)</a>
+                  <a href="poleKT_fr.html">Pôle KT</a>
+                  <a href="poleJeunesse_fr.html">Pôle Jeunesse</a>
+                  <a href="poleKGT_fr.html">Pôle KGT</a>
+                </div>
+              </div>
+            </li>
+            <li><a href="don_fr.html" class="active">Faire un don</a></li>
+            <li><a href="contact_fr.html">Contact</a></li>
+            <li class="langue-select">
+              <select name="language" id="language">
+                <option value="fr">Français 🇫🇷</option>
+                <option value="tr">Türkçe 🇹🇷</option>
+              </select>
+            </li>
+          </ul>
+        </nav>
+        <div class="mobile-nav">
+          <a href="javascript:void(0);" class="hamburger-icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+          </a>
+          <div id="myLinks">
+            <a href="index.html">Accueil</a>
+            <a href="pole_fr.html">Nos Pôles</a>
+            <a href="don_fr.html" class="active">Faire un don</a>
+            <a href="contact_fr.html">Contact</a>
+            <div class="langue-select-mobile">
+              <select name="language" id="language-mobile">
+                <option value="fr">Français 🇫🇷</option>
+                <option value="tr">Türkçe 🇹🇷</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+    <main>
+      <div class="entete">
+        <h1>Faire un don</h1>
+        <p>Soutenez notre mosquée et participez à nos projets</p>
+      </div>
+
+      <div class="section">
+        <h2>Pourquoi faire un don ?</h2>
+        <p>
+          Vos dons nous permettent de maintenir et développer nos activités au
+          service de la communauté. Ils contribuent à :
+        </p>
+        <ul style="margin: 20px 0; padding-left: 20px">
+          <li>L'entretien et l'amélioration de notre lieu de culte</li>
+          <li>L'organisation d'événements culturels et éducatifs</li>
+          <li>Le soutien aux familles dans le besoin</li>
+          <li>Les projets de développement communautaire</li>
+        </ul>
+      </div>
+
+      <div class="form-container">
+        <h2>Formulaire de don</h2>
+        <form
+          action="mailto:cimggtvf@gmail.com"
+          method="post"
+          enctype="text/plain"
+        >
+          <div class="form-group">
+            <label for="nom">Nom complet:</label>
+            <input type="text" id="nom" name="nom" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="montant">Montant du don (€):</label>
+            <input
+              type="number"
+              id="montant"
+              name="montant"
+              min="1"
+              placeholder="50"
+            />
+          </div>
+          <div class="form-group">
+            <label for="type-don">Type de don:</label>
+            <select
+              id="type-don"
+              name="type"
+              style="
+                width: 100%;
+                padding: 12px 15px;
+                border: 2px solid #e0e0e0;
+                border-radius: 8px;
+              "
+            >
+              <option value="ponctuel">Don ponctuel</option>
+              <option value="mensuel">Don mensuel</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message (optionnel):</label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Votre message..."
+            ></textarea>
+          </div>
+          <button type="submit" class="btn">Confirmer le don</button>
+        </form>
+      </div>
+    </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-contenue">
+        <div class="footer-info">
+          <img src="logo_cimg_gris.png" alt="Logo CIMG Mosquée Bleu" />
+          <p><strong>Villefranche-sur-Saône</strong></p>
+          <p>📞 Accueil: 04 xx xx xx xx</p>
+          <p>📱 Téléphone: 06 xx xx xx xx</p>
+        </div>
+        <div class="footer-info">
+          <p>📍 466 Rue Charles Sève</p>
+          <p>69400 Villefranche-sur-Saône</p>
+          <p>✉️ cimggtvf@gmail.com</p>
+          <p>🔗 Réseaux sociaux:</p>
+          <div class="footer-social">
+            <a href="https://linktr.ee/mosqueebleuecimg">
+              <img src="linktree.svg" alt="Linktree" />
+            </a>
+            <a href="https://mawaqit.net/fr/m/cimg-villefranche-villefranche-69400-france">
+              <img src="mawaqit_logo_light_rounded.png" alt="Mawaqit" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-mention-legales">
+        <p>
+          CIMG © Confédération islamique Millî Görüş 2025 [ Création par Nexus
+          Flow ] – Mentions légales
+        </p>
+      </div>
+    </div>
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,144 @@
+<header class="site-header">
+    <div class="header-top">
+        <div class="container">
+            <div class="header-top-content">
+                <div class="header-contact">
+                    <a href="tel:+33474680000" class="header-link">
+                        <i class="fas fa-phone"></i>
+                        <span>04 74 68 00 00</span>
+                    </a>
+                    <a href="mailto:contact@mosquee-bleue.fr" class="header-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>contact@mosquee-bleue.fr</span>
+                    </a>
+                </div>
+                <div class="header-social">
+                    <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://linktr.ee/mosqueeblevfs" target="_blank" rel="noopener" aria-label="Linktree" class="linktree-link">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                            <path d="M7.953 15.066c-.08.163-.08.324-.08.486.08.517.528.897 1.052.89h1.294v4.776c0 .486-.404.89-.89.89H6.577a.898.898 0 0 1-.889-.891v-4.774H.992c-.728 0-1.214-.729-.89-1.377l6.96-12.627a1.065 1.065 0 0 1 1.863 0l2.913 5.585-3.885 7.042zm15.945 0-6.96-12.627a1.065 1.065 0 0 0-1.862 0l-2.995 5.586 3.885 7.04c.081.164.081.326.081.487-.08.517-.529.897-1.052.89h-1.296v4.776c.005.49.4.887.89.891h2.914a.9.9 0 0 0 .892-.89v-4.775h4.612c.73 0 1.214-.729.89-1.377z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="language-selector">
+                    <button class="language-button" aria-label="Choisir la langue">
+                        <i class="fas fa-globe"></i>
+                        <span class="current-lang"><%= currentLang === 'tr' ? 'TR' : 'FR' %></span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown">
+                        <a href="#" class="language-option <%= currentLang === 'fr' ? 'active' : '' %>" data-lang="fr">
+                            <span class="flag">🇫🇷</span>
+                            <span>Français</span>
+                        </a>
+                        <a href="#" class="language-option <%= currentLang === 'tr' ? 'active' : '' %>" data-lang="tr">
+                            <span class="flag">🇹🇷</span>
+                            <span>Türkçe</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="header-main">
+        <div class="container">
+            <div class="header-main-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <a href="/">
+                        <img src="/images/logo_cimg.png" alt="Logo CIMG Mosquée Bleue" class="logo-image">
+                        <div class="logo-text">
+                            <h1>Mosquée Bleue</h1>
+                            <p>Villefranche-sur-Saône</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Navigation Desktop -->
+                <nav class="main-nav">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link <%= currentPath === '/' ? 'active' : '' %>">
+                                <%= t.nav.home %>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="/poles" class="nav-link <%= currentPath.startsWith('/poles') ? 'active' : '' %>">
+                                <%= t.nav.poles %>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/poles/at"><%= t.nav.poleAT %></a></li>
+                                <li><a href="/poles/kt"><%= t.nav.poleKT %></a></li>
+                                <li><a href="/poles/jeunesse"><%= t.nav.poleJeunesse %></a></li>
+                                <li><a href="/poles/kgt"><%= t.nav.poleKGT %></a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/evenements" class="nav-link <%= currentPath === '/evenements' ? 'active' : '' %>">
+                                <%= t.events.title %>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/don" class="nav-link <%= currentPath === '/don' ? 'active' : '' %>">
+                                <%= t.nav.donate %>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/adhesion" class="nav-link <%= currentPath === '/adhesion' ? 'active' : '' %>">
+                                <%= t.membership.title %>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/contact" class="nav-link <%= currentPath === '/contact' ? 'active' : '' %>">
+                                <%= t.nav.contact %>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                
+                <!-- Bouton CTA -->
+                <div class="header-cta">
+                    <a href="/don" class="btn btn-primary">
+                        <i class="fas fa-heart"></i>
+                        Faire un don
+                    </a>
+                </div>
+                
+                <!-- Menu Hamburger Mobile -->
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Menu Mobile -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <ul class="mobile-nav-list">
+                <li><a href="/" class="<%= currentPath === '/' ? 'active' : '' %>"><%= t.nav.home %></a></li>
+                <li>
+                    <a href="/poles" class="<%= currentPath.startsWith('/poles') ? 'active' : '' %>"><%= t.nav.poles %></a>
+                    <ul class="mobile-submenu">
+                        <li><a href="/poles/at"><%= t.nav.poleAT %></a></li>
+                        <li><a href="/poles/kt"><%= t.nav.poleKT %></a></li>
+                        <li><a href="/poles/jeunesse"><%= t.nav.poleJeunesse %></a></li>
+                        <li><a href="/poles/kgt"><%= t.nav.poleKGT %></a></li>
+                    </ul>
+                </li>
+                <li><a href="/evenements" class="<%= currentPath === '/evenements' ? 'active' : '' %>"><%= t.events.title %></a></li>
+                <li><a href="/don" class="<%= currentPath === '/don' ? 'active' : '' %>"><%= t.nav.donate %></a></li>
+                <li><a href="/adhesion" class="<%= currentPath === '/adhesion' ? 'active' : '' %>"><%= t.membership.title %></a></li>
+                <li><a href="/contact" class="<%= currentPath === '/contact' ? 'active' : '' %>"><%= t.nav.contact %></a></li>
+            </ul>
+        </div>
+    </div>
+</header>

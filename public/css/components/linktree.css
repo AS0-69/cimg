@@ -1,0 +1,26 @@
+/* ========================================
+   STYLES ADDITIONNELS POUR LINKTREE
+======================================== */
+
+.linktree-link svg {
+    transition: all var(--transition-base);
+}
+
+.linktree-link:hover svg {
+    transform: scale(1.1);
+}
+
+.header-social .linktree-link svg {
+    width: 18px;
+    height: 18px;
+}
+
+.footer-social .linktree-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+.social-links-large .linktree-link svg {
+    margin-right: var(--spacing-sm);
+    vertical-align: middle;
+}

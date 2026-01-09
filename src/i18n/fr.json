@@ -1,0 +1,133 @@
+{
+  "site": {
+    "title": "Mosquée Bleue",
+    "subtitle": "Villefranche-sur-Saône",
+    "description": "Centre islamique et culturel au service de la communauté musulmane"
+  },
+  "nav": {
+    "home": "Accueil",
+    "poles": "Nos Pôles",
+    "donate": "Faire un don",
+    "contact": "Contact",
+    "poleAT": "Pôle Principal (AT)",
+    "poleKT": "Pôle KT",
+    "poleJeunesse": "Pôle Jeunesse",
+    "poleKGT": "Pôle KGT"
+  },
+  "hero": {
+    "title": "Bienvenue à la Mosquée Bleue",
+    "subtitle": "Centre Islamique et Mosquée de Villefranche-sur-Saône",
+    "description": "Un lieu de prière, d'apprentissage et de partage pour toute la communauté musulmane.",
+    "cta": "Découvrir nos activités",
+    "donate": "Soutenir la mosquée"
+  },
+  "quotes": {
+    "title": "Paroles inspirantes"
+  },
+  "events": {
+    "title": "Événements à venir",
+    "subtitle": "Rejoignez-nous pour nos prochaines activités",
+    "viewAll": "Voir tous les événements",
+    "register": "S'inscrire",
+    "page_title": "Événements & Activités",
+    "page_subtitle": "Découvrez nos prochains événements et activités",
+    "upcoming_events": "Événements à venir",
+    "upcoming_events_desc": "Conférences, cérémonies et événements spéciaux",
+    "activities": "Activités régulières",
+    "activities_desc": "Cours, formations et activités communautaires",
+    "see_details": "Voir les détails",
+    "no_events": "Aucun événement à venir pour le moment",
+    "no_activities": "Aucune activité à venir pour le moment"
+  },
+  "news": {
+    "title": "Actualités",
+    "subtitle": "Restez informés de la vie de notre mosquée",
+    "readMore": "Lire la suite"
+  },
+  "about": {
+    "title": "À propos de nous",
+    "subtitle": "Au service de la communauté musulmane",
+    "mission": "Notre mission",
+    "missionText": "La Mosquée Bleue est un lieu de culte, d'apprentissage et d'entraide. Nous offrons des services religieux, des cours d'arabe, et organisons des événements communautaires.",
+    "values": "Nos valeurs",
+    "value1": "Fraternité",
+    "value2": "Savoir",
+    "value3": "Solidarité"
+  },
+  "footer": {
+    "prayerTimes": "Horaires de prière",
+    "quickLinks": "Liens rapides",
+    "contact": "Contact",
+    "followUs": "Suivez-nous",
+    "address": "466 Rue Charles Sève, 69400 Villefranche-sur-Saône",
+    "legal": "Mentions légales",
+    "privacy": "Politique de confidentialité",
+    "admin": "Espace admin",
+    "copyright": "© 2024 CIMG Mosquée Bleue. Tous droits réservés."
+  },
+  "prayers": {
+    "fajr": "Fajr",
+    "sunrise": "Chourouk",
+    "dhuhr": "Dhuhr",
+    "asr": "Asr",
+    "maghrib": "Maghrib",
+    "isha": "Isha",
+    "jumua": "Jumua"
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Nous sommes à votre écoute",
+    "name": "Nom complet",
+    "email": "Adresse e-mail",
+    "phone": "Téléphone",
+    "subject": "Sujet",
+    "message": "Votre message",
+    "send": "Envoyer le message",
+    "location": "Notre emplacement",
+    "followUs": "Suivez-nous"
+  },
+  "donate": {
+    "title": "Soutenir la Mosquée",
+    "subtitle": "Votre générosité aide à maintenir et développer les services de notre communauté",
+    "monthly": "Don mensuel",
+    "oneTime": "Don ponctuel",
+    "amount": "Montant",
+    "submit": "Faire un don",
+    "whyDonate": "Pourquoi donner ?",
+    "reason1": "Entretien de la mosquée",
+    "reason2": "Programmes éducatifs",
+    "reason3": "Actions sociales"
+  },
+  "membership": {
+    "title": "Adhésion à la Mosquée",
+    "subtitle": "Rejoignez notre communauté",
+    "civility": "Civilité",
+    "mr": "M.",
+    "mrs": "Mme",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "birthDate": "Date de naissance",
+    "birthPlace": "Lieu de naissance",
+    "nationality": "Nationalité",
+    "address": "Adresse",
+    "postalCode": "Code postal",
+    "city": "Ville",
+    "country": "Pays",
+    "phone": "Téléphone",
+    "email": "Email",
+    "confirmEmail": "Confirmer l'email",
+    "contribution": "Cotisation mensuelle",
+    "iban": "IBAN",
+    "bic": "BIC",
+    "bankAuth": "J'autorise le prélèvement automatique sur mon compte bancaire",
+    "terms": "J'accepte les conditions d'adhésion",
+    "submit": "Valider mon adhésion"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "success": "Opération réussie",
+    "required": "Champ obligatoire",
+    "invalid": "Format invalide"
+  }
+}

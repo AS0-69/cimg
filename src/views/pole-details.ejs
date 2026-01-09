@@ -1,0 +1,87 @@
+<%- include('partials/head.ejs') %>
+
+<!-- Hero Section -->
+<section class="hero hero-page">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="hero-content">
+            <nav class="breadcrumb">
+                <a href="/">Accueil</a>
+                <span>/</span>
+                <a href="/poles">Nos Pôles</a>
+                <span>/</span>
+                <span><%= pole.nom %></span>
+            </nav>
+            <h1 class="hero-title"><%= pole.nom %></h1>
+            <p class="hero-subtitle"><%= pole.description || 'Découvrez les activités de ce pôle' %></p>
+        </div>
+    </div>
+</section>
+
+<!-- Pole Details -->
+<section class="pole-details-section">
+    <div class="container">
+        <div class="pole-details-grid">
+            <div class="pole-details-content">
+                <h2>Présentation</h2>
+                <p class="lead"><%= pole.description %></p>
+                
+                <h3>Nos activités</h3>
+                <ul class="activities-list">
+                    <% pole.activites.forEach(activite => { %>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span><%= activite %></span>
+                        </li>
+                    <% }); %>
+                </ul>
+                
+                <div class="pole-details-cta">
+                    <h3>Rejoignez-nous</h3>
+                    <p>Intéressé par les activités de ce pôle ? N'hésitez pas à nous contacter pour plus d'informations.</p>
+                    <a href="/contact" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i>
+                        Nous contacter
+                    </a>
+                </div>
+            </div>
+            
+            <div class="pole-details-sidebar">
+                <div class="pole-sidebar-card">
+                    <img src="<%= pole.image %>" alt="<%= pole.nom %>">
+                </div>
+                
+                <div class="pole-sidebar-card">
+                    <h4>Informations pratiques</h4>
+                    <ul class="info-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Mosquée Bleue<br>Villefranche-sur-Saône</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+33474680000">04 74 68 00 00</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:contact@mosquee-bleue.fr">contact@mosquee-bleue.fr</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="pole-sidebar-card">
+                    <h4>Autres pôles</h4>
+                    <ul class="other-poles">
+                        <li><a href="/poles/at">Pôle Principal (AT)</a></li>
+                        <li><a href="/poles/kt">Pôle KT</a></li>
+                        <li><a href="/poles/jeunesse">Pôle Jeunesse</a></li>
+                        <li><a href="/poles/kgt">Pôle KGT</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer.ejs') %>
+<%- include('partials/foot.ejs') %>

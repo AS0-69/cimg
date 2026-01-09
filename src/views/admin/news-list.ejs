@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; }
+        .header { background: #009972; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 1.5rem; }
+        .nav { display: flex; gap: 2rem; }
+        .nav a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: background 0.2s; }
+        .nav a:hover, .nav a.active { background: rgba(255,255,255,0.2); }
+        .container { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
+        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .btn-primary { background: #009972; color: white; }
+        .btn-primary:hover { background: #007d5e; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,153,114,0.3); }
+        .btn-danger { background: #e53e3e; color: white; padding: 0.5rem 1rem; font-size: 0.875rem; }
+        .btn-danger:hover { background: #c53030; }
+        .btn-secondary { background: #4299e1; color: white; padding: 0.5rem 1rem; font-size: 0.875rem; }
+        .btn-secondary:hover { background: #3182ce; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #f7fafc; }
+        th { padding: 1rem; text-align: left; font-weight: 600; color: #2d3748; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 1rem; border-bottom: 1px solid #e2e8f0; }
+        tbody tr:hover { background: #f7fafc; }
+        .actions { display: flex; gap: 0.5rem; }
+        .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.875rem; font-weight: 600; }
+        .badge-success { background: #c6f6d5; color: #22543d; }
+        .badge-warning { background: #feebc8; color: #744210; }
+        .empty-state { text-align: center; padding: 4rem 2rem; color: #718096; }
+        .empty-state i { font-size: 4rem; margin-bottom: 1rem; opacity: 0.3; }
+        .img-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-newspaper"></i> <%= title %></h1>
+        <div class="nav">
+            <a href="/admin/dashboard">Dashboard</a>
+            <a href="/admin/events">Événements</a>
+            <a href="/admin/news" class="active">Actualités</a>
+            <a href="/admin/quotes">Citations</a>
+            <a href="/admin/members">Membres</a>
+            <a href="/admin/donations">Dons</a>
+            <a href="/admin/logout">Déconnexion</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="toolbar">
+            <h2>Toutes les actualités (<%= news.length %>)</h2>
+            <a href="/admin/news/new" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Nouvelle actualité
+            </a>
+        </div>
+
+        <div class="card">
+            <% if (news.length === 0) { %>
+                <div class="empty-state">
+                    <i class="fas fa-newspaper"></i>
+                    <h3>Aucune actualité</h3>
+                    <p>Créez votre première actualité pour commencer</p>
+                </div>
+            <% } else { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Titre</th>
+                            <th>Date</th>
+                            <th>Catégorie</th>
+                            <th style="text-align: right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% news.forEach(item => { %>
+                            <tr>
+                                <td>
+                                    <% if (item.image) { %>
+                                        <img src="<%= item.image %>" alt="<%= item.titre %>" class="img-thumb">
+                                    <% } else { %>
+                                        <div class="img-thumb" style="background: #e2e8f0; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-image" style="color: #a0aec0;"></i>
+                                        </div>
+                                    <% } %>
+                                </td>
+                                <td><strong><%= item.titre %></strong></td>
+                                <td><%= new Date(item.date).toLocaleDateString('fr-FR') %></td>
+                                <td><span class="badge badge-success"><%= item.categorie %></span></td>
+                                <td>
+                                    <div class="actions" style="justify-content: flex-end;">
+                                        <a href="/admin/news/<%= item.id %>/edit" class="btn btn-secondary">
+                                            <i class="fas fa-edit"></i> Modifier
+                                        </a>
+                                        <form method="POST" action="/admin/news/<%= item.id %>/delete" style="display: inline;" class="delete-form" data-message="Supprimer cette actualité ?">
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="fas fa-trash"></i> Supprimer
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            <% } %>
+        </div>
+    </div>
+    
+    <script>
+        // Confirmation de suppression
+        document.querySelectorAll('.delete-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                const message = this.dataset.message || 'Êtes-vous sûr de vouloir supprimer cet élément ?';
+                if (!confirm(message)) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

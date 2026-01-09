@@ -1,0 +1,310 @@
+/* ========================================
+   CARDS
+======================================== */
+
+/* Actualités Cards */
+.actualites-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-2xl);
+}
+
+.actualite-card {
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+}
+
+.actualite-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.actualite-image {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.actualite-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.actualite-card:hover .actualite-image img {
+    transform: scale(1.1);
+}
+
+.actualite-categorie {
+    position: absolute;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.actualite-content {
+    padding: var(--spacing-xl);
+}
+
+.actualite-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--color-gray-500);
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.actualite-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-gray-900);
+}
+
+.actualite-content p {
+    color: var(--color-gray-600);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Pôles Cards */
+.poles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-xl);
+}
+
+.pole-card {
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-2xl) var(--spacing-xl);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+}
+
+.pole-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.pole-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-lg);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    color: var(--color-white);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    transition: all var(--transition-base);
+}
+
+.pole-card:hover .pole-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.pole-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.pole-card p {
+    color: var(--color-gray-600);
+    font-size: 0.9375rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Pôles Page Cards */
+.poles-page-grid {
+    display: grid;
+    gap: var(--spacing-3xl);
+}
+
+.pole-page-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.pole-page-card:nth-child(even) {
+    direction: rtl;
+}
+
+.pole-page-card:nth-child(even) .pole-page-content {
+    direction: ltr;
+}
+
+.pole-page-image {
+    height: 100%;
+    min-height: 350px;
+}
+
+.pole-page-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pole-page-content {
+    padding: var(--spacing-2xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.pole-page-content h2 {
+    font-size: 1.75rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.pole-page-content p {
+    color: var(--color-gray-600);
+    margin-bottom: var(--spacing-lg);
+}
+
+.pole-activities {
+    list-style: none;
+    margin-bottom: var(--spacing-xl);
+}
+
+.pole-activities li {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.pole-activities i {
+    color: var(--color-primary);
+    font-size: 1.125rem;
+}
+
+/* Info Cards */
+.donation-info-card,
+.pole-sidebar-card,
+.contact-info-card {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.donation-info-card h4,
+.pole-sidebar-card h4,
+.contact-info-card h4 {
+    font-size: 1.125rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-gray-900);
+}
+
+.info-list {
+    list-style: none;
+}
+
+.info-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-list li:last-child {
+    margin-bottom: 0;
+}
+
+.info-list i {
+    color: var(--color-primary);
+    font-size: 1.125rem;
+    margin-top: 2px;
+    min-width: 20px;
+}
+
+/* Impact Cards */
+.impact-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-xl);
+}
+
+.impact-card {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-lg);
+}
+
+.impact-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto var(--spacing-lg);
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.impact-card h3 {
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.impact-card p {
+    color: var(--color-gray-600);
+    font-size: 0.9375rem;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .actualites-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .poles-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .pole-page-card {
+        grid-template-columns: 1fr;
+    }
+    
+    .pole-page-card:nth-child(even) {
+        direction: ltr;
+    }
+    
+    .impact-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .actualites-grid,
+    .poles-grid,
+    .impact-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pole-page-image {
+        min-height: 250px;
+    }
+}

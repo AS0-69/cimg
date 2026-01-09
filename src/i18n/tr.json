@@ -1,0 +1,133 @@
+{
+  "site": {
+    "title": "Mavi Cami",
+    "subtitle": "Villefranche-sur-Saône",
+    "description": "Müslüman topluluğa hizmet eden İslami ve kültürel merkez"
+  },
+  "nav": {
+    "home": "Ana Sayfa",
+    "poles": "Bölümlerimiz",
+    "donate": "Bağış Yap",
+    "contact": "İletişim",
+    "poleAT": "Ana Bölüm (AT)",
+    "poleKT": "KT Bölümü",
+    "poleJeunesse": "Gençlik Bölümü",
+    "poleKGT": "KGT Bölümü"
+  },
+  "hero": {
+    "title": "Mavi Cami'ye Hoş Geldiniz",
+    "subtitle": "Villefranche-sur-Saône İslam Merkezi ve Camisi",
+    "description": "Tüm Müslüman topluluk için dua, öğrenme ve paylaşım yeri.",
+    "cta": "Faaliyetlerimizi Keşfedin",
+    "donate": "Camiyi Destekleyin"
+  },
+  "quotes": {
+    "title": "İlham Verici Sözler"
+  },
+  "events": {
+    "title": "Yaklaşan Etkinlikler",
+    "subtitle": "Gelecek faaliyetlerimize katılın",
+    "viewAll": "Tüm etkinlikleri görün",
+    "register": "Kayıt Ol",
+    "page_title": "Etkinlikler ve Faaliyetler",
+    "page_subtitle": "Yaklaşan etkinliklerimizi ve faaliyetlerimizi keşfedin",
+    "upcoming_events": "Yaklaşan Etkinlikler",
+    "upcoming_events_desc": "Konferanslar, törenler ve özel etkinlikler",
+    "activities": "Düzenli Faaliyetler",
+    "activities_desc": "Dersler, eğitimler ve topluluk faaliyetleri",
+    "see_details": "Detayları Gör",
+    "no_events": "Şu anda yaklaşan etkinlik bulunmuyor",
+    "no_activities": "Şu anda yaklaşan faaliyet bulunmuyor"
+  },
+  "news": {
+    "title": "Haberler",
+    "subtitle": "Camimizin hayatından haberdar olun",
+    "readMore": "Devamını Oku"
+  },
+  "about": {
+    "title": "Hakkımızda",
+    "subtitle": "Müslüman topluluğa hizmet",
+    "mission": "Misyonumuz",
+    "missionText": "Mavi Cami bir ibadet, öğrenme ve dayanışma yeridir. Dini hizmetler, Arapça dersleri sunuyor ve topluluk etkinlikleri düzenliyoruz.",
+    "values": "Değerlerimiz",
+    "value1": "Kardeşlik",
+    "value2": "Bilgi",
+    "value3": "Dayanışma"
+  },
+  "footer": {
+    "prayerTimes": "Namaz Vakitleri",
+    "quickLinks": "Hızlı Bağlantılar",
+    "contact": "İletişim",
+    "followUs": "Bizi Takip Edin",
+    "address": "466 Rue Charles Sève, 69400 Villefranche-sur-Saône",
+    "legal": "Yasal Bilgiler",
+    "privacy": "Gizlilik Politikası",
+    "admin": "Yönetici Alanı",
+    "copyright": "© 2024 CIMG Mavi Cami. Tüm hakları saklıdır."
+  },
+  "prayers": {
+    "fajr": "Sabah",
+    "sunrise": "Güneş",
+    "dhuhr": "Öğle",
+    "asr": "İkindi",
+    "maghrib": "Akşam",
+    "isha": "Yatsı",
+    "jumua": "Cuma"
+  },
+  "contact": {
+    "title": "Bize Ulaşın",
+    "subtitle": "Sizi dinliyoruz",
+    "name": "Ad Soyad",
+    "email": "E-posta Adresi",
+    "phone": "Telefon",
+    "subject": "Konu",
+    "message": "Mesajınız",
+    "send": "Mesajı Gönder",
+    "location": "Konumumuz",
+    "followUs": "Bizi Takip Edin"
+  },
+  "donate": {
+    "title": "Camiyi Destekleyin",
+    "subtitle": "Cömertliğiniz topluluğumuzun hizmetlerini sürdürmeye ve geliştirmeye yardımcı oluyor",
+    "monthly": "Aylık Bağış",
+    "oneTime": "Tek Seferlik Bağış",
+    "amount": "Miktar",
+    "submit": "Bağış Yap",
+    "whyDonate": "Neden Bağış Yapmalı?",
+    "reason1": "Cami bakımı",
+    "reason2": "Eğitim programları",
+    "reason3": "Sosyal yardım"
+  },
+  "membership": {
+    "title": "Üyelik",
+    "subtitle": "Topluluğumuza katılın",
+    "civility": "Unvan",
+    "mr": "Bay",
+    "mrs": "Bayan",
+    "firstName": "Ad",
+    "lastName": "Soyad",
+    "birthDate": "Doğum Tarihi",
+    "birthPlace": "Doğum Yeri",
+    "nationality": "Uyruk",
+    "address": "Adres",
+    "postalCode": "Posta Kodu",
+    "city": "Şehir",
+    "country": "Ülke",
+    "phone": "Telefon",
+    "email": "E-posta",
+    "confirmEmail": "E-posta Onayı",
+    "contribution": "Aylık Aidat",
+    "iban": "IBAN",
+    "bic": "BIC",
+    "bankAuth": "Banka hesabımdan otomatik ödeme yapılmasına izin veriyorum",
+    "terms": "Üyelik şartlarını kabul ediyorum",
+    "submit": "Üyeliğimi Onayla"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu",
+    "success": "İşlem başarılı",
+    "required": "Zorunlu alan",
+    "invalid": "Geçersiz format"
+  }
+}

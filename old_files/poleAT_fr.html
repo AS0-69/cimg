@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pôle Principal (AT) - Mosquée Bleue de Villefranche-sur-Saône</title>
+ <link rel="shortcut icon" href="logo_vert.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="app.js"></script>
+
+</head>
+
+<body>
+  <div class="btn_up">
+    <img src="arrow-up-solid.svg" class="icone_up">
+
+  </div>
+
+  <div class="btn_donation">
+    <a href="don_fr.html">Faire un don</a>
+  </div>
+
+
+  <header>
+    <div class="container">
+      <div class="header-contenue">
+        <div class="logo">
+          <div class="logo-icon">
+            <a href="index.html"><img src="logo_cimg.png" width="200" height="40" alt="Logo CIMG Mosquée Bleu" /></a>
+          </div>
+          <div class="logo-text">
+            <h1>Mosquée Bleu</h1>
+            <p>Villefranche-sur-Saône</p>
+          </div>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li>
+              <div class="dropdown">
+                <a  href="pole_fr.html"  class="active">Nos Pôles ▼</a>
+                <div class="dropdown-content">
+                  <a href="poleAT_fr.html">Pôle Principal(AT)</a>
+                  <a href="poleKT_fr.html">Pôle KT</a>
+                  <a href="poleJeunesse_fr.html">Pôle Jeunesse</a>
+                  <a href="poleKGT_fr.html">Pôle KGT</a>
+                </div>
+              </div>
+            </li>
+            <li><a href="don_fr.html">Faire un don</a></li>
+            <li><a href="contact_fr.html">Contact</a></li>
+            <li class="langue-select">
+              <select name="language" id="language">
+                <option value="fr">Français 🇫🇷</option>
+                <option value="tr">Türkçe 🇹🇷</option>
+              </select>
+            </li>
+          </ul>
+        </nav>
+        <div class="mobile-nav">
+          <a href="javascript:void(0);" class="hamburger-icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+          </a>
+          <div id="myLinks">
+            <a href="index.html">Accueil</a>
+            <a href="pole_fr.html" class="active">Nos Pôles</a>
+            <a href="don_fr.html">Faire un don</a>
+            <a href="contact_fr.html">Contact</a>
+            <div class="langue-select-mobile">
+              <select name="language" id="language-mobile">
+                <option value="fr">Français 🇫🇷</option>
+                <option value="tr">Türkçe 🇹🇷</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="entete">
+      <h1>Pôle Principal (AT)</h1>
+    </div>
+    
+    <div class="section" id="section-pole-presentation">
+      <div class="section-text">
+        <h2>Présentation du pôle</h2>
+        <p>
+          Le Pôle Principal, aussi appelé AT (Ana Teskilat), joue un rôle central dans la gestion des activités de la mosquée. Ce pôle regroupe les adultes, leur offrant des opportunités pour renforcer leur spiritualité, participer à des activités culturelles et soutenir la communauté locale.
+        </p>
+      </div>
+
+      <div class="section-image">
+        <img src="image-exemple1.jpg" alt="Image du Pôle Principal (AT) - Mosquée Bleue de Villefranche-sur-Saône" />
+      </div>
+    </div>
+
+    <div class="section" id="section-pole-images">
+      <h2>Galerie d'images</h2>
+
+      <div class="slideshow-container">
+        <div class="mySlides fade">
+          <div class="numbertext">1 / 4</div>
+          <img src="mosquee_interieur.jpg">
+          <div class="text">Caption Text</div>
+        </div>
+
+        <div class="mySlides fade">
+          <div class="numbertext">2 / 4</div>
+          <img src="exterieur_mosquee.jpg">
+          <div class="text">Caption Two</div>
+        </div>
+
+        <div class="mySlides fade">
+          <div class="numbertext">3 / 4</div>
+          <img src="angle_gauche_interieur_mosquee.jpg" >
+          <div class="text">Caption Three</div>
+        </div>
+
+        <div class="mySlides fade">
+          <div class="numbertext">4 / 4</div>
+          <img src="image-exemple3.jpg" >
+          <div class="text">Caption Four</div>
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
+      </div>
+      <br>
+
+      <div class="dots-container">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+      </div>
+    </div>
+
+    <div class="section" id="section-pole-reseaux">
+      <h2>Nous contacter</h2>
+      <p>Pour toute information, vous pouvez nous contacter directement par email ou via nos réseaux sociaux.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/mavicamivillefranche/?locale=fr_FR">
+          <img src="facebook.png" alt="Facebook Pôle Principal (AT)" />
+        </a>
+        <a href="https://www.instagram.com/mosqueebleue_cimg/">
+          <img src="instagram.png" alt="Instagram Pôle Principal (AT)" />
+        </a>
+        <a href="mosqueebleuecimg@gmail.com">
+          <img src="email.png" alt="Mail Pôle Principal (AT)" />
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-contenue">
+        <div class="footer-info">
+          <img src="logo_cimg_gris.png" alt="Logo CIMG Mosquée Bleu" />
+          <p><strong>Villefranche-sur-Saône</strong></p>
+          <p>📞 Accueil: 04 xx xx xx xx</p>
+          <p>📱 Téléphone: 06 xx xx xx xx</p>
+        </div>
+        <div class="footer-info">
+          <p>📍 466 Rue Charles Sève</p>
+          <p>69400 Villefranche-sur-Saône</p>
+          <p>✉️ cimggtvf@gmail.com</p>
+          <p>🔗 Réseaux sociaux:</p>
+          <div class="footer-social">
+            <a href="https://linktr.ee/mosqueebleuecimg">
+              <img src="linktree.svg" alt="Linktree" />
+            </a>
+            <a href="https://mawaqit.net/fr/m/cimg-villefranche-villefranche-69400-france">
+              <img src="mawaqit_logo_light_rounded.png" alt="Mawaqit" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-mention-legales">
+        <p>
+          CIMG © Confédération islamique Millî Görüş 2025 [ Création par Nexus
+          Flow ] – Mentions légales
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

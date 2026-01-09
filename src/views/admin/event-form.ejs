@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; }
+        .header { background: #009972; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 1.5rem; }
+        .nav { display: flex; gap: 2rem; }
+        .nav a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: background 0.2s; }
+        .nav a:hover, .nav a.active { background: rgba(255,255,255,0.2); }
+        .container { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
+        .form-card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 2rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem; transition: border 0.2s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #009972; }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+        .conditional-field { display: none; margin-top: 0.5rem; }
+        .conditional-field.show { display: block; }
+        .image-upload-area { border: 2px dashed #cbd5e0; border-radius: 8px; padding: 2rem; text-align: center; background: #f7fafc; cursor: pointer; transition: all 0.2s; }
+        .image-upload-area:hover { border-color: #009972; background: #e6f7f2; }
+        .image-upload-area i { font-size: 3rem; color: #009972; margin-bottom: 1rem; }
+        .image-list { margin-top: 1rem; }
+        .image-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: #f7fafc; border-radius: 8px; margin-bottom: 0.5rem; }
+        .image-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; }
+        .image-item-name { flex: 1; font-weight: 500; }
+        .btn { padding: 0.75rem 2rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .btn-primary { background: #009972; color: white; }
+        .btn-primary:hover { background: #007d5e; transform: translateY(-1px); }
+        .btn-secondary { background: #e2e8f0; color: #4a5568; }
+        .btn-secondary:hover { background: #cbd5e0; }
+        .btn-danger { background: #e53e3e; color: white; padding: 0.5rem 1rem; font-size: 0.875rem; }
+        .btn-danger:hover { background: #c53030; }
+        .form-actions { display: flex; gap: 1rem; margin-top: 2rem; }
+        .hint { font-size: 0.875rem; color: #718096; margin-top: 0.25rem; }
+        .required { color: #e53e3e; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-calendar-plus"></i> <%= event ? 'Modifier' : 'Nouvel' %> événement</h1>
+        <div class="nav">
+            <a href="/admin/dashboard">Dashboard</a>
+            <a href="/admin/events" class="active">Événements</a>
+            <a href="/">Retour au site</a>
+            <a href="/admin/logout">Déconnexion</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-card">
+            <form method="POST" action="<%= event ? `/admin/events/${event.id}` : '/admin/events' %>" enctype="multipart/form-data">
+                
+                <!-- Type -->
+                <div class="form-group">
+                    <label>Type <span class="required">*</span></label>
+                    <select name="type" id="type" required>
+                        <option value="">-- Sélectionner --</option>
+                        <% types.forEach(type => { %>
+                            <option value="<%= type.name %>" <%= event && event.type === type.name ? 'selected' : '' %>>
+                                <%= type.label_fr %>
+                            </option>
+                        <% }); %>
+                        <option value="autre">➕ Autre (nouveau type)</option>
+                    </select>
+                    <div class="conditional-field" id="new_type_field">
+                        <input type="text" name="new_type" placeholder="Nom du nouveau type">
+                    </div>
+                </div>
+
+                <!-- Titre -->
+                <div class="form-group">
+                    <label>Titre <span class="required">*</span></label>
+                    <input type="text" name="title" value="<%= event ? event.title : '' %>" required>
+                </div>
+
+                <!-- Date et Heures -->
+                <div class="form-row-3">
+                    <div class="form-group">
+                        <label>Date <span class="required">*</span></label>
+                        <input type="date" name="date" value="<%= event && event.date ? new Date(event.date).toISOString().split('T')[0] : '' %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Heure de début <span class="required">*</span></label>
+                        <input type="time" name="start_time" value="<%= event ? event.start_time : '' %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Heure de fin <span class="required">*</span></label>
+                        <input type="time" name="end_time" value="<%= event ? event.end_time : '' %>" required>
+                    </div>
+                </div>
+
+                <!-- Lieu et Catégorie -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Lieu <span class="required">*</span></label>
+                        <select name="location" id="location" required>
+                            <option value="">-- Sélectionner --</option>
+                            <% locations.forEach(loc => { %>
+                                <option value="<%= loc.name %>" <%= event && event.location === loc.name ? 'selected' : '' %>>
+                                    <%= loc.name %>
+                                </option>
+                            <% }); %>
+                            <option value="autre">➕ Autre (nouveau lieu)</option>
+                        </select>
+                        <div class="conditional-field" id="new_location_field">
+                            <input type="text" name="new_location" placeholder="Nom du nouveau lieu">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Catégorie <span class="required">*</span></label>
+                        <select name="category" id="category" required>
+                            <option value="">-- Sélectionner --</option>
+                            <% categories.forEach(cat => { %>
+                                <option value="<%= cat.name %>" <%= event && event.category === cat.name ? 'selected' : '' %>>
+                                    <%= cat.name %>
+                                </option>
+                            <% }); %>
+                            <option value="autre">➕ Autre (nouvelle catégorie)</option>
+                        </select>
+                        <div class="conditional-field" id="new_category_field">
+                            <input type="text" name="new_category" placeholder="Nom de la nouvelle catégorie">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label>Description <span class="required">*</span></label>
+                    <textarea name="description" required><%= event ? event.description : '' %></textarea>
+                </div>
+
+                <!-- Images -->
+                <div class="form-group">
+                    <label>Images</label>
+                    <div class="image-upload-area" id="uploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p><strong>Cliquez pour téléverser des images</strong></p>
+                        <p class="hint">JPG, PNG, WEBP - Max 5MB par image</p>
+                    </div>
+                    <input type="file" name="images" id="images" accept="image/*" multiple style="display:none">
+                    
+                    <div class="image-list" id="image-list">
+                        <% if (event && event.images && event.images.length > 0) { %>
+                            <% event.images.forEach((img, idx) => { %>
+                                <div class="image-item" data-img="<%= img %>">
+                                    <img src="<%= img %>" alt="Image <%= idx + 1 %>">
+                                    <span class="image-item-name"><%= img.split('/').pop() %></span>
+                                    <button type="button" class="btn btn-danger remove-existing-btn">
+                                        <i class="fas fa-trash"></i> Supprimer
+                                    </button>
+                                </div>
+                            <% }); %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                    <a href="/admin/events" class="btn btn-secondary">Annuler</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Gestion des champs conditionnels
+        document.getElementById('type').addEventListener('change', function() {
+            document.getElementById('new_type_field').classList.toggle('show', this.value === 'autre');
+        });
+        document.getElementById('location').addEventListener('change', function() {
+            document.getElementById('new_location_field').classList.toggle('show', this.value === 'autre');
+        });
+        document.getElementById('category').addEventListener('change', function() {
+            document.getElementById('new_category_field').classList.toggle('show', this.value === 'autre');
+        });
+
+        // Click sur zone upload
+        document.getElementById('uploadArea').addEventListener('click', function() {
+            document.getElementById('images').click();
+        });
+
+        // Affichage des nouvelles images sélectionnées
+        document.getElementById('images').addEventListener('change', function(e) {
+            const imageList = document.getElementById('image-list');
+            Array.from(e.target.files).forEach((file) => {
+                const div = document.createElement('div');
+                div.className = 'image-item';
+                div.innerHTML = `
+                    <img src="${URL.createObjectURL(file)}" alt="Nouvelle image">
+                    <span class="image-item-name">${file.name}</span>
+                    <button type="button" class="btn btn-danger remove-new-btn">
+                        <i class="fas fa-times"></i> Retirer
+                    </button>
+                `;
+                imageList.appendChild(div);
+            });
+        });
+
+        // Gestion suppression nouvelles images
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.remove-new-btn')) {
+                e.target.closest('.image-item').remove();
+            }
+        });
+
+        // Gestion suppression images existantes
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.remove-existing-btn')) {
+                const btn = e.target.closest('.remove-existing-btn');
+                const item = btn.closest('.image-item');
+                const img = item.dataset.img;
+                
+                if (confirm('Supprimer cette image ?')) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'remove_images[]';
+                    input.value = img;
+                    document.querySelector('form').appendChild(input);
+                    item.remove();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

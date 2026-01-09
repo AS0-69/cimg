@@ -1,0 +1,277 @@
+<%- include('partials/head.ejs') %>
+
+<!-- Hero Section -->
+<section class="hero hero-page">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Faire un don</h1>
+            <p class="hero-subtitle">Soutenez votre mosquée et participez au développement de notre communauté</p>
+        </div>
+    </div>
+</section>
+
+<!-- Donation Section -->
+<section class="donation-section">
+    <div class="container">
+        <!-- Barre de progression -->
+        <div class="donation-progress-container">
+            <h2>Objectif de collecte mensuelle</h2>
+            <div class="progress-stats">
+                <div class="stat">
+                    <span class="stat-value">12 450 €</span>
+                    <span class="stat-label">Collectés</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">20 000 €</span>
+                    <span class="stat-label">Objectif</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">7 550 €</span>
+                    <span class="stat-label">Restant</span>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 62.25%">
+                    <span class="progress-percentage">62%</span>
+                </div>
+            </div>
+            <p class="progress-message">
+                <i class="fas fa-info-circle"></i>
+                Vos dons nous permettent de maintenir la mosquée ouverte, d'organiser des activités éducatives 
+                et de soutenir les familles dans le besoin.
+            </p>
+        </div>
+        
+        <div class="donation-intro">
+            <h2>Votre générosité fait la différence</h2>
+            <p class="lead">
+                Chaque don, quelle que soit sa valeur, contribue au bon fonctionnement de notre mosquée 
+                et permet de maintenir nos activités au service de la communauté.
+            </p>
+        </div>
+        
+        <div class="donation-grid">
+            <!-- Formulaire de don -->
+            <div class="donation-form-container">
+                <h3>Choisissez le montant de votre don</h3>
+                
+                <form id="donationForm" class="donation-form">
+                    <!-- Montants prédéfinis -->
+                    <div class="amount-options">
+                        <button type="button" class="amount-btn" data-amount="20">20€</button>
+                        <button type="button" class="amount-btn" data-amount="50">50€</button>
+                        <button type="button" class="amount-btn" data-amount="100">100€</button>
+                        <button type="button" class="amount-btn" data-amount="200">200€</button>
+                    </div>
+                    
+                    <!-- Montant personnalisé -->
+                    <div class="form-group">
+                        <label for="customAmount">Ou saisissez un montant personnalisé</label>
+                        <div class="input-group">
+                            <input 
+                                type="number" 
+                                id="customAmount" 
+                                name="amount" 
+                                min="5" 
+                                placeholder="Montant"
+                                class="form-control"
+                            >
+                            <span class="input-group-text">€</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Type de don -->
+                    <div class="form-group">
+                        <label>Type de don</label>
+                        <div class="donation-type-options">
+                            <label class="radio-card">
+                                <input type="radio" name="donationType" value="ponctuel" checked>
+                                <span class="radio-card-content">
+                                    <i class="fas fa-hand-holding-heart"></i>
+                                    <strong>Don ponctuel</strong>
+                                </span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="donationType" value="mensuel">
+                                <span class="radio-card-content">
+                                    <i class="fas fa-calendar-check"></i>
+                                    <strong>Don mensuel</strong>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Affectation du don -->
+                    <div class="form-group">
+                        <label for="donationPurpose">Affecter mon don à</label>
+                        <select id="donationPurpose" name="purpose" class="form-control">
+                            <option value="general">Fonctionnement général</option>
+                            <option value="travaux">Travaux et entretien</option>
+                            <option value="education">Éducation et enseignement</option>
+                            <option value="solidarite">Actions solidaires</option>
+                            <option value="jeunesse">Activités jeunesse</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Informations personnelles -->
+                    <div class="form-group">
+                        <label for="donorName">Nom complet *</label>
+                        <input 
+                            type="text" 
+                            id="donorName" 
+                            name="name" 
+                            required 
+                            class="form-control"
+                            placeholder="Votre nom"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="donorEmail">Email *</label>
+                        <input 
+                            type="email" 
+                            id="donorEmail" 
+                            name="email" 
+                            required 
+                            class="form-control"
+                            placeholder="votre@email.com"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="newsletter">
+                            <span>Je souhaite recevoir les actualités de la mosquée</span>
+                        </label>
+                    </div>
+                    
+                    <!-- Bouton de soumission -->
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                        <i class="fas fa-lock"></i>
+                        Procéder au paiement sécurisé
+                    </button>
+                    
+                    <p class="form-note">
+                        <i class="fas fa-shield-alt"></i>
+                        Paiement 100% sécurisé par Stripe
+                    </p>
+                </form>
+            </div>
+            
+            <!-- Sidebar informations -->
+            <div class="donation-sidebar">
+                <div class="donation-info-card">
+                    <h4>Pourquoi donner ?</h4>
+                    <ul class="info-list">
+                        <li>
+                            <i class="fas fa-mosque"></i>
+                            <span>Entretien et fonctionnement de la mosquée</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-book-quran"></i>
+                            <span>Programmes éducatifs et cours</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-users"></i>
+                            <span>Activités communautaires</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-hands-helping"></i>
+                            <span>Actions caritatives et solidaires</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="donation-info-card">
+                    <h4>Avantages fiscaux</h4>
+                    <p>
+                        Vos dons à la mosquée peuvent être éligibles à une réduction fiscale. 
+                        Un reçu fiscal vous sera envoyé par email.
+                    </p>
+                    <div class="tax-benefit">
+                        <span class="tax-label">Exemple :</span>
+                        <p>Pour un don de <strong>100€</strong>, votre don ne vous coûte réellement que <strong>34€</strong> après déduction fiscale (66%).</p>
+                    </div>
+                </div>
+                
+                <div class="donation-info-card">
+                    <h4>Autres moyens de donner</h4>
+                    <ul class="payment-methods">
+                        <li>
+                            <i class="fas fa-university"></i>
+                            <span>Virement bancaire</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-money-check"></i>
+                            <span>Chèque</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-hand-holding-usd"></i>
+                            <span>Sur place à la mosquée</span>
+                        </li>
+                    </ul>
+                    <a href="/contact" class="btn btn-outline btn-sm">
+                        Plus d'informations
+                    </a>
+                </div>
+                
+                <div class="donation-info-card trust-indicators">
+                    <h4>Transparence et confiance</h4>
+                    <p>
+                        <i class="fas fa-check-circle"></i>
+                        Association loi 1901
+                    </p>
+                    <p>
+                        <i class="fas fa-check-circle"></i>
+                        Paiements sécurisés
+                    </p>
+                    <p>
+                        <i class="fas fa-check-circle"></i>
+                        Reçus fiscaux automatiques
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Impact Section -->
+<section class="impact-section">
+    <div class="container">
+        <h2>L'impact de vos dons</h2>
+        <div class="impact-grid">
+            <div class="impact-card">
+                <div class="impact-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>500+</h3>
+                <p>Fidèles accueillis chaque semaine</p>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon">
+                    <i class="fas fa-child"></i>
+                </div>
+                <h3>150+</h3>
+                <p>Enfants inscrits aux cours</p>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h3>50+</h3>
+                <p>Événements organisés par an</p>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <h3>100+</h3>
+                <p>Familles aidées chaque année</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer.ejs') %>
+<%- include('partials/foot.ejs') %>

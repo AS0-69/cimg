@@ -1,0 +1,149 @@
+/* ========================================
+   BUTTONS
+======================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid transparent;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    white-space: nowrap;
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 153, 114, 0.2);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Primary Button */
+.btn-primary {
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    color: var(--color-white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Outline Button */
+.btn-outline {
+    background: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-outline:hover:not(:disabled) {
+    background: var(--color-primary);
+    color: var(--color-white);
+    transform: translateY(-2px);
+}
+
+/* Hero buttons special (white outline) */
+.hero .btn-outline {
+    color: var(--color-white);
+    border-color: var(--color-white);
+}
+
+.hero .btn-outline:hover:not(:disabled) {
+    background: var(--color-white);
+    color: var(--color-primary);
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background: var(--color-secondary);
+    color: var(--color-white);
+    border-color: var(--color-secondary);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #234765;
+    border-color: #234765;
+    color: var(--color-white);
+    transform: translateY(-2px);
+}
+
+/* Button Sizes */
+.btn-sm {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: 0.875rem;
+}
+
+.btn-lg {
+    padding: var(--spacing-lg) var(--spacing-2xl);
+    font-size: 1.125rem;
+}
+
+.btn-block {
+    width: 100%;
+    display: flex;
+}
+
+/* Button Link */
+.btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--color-primary);
+    font-weight: 500;
+    text-decoration: none;
+    transition: all var(--transition-base);
+}
+
+.btn-link:hover {
+    gap: var(--spacing-md);
+    color: var(--color-primary-dark);
+}
+
+.btn-link i {
+    font-size: 0.875rem;
+}
+
+/* Animation icône pour donation-box uniquement */
+.donation-box .btn i {
+    opacity: 0;
+    width: 0;
+    transition: all 0.5s ease;
+    position: relative;
+    top: 2px;
+}
+
+.donation-box .btn:hover i {
+    opacity: 1;
+    width: auto;
+    margin-left: var(--spacing-sm);
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .btn {
+        padding: var(--spacing-sm) var(--spacing-lg);
+        font-size: 0.9375rem;
+    }
+    
+    .btn-lg {
+        padding: var(--spacing-md) var(--spacing-xl);
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,288 @@
+<%- include('partials/head.ejs') %>
+
+<!-- Hero Section -->
+<section class="hero hero-page">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Espace Administrateur</h1>
+            <p class="hero-subtitle">Connexion sécurisée</p>
+        </div>
+    </div>
+</section>
+
+<!-- Login Section -->
+<section class="login-section section">
+    <div class="container">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <i class="fas fa-lock login-icon"></i>
+                    <h2>Connexion Admin</h2>
+                    <p>Accès sécurisé à l'espace d'administration</p>
+                </div>
+
+                <% if (locals.error) { %>
+                    <div class="alert alert-error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <%= error %>
+                    </div>
+                <% } %>
+
+                <form action="/admin/login" method="POST" class="login-form">
+                    <div class="form-group">
+                        <label for="username">
+                            <i class="fas fa-user"></i>
+                            Nom d'utilisateur
+                        </label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username" 
+                            class="form-control" 
+                            placeholder="Entrez votre nom d'utilisateur"
+                            required
+                            autocomplete="username"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fas fa-key"></i>
+                            Mot de passe
+                        </label>
+                        <div class="password-input-wrapper">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                class="form-control" 
+                                placeholder="Entrez votre mot de passe"
+                                required
+                                autocomplete="current-password"
+                            >
+                            <button type="button" class="password-toggle" id="togglePassword" aria-label="Afficher le mot de passe">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="remember" id="remember">
+                            <span>Se souvenir de moi</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Se connecter
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <p class="text-small">
+                        Vous avez oublié votre mot de passe ? 
+                        <a href="mailto:contact@mosquee-bleue.fr">Contactez-nous</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="login-info">
+                <div class="info-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Sécurité</h3>
+                    <p>Connexion sécurisée par HTTPS avec chiffrement des données</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-users-cog"></i>
+                    <h3>Gestion</h3>
+                    <p>Interface complète de gestion du contenu et des actualités</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Statistiques</h3>
+                    <p>Tableaux de bord et statistiques de fréquentation du site</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Styles spécifiques pour la page de connexion -->
+<style>
+.login-section {
+    background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-white) 100%);
+    min-height: calc(100vh - 400px);
+    display: flex;
+    align-items: center;
+}
+
+.login-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-3xl);
+}
+
+.login-card {
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-3xl);
+    box-shadow: var(--shadow-xl);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.login-icon {
+    font-size: 3rem;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.login-header h2 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-gray-900);
+}
+
+.login-header p {
+    color: var(--color-gray-600);
+    margin: 0;
+}
+
+.login-form .form-group label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 600;
+}
+
+.login-form .form-group label i {
+    color: var(--color-primary);
+}
+
+.password-input-wrapper {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--color-gray-500);
+    cursor: pointer;
+    padding: 8px;
+    transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+    color: var(--color-primary);
+}
+
+.btn-block {
+    width: 100%;
+    margin-top: var(--spacing-lg);
+}
+
+.login-footer {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-gray-200);
+    text-align: center;
+}
+
+.login-footer .text-muted {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    color: var(--color-gray-600);
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.login-footer .text-small {
+    font-size: 0.875rem;
+    color: var(--color-gray-600);
+}
+
+.login-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.info-card {
+    background: var(--color-white);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.info-card i {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.info-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-gray-900);
+}
+
+.info-card p {
+    font-size: 0.9375rem;
+    color: var(--color-gray-600);
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .login-card {
+        padding: var(--spacing-2xl);
+    }
+    
+    .login-info {
+        display: none;
+    }
+}
+</style>
+
+<script>
+// Toggle password visibility
+document.addEventListener('DOMContentLoaded', () => {
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    
+    if (togglePassword && passwordInput) {
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            const icon = togglePassword.querySelector('i');
+            if (type === 'password') {
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        });
+    }
+});
+</script>
+
+<%- include('partials/footer.ejs') %>
+<%- include('partials/foot.ejs') %>
