@@ -22,17 +22,24 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     let folder = 'public/images/events'; // Par défaut
     
-    if (req.baseUrl.includes('/news')) folder = 'public/images/news';
-    else if (req.baseUrl.includes('/members')) folder = 'public/images/team';
-    else if (req.baseUrl.includes('/donations')) folder = 'public/images/donations';
-    else if (req.baseUrl.includes('/quotes')) folder = 'public/images/quotes';
+    // Vérifier le path complet (baseUrl + path)
+    const fullPath = req.baseUrl + req.path;
+    console.log('Multer destination - fullPath:', fullPath);
     
+    if (fullPath.includes('/news')) folder = 'public/images/news';
+    else if (fullPath.includes('/members')) folder = 'public/images/team';
+    else if (fullPath.includes('/donations')) folder = 'public/images/donations';
+    else if (fullPath.includes('/quotes')) folder = 'public/images/quotes';
+    
+    console.log('Dossier de destination:', folder);
     cb(null, folder);
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     const ext = path.extname(file.originalname);
-    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+    const filename = file.fieldname + '-' + uniqueSuffix + ext;
+    console.log('Nom de fichier généré:', filename);
+    cb(null, filename);
   }
 });
 
@@ -52,7 +59,7 @@ const fileFilter = (req, file, cb) => {
 // Configuration multer
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB max
   fileFilter: fileFilter
 });
 

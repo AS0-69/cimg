@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Quotes Carousel
     initQuotesCarousel();
     
+    // Mosque Images Carousel
+    initMosqueCarousel();
+    
     // Language Selector
     initLanguageSelector();
     
@@ -402,4 +405,51 @@ function initAdhesionForm() {
             alert('Une erreur est survenue. Veuillez réessayer.');
         }
     });
+}
+
+// ========================================
+// MOSQUE IMAGES CAROUSEL
+// ========================================
+function initMosqueCarousel() {
+    const carouselContainer = document.querySelector('.mosque-images-carousel .carousel-container');
+    if (!carouselContainer) return;
+    
+    const slides = carouselContainer.querySelectorAll('.carousel-slide');
+    const prevBtn = carouselContainer.querySelector('.carousel-prev');
+    const nextBtn = carouselContainer.querySelector('.carousel-next');
+    
+    if (slides.length === 0) return;
+    
+    let currentSlide = 0;
+    
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            if (i === index) {
+                slide.style.display = 'block';
+                slide.classList.add('active');
+            } else {
+                slide.style.display = 'none';
+                slide.classList.remove('active');
+            }
+        });
+    }
+    
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+    
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+    
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+    
+    // Auto-advance every 5 seconds
+    setInterval(nextSlide, 5000);
+    
+    // Initialize first slide
+    showSlide(0);
 }

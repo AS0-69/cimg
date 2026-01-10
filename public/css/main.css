@@ -140,9 +140,23 @@ a:hover {
    LAYOUT
 ======================================== */
 .container {
-    max-width: var(--container-max-width);
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 var(--container-padding);
+    padding: 0 2rem;
+    width: 100%;
+}
+
+.container-wide {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    width: 100%;
+}
+
+.container-narrow {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
     width: 100%;
 }
 
@@ -154,10 +168,17 @@ main {
    SECTIONS
 ======================================== */
 section {
-    padding: var(--spacing-4xl) 0;
+    padding: 3rem 0;
+}
+
+section.compact {
+    padding: 2rem 0;
 }
 
 @media (max-width: 768px) {
+    section {
+        padding: 2rem 0;
+    }
     section {
         padding: var(--spacing-3xl) 0;
     }

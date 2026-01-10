@@ -44,13 +44,14 @@
     <div class="header">
         <h1><i class="fas fa-hand-holding-heart"></i> <%= title %></h1>
         <div class="nav">
-            <a href="/admin/dashboard">Dashboard</a>
-            <a href="/admin/events">Événements</a>
-            <a href="/admin/news">Actualités</a>
-            <a href="/admin/quotes">Citations</a>
-            <a href="/admin/members">Membres</a>
-            <a href="/admin/donations" class="active">Dons</a>
-            <a href="/admin/logout">Déconnexion</a>
+            <a href="/admin/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="/admin/events"><i class="fas fa-calendar-alt"></i> Événements</a>
+            <a href="/admin/news"><i class="fas fa-newspaper"></i> Actualités</a>
+            <a href="/admin/quotes"><i class="fas fa-quote-left"></i> Citations</a>
+            <a href="/admin/members"><i class="fas fa-users"></i> Membres</a>
+            <a href="/admin/donations" class="active"><i class="fas fa-hand-holding-usd"></i> Dons</a>
+            <a href="/"><i class="fas fa-home"></i> Retour au site</a>
+            <a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
         </div>
     </div>
 
@@ -73,6 +74,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <th>Images</th>
                             <th>Titre</th>
                             <th>Progression</th>
                             <th>Montants</th>
@@ -83,8 +85,28 @@
                     <tbody>
                         <% donations.forEach(donation => { 
                             const percentage = Math.round((donation.current_amount / donation.goal_amount) * 100);
+                            let images = [];
+                            if (donation.images) {
+                                images = typeof donation.images === 'string' ? JSON.parse(donation.images) : donation.images;
+                            }
                         %>
                             <tr>
+                                <td>
+                                    <% if (images && images.length > 0) { %>
+                                        <div style="display: flex; gap: 0.25rem; flex-wrap: wrap;">
+                                            <% images.slice(0, 3).forEach(img => { %>
+                                                <img src="<%= img %>" alt="Image" class="img-thumb">
+                                            <% }); %>
+                                            <% if (images.length > 3) { %>
+                                                <div style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: #e2e8f0; border-radius: 8px; font-size: 0.75rem; color: #718096;">
+                                                    +<%= images.length - 3 %>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                    <% } else { %>
+                                        <span style="color: #cbd5e0; font-size: 0.875rem;">Aucune image</span>
+                                    <% } %>
+                                </td>
                                 <td>
                                     <strong><%= donation.title %></strong>
                                     <% if (donation.end_date) { %>

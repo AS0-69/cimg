@@ -1,72 +1,21 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; }
-        .header { background: #009972; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .header h1 { font-size: 1.5rem; }
-        .nav { display: flex; gap: 2rem; }
-        .nav a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: background 0.2s; }
-        .nav a:hover, .nav a.active { background: rgba(255,255,255,0.2); }
-        .container { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; }
-        .form-card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 2rem; }
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem; transition: border 0.2s; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #009972; }
-        .form-group textarea { resize: vertical; min-height: 150px; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .conditional-field { display: none; margin-top: 0.5rem; }
-        .conditional-field.show { display: block; }
-        .image-upload-area { border: 2px dashed #cbd5e0; border-radius: 8px; padding: 2rem; text-align: center; background: #f7fafc; cursor: pointer; transition: all 0.2s; }
-        .image-upload-area:hover { border-color: #009972; background: #e6f7f2; }
-        .image-preview { margin-top: 1rem; text-align: center; }
-        .image-preview img { max-width: 300px; border-radius: 8px; }
-        .btn { padding: 0.75rem 2rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; }
-        .btn-primary { background: #009972; color: white; }
-        .btn-primary:hover { background: #007d5e; transform: translateY(-1px); }
-        .btn-secondary { background: #e2e8f0; color: #4a5568; }
-        .btn-secondary:hover { background: #cbd5e0; }
-        .form-actions { display: flex; gap: 1rem; margin-top: 2rem; }
-        .required { color: #e53e3e; }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1><i class="fas fa-newspaper"></i> <%= news ? 'Modifier' : 'Nouvelle' %> actualité</h1>
-        <div class="nav">
-            <a href="/admin/dashboard">Dashboard</a>
-            <a href="/admin/news" class="active">Actualités</a>
-            <a href="/">Retour au site</a>
-        </div>
-    </div>
+<%- include('../partials/admin-header', { title, activeNav: 'news' }) %>
 
     <div class="container">
+        <h2 style="margin-bottom: 2rem; color: #2d3748;"><i class="fas fa-newspaper"></i> <%= news ? 'Modifier' : 'Nouvelle' %> actualité</h2>
         <div class="form-card">
             <form method="POST" action="<%= news ? `/admin/news/${news.id}` : '/admin/news' %>" enctype="multipart/form-data">
                 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Titre <span class="required">*</span></label>
-                        <input type="text" name="titre" value="<%= news ? news.titre : '' %>" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Date <span class="required">*</span></label>
-                        <input type="date" name="date" value="<%= news && news.date ? new Date(news.date).toISOString().split('T')[0] : '' %>" required>
-                    </div>
+                <div class="form-group">
+                    <label>Titre <span class="required">*</span></label>
+                    <input type="text" name="title" value="<%= news ? news.title : '' %>" required>
                 </div>
 
                 <div class="form-group">
                     <label>Catégorie <span class="required">*</span></label>
-                    <select name="categorie" id="categorie" required>
+                    <select name="category" id="category" required>
                         <option value="">-- Sélectionner --</option>
                         <% categories.forEach(cat => { %>
-                            <option value="<%= cat.name %>" <%= news && news.categorie === cat.name ? 'selected' : '' %>>
+                            <option value="<%= cat.name %>" <%= news && news.category === cat.name ? 'selected' : '' %>>
                                 <%= cat.name %>
                             </option>
                         <% }); %>
@@ -78,21 +27,30 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Description <span class="required">*</span></label>
-                    <textarea name="description" required><%= news ? news.description : '' %></textarea>
+                    <label>Contenu <span class="required">*</span></label>
+                    <textarea name="content" required><%= news ? news.content : '' %></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>Image</label>
+                    <label>Images</label>
                     <div class="image-upload-area" id="uploadArea">
-                        <i class="fas fa-image" style="font-size: 3rem; color: #009972;"></i>
-                        <p><strong>Cliquez pour téléverser une image</strong></p>
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p><strong>Cliquez pour téléverser des images</strong></p>
+                        <p class="hint">JPG, PNG, WEBP - Max 20MB par image</p>
                     </div>
-                    <input type="file" name="image" id="image" accept="image/*" style="display:none">
+                    <input type="file" name="images" id="images" accept="image/*" multiple style="display:none">
                     
-                    <div class="image-preview" id="preview">
-                        <% if (news && news.image) { %>
-                            <img src="<%= news.image %>" alt="Image actuelle">
+                    <div class="image-list" id="image-list">
+                        <% if (news && news.images && news.images.length > 0) { %>
+                            <% news.images.forEach((img, idx) => { %>
+                                <div class="image-item" data-img="<%= img %>">
+                                    <img src="<%= img %>" alt="Image <%= idx + 1 %>">
+                                    <span class="image-item-name"><%= img.split('/').pop() %></span>
+                                    <button type="button" class="btn btn-danger remove-existing-btn">
+                                        <i class="fas fa-trash"></i> Supprimer
+                                    </button>
+                                </div>
+                            <% }); %>
                         <% } %>
                     </div>
                 </div>
@@ -107,22 +65,6 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('categorie').addEventListener('change', function() {
-            document.getElementById('new_category_field').classList.toggle('show', this.value === 'autre');
-        });
-
-        document.getElementById('uploadArea').addEventListener('click', function() {
-            document.getElementById('image').click();
-        });
-
-        document.getElementById('image').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const preview = document.getElementById('preview');
-                preview.innerHTML = `<img src="${URL.createObjectURL(file)}" alt="Aperçu">`;
-            }
-        });
-    </script>
+    <%- include('../partials/admin-form-scripts') %>
 </body>
 </html>

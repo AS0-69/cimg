@@ -41,7 +41,13 @@ const Donation = sequelize.define('Donation', {
   image: {
     type: DataTypes.STRING(500),
     allowNull: true,
-    comment: 'Image de la campagne'
+    comment: 'Image principale (legacy)'
+  },
+  images: {
+    type: DataTypes.JSON,
+    allowNull: true,
+    defaultValue: [],
+    comment: 'Images multiples de la campagne'
   }
 }, {
   tableName: 'donations',

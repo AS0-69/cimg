@@ -11,43 +11,104 @@
     </div>
 </section>
 
-<!-- Donation Section -->
-<section class="donation-section">
+<!-- Impact Section -->
+<section class="impact-section" style="background: var(--color-gray-50); padding: 3rem 0;">
     <div class="container">
-        <!-- Barre de progression -->
-        <div class="donation-progress-container">
-            <h2>Objectif de collecte mensuelle</h2>
-            <div class="progress-stats">
-                <div class="stat">
-                    <span class="stat-value">12 450 €</span>
-                    <span class="stat-label">Collectés</span>
+        <h2 style="text-align: center; margin-bottom: 2.5rem;">L'impact de vos dons</h2>
+        <div class="impact-grid">
+            <div class="impact-card">
+                <div class="impact-icon">
+                    <i class="fas fa-users"></i>
                 </div>
-                <div class="stat">
-                    <span class="stat-value">20 000 €</span>
-                    <span class="stat-label">Objectif</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-value">7 550 €</span>
-                    <span class="stat-label">Restant</span>
-                </div>
+                <h3>500+</h3>
+                <p>Fidèles accueillis chaque semaine</p>
             </div>
-            <div class="progress-bar-container">
-                <div class="progress-bar" style="width: 62.25%">
-                    <span class="progress-percentage">62%</span>
+            <div class="impact-card">
+                <div class="impact-icon">
+                    <i class="fas fa-child"></i>
                 </div>
+                <h3>150+</h3>
+                <p>Enfants inscrits aux cours</p>
             </div>
-            <p class="progress-message">
-                <i class="fas fa-info-circle"></i>
-                Vos dons nous permettent de maintenir la mosquée ouverte, d'organiser des activités éducatives 
-                et de soutenir les familles dans le besoin.
-            </p>
+            <div class="impact-card">
+                <div class="impact-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h3>50+</h3>
+                <p>Événements organisés par an</p>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <h3>100+</h3>
+                <p>Familles aidées chaque année</p>
+            </div>
         </div>
+    </div>
+</section>
+
+<!-- Donation Section -->
+<section class="donation-section compact">
+    <div class="container-wide">
         
-        <div class="donation-intro">
-            <h2>Votre générosité fait la différence</h2>
+        <!-- Campagnes actives -->
+        <% if (donations && donations.length > 0) { %>
+            <div class="active-campaigns-section">
+                <h2 style="text-align: center; margin-bottom: 2rem;">Campagnes en cours</h2>
+                <div class="campaigns-grid">
+                    <% donations.forEach(donation => { 
+                        const percentage = Math.round((donation.current_amount / donation.goal_amount) * 100);
+                        let images = [];
+                        if (donation.images) {
+                            images = typeof donation.images === 'string' ? JSON.parse(donation.images) : donation.images;
+                        }
+                        const mainImage = images.length > 0 ? images[0] : '/images/default-event.jpg';
+                    %>
+                        <div class="campaign-card">
+                            <div class="campaign-image">
+                                <img src="<%= mainImage %>" alt="<%= donation.title %>">
+                                <div class="campaign-badge">
+                                    <i class="fas fa-heart"></i> <%= percentage %>%
+                                </div>
+                            </div>
+                            <div class="campaign-content">
+                                <h3><%= donation.title %></h3>
+                                <p><%= donation.description %></p>
+                                
+                                <div class="campaign-progress">
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: <%= percentage %>%"></div>
+                                    </div>
+                                    <div class="campaign-stats">
+                                        <div class="stat">
+                                            <span class="amount"><%= donation.current_amount.toLocaleString('fr-FR') %>€</span>
+                                            <span class="label">Collectés</span>
+                                        </div>
+                                        <div class="stat">
+                                            <span class="amount"><%= donation.goal_amount.toLocaleString('fr-FR') %>€</span>
+                                            <span class="label">Objectif</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <% if (donation.end_date) { %>
+                                    <div class="campaign-deadline">
+                                        <i class="far fa-calendar"></i>
+                                        Fin le <%= new Date(donation.end_date).toLocaleDateString('fr-FR') %>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            </div>
+        <% } %>
+        
+        <div class="donation-intro" style="margin-top: <%= donations && donations.length > 0 ? '3rem' : '0' %>">
+            <h2>Faire un don</h2>
             <p class="lead">
-                Chaque don, quelle que soit sa valeur, contribue au bon fonctionnement de notre mosquée 
-                et permet de maintenir nos activités au service de la communauté.
+                Soutenez le fonctionnement général de notre mosquée ou une campagne spécifique.
             </p>
         </div>
         
@@ -107,6 +168,11 @@
                         <label for="donationPurpose">Affecter mon don à</label>
                         <select id="donationPurpose" name="purpose" class="form-control">
                             <option value="general">Fonctionnement général</option>
+                            <% if (donations && donations.length > 0) { %>
+                                <% donations.forEach(donation => { %>
+                                    <option value="campaign_<%= donation.id %>"><%= donation.title %></option>
+                                <% }); %>
+                            <% } %>
                             <option value="travaux">Travaux et entretien</option>
                             <option value="education">Éducation et enseignement</option>
                             <option value="solidarite">Actions solidaires</option>
@@ -231,43 +297,6 @@
                         Reçus fiscaux automatiques
                     </p>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Impact Section -->
-<section class="impact-section">
-    <div class="container">
-        <h2>L'impact de vos dons</h2>
-        <div class="impact-grid">
-            <div class="impact-card">
-                <div class="impact-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h3>500+</h3>
-                <p>Fidèles accueillis chaque semaine</p>
-            </div>
-            <div class="impact-card">
-                <div class="impact-icon">
-                    <i class="fas fa-child"></i>
-                </div>
-                <h3>150+</h3>
-                <p>Enfants inscrits aux cours</p>
-            </div>
-            <div class="impact-card">
-                <div class="impact-icon">
-                    <i class="fas fa-calendar-alt"></i>
-                </div>
-                <h3>50+</h3>
-                <p>Événements organisés par an</p>
-            </div>
-            <div class="impact-card">
-                <div class="impact-icon">
-                    <i class="fas fa-hand-holding-heart"></i>
-                </div>
-                <h3>100+</h3>
-                <p>Familles aidées chaque année</p>
             </div>
         </div>
     </div>

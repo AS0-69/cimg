@@ -198,6 +198,10 @@
     font-weight: 700;
     color: var(--color-secondary);
     margin-bottom: 1rem;
+    /* Éviter les débordements sur les titres très longs */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 .modal-meta {

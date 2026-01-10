@@ -41,13 +41,14 @@
     <div class="header">
         <h1><i class="fas fa-newspaper"></i> <%= title %></h1>
         <div class="nav">
-            <a href="/admin/dashboard">Dashboard</a>
-            <a href="/admin/events">Événements</a>
-            <a href="/admin/news" class="active">Actualités</a>
-            <a href="/admin/quotes">Citations</a>
-            <a href="/admin/members">Membres</a>
-            <a href="/admin/donations">Dons</a>
-            <a href="/admin/logout">Déconnexion</a>
+            <a href="/admin/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="/admin/events"><i class="fas fa-calendar-alt"></i> Événements</a>
+            <a href="/admin/news" class="active"><i class="fas fa-newspaper"></i> Actualités</a>
+            <a href="/admin/quotes"><i class="fas fa-quote-left"></i> Citations</a>
+            <a href="/admin/members"><i class="fas fa-users"></i> Membres</a>
+            <a href="/admin/donations"><i class="fas fa-hand-holding-usd"></i> Dons</a>
+            <a href="/"><i class="fas fa-home"></i> Retour au site</a>
+            <a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
         </div>
     </div>
 
@@ -81,17 +82,25 @@
                         <% news.forEach(item => { %>
                             <tr>
                                 <td>
-                                    <% if (item.image) { %>
-                                        <img src="<%= item.image %>" alt="<%= item.titre %>" class="img-thumb">
+                                    <% 
+                                    let displayImage = null;
+                                    if (item.images && item.images.length > 0) {
+                                        displayImage = item.images[0];
+                                    } else if (item.image) {
+                                        displayImage = item.image;
+                                    }
+                                    %>
+                                    <% if (displayImage) { %>
+                                        <img src="<%= displayImage %>" alt="<%= item.title %>" class="img-thumb">
                                     <% } else { %>
                                         <div class="img-thumb" style="background: #e2e8f0; display: flex; align-items: center; justify-content: center;">
                                             <i class="fas fa-image" style="color: #a0aec0;"></i>
                                         </div>
                                     <% } %>
                                 </td>
-                                <td><strong><%= item.titre %></strong></td>
-                                <td><%= new Date(item.date).toLocaleDateString('fr-FR') %></td>
-                                <td><span class="badge badge-success"><%= item.categorie %></span></td>
+                                <td><strong><%= item.title %></strong></td>
+                                <td><%= new Date(item.createdAt).toLocaleDateString('fr-FR') %></td>
+                                <td><span class="badge badge-success"><%= item.category %></span></td>
                                 <td>
                                     <div class="actions" style="justify-content: flex-end;">
                                         <a href="/admin/news/<%= item.id %>/edit" class="btn btn-secondary">

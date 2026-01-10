@@ -35,19 +35,22 @@
         .empty-state { text-align: center; padding: 4rem 2rem; color: #718096; }
         .empty-state i { font-size: 4rem; margin-bottom: 1rem; opacity: 0.3; }
         .quote-text { font-style: italic; color: #4a5568; max-width: 600px; }
+        .quote-original { direction: rtl; text-align: right; color: #2d3748; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .quote-translation { font-style: italic; color: #4a5568; font-size: 0.85rem; }
     </style>
 </head>
 <body>
     <div class="header">
         <h1><i class="fas fa-quote-right"></i> <%= title %></h1>
         <div class="nav">
-            <a href="/admin/dashboard">Dashboard</a>
-            <a href="/admin/events">Événements</a>
-            <a href="/admin/news">Actualités</a>
-            <a href="/admin/quotes" class="active">Citations</a>
-            <a href="/admin/members">Membres</a>
-            <a href="/admin/donations">Dons</a>
-            <a href="/admin/logout">Déconnexion</a>
+            <a href="/admin/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="/admin/events"><i class="fas fa-calendar-alt"></i> Événements</a>
+            <a href="/admin/news"><i class="fas fa-newspaper"></i> Actualités</a>
+            <a href="/admin/quotes" class="active"><i class="fas fa-quote-left"></i> Citations</a>
+            <a href="/admin/members"><i class="fas fa-users"></i> Membres</a>
+            <a href="/admin/donations"><i class="fas fa-hand-holding-usd"></i> Dons</a>
+            <a href="/"><i class="fas fa-home"></i> Retour au site</a>
+            <a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
         </div>
     </div>
 
@@ -70,7 +73,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Citation (FR)</th>
+                            <th>Citation</th>
                             <th>Auteur</th>
                             <th style="text-align: center;">Statut</th>
                             <th style="text-align: right;">Actions</th>
@@ -80,8 +83,13 @@
                         <% quotes.forEach(quote => { %>
                             <tr>
                                 <td>
-                                    <div class="quote-text">
-                                        "<%= quote.text_fr.substring(0, 100) %><%= quote.text_fr.length > 100 ? '...' : '' %>"
+                                    <% if (quote.text_original) { %>
+                                        <div class="quote-original">
+                                            <%= quote.text_original.substring(0, 80) %><%= quote.text_original.length > 80 ? '...' : '' %>
+                                        </div>
+                                    <% } %>
+                                    <div class="quote-translation">
+                                        <em>"<%= quote.text_fr.substring(0, 100) %><%= quote.text_fr.length > 100 ? '...' : '' %>"</em>
                                     </div>
                                 </td>
                                 <td><strong><%= quote.author %></strong></td>

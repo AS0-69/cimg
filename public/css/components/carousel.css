@@ -4,14 +4,14 @@
 
 .quotes-carousel-section {
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-    padding: var(--spacing-2xl) 0;
+    padding: 2rem 0;
     color: var(--color-white);
     overflow: hidden;
 }
 
 .quotes-carousel {
     position: relative;
-    min-height: 200px;
+    min-height: 140px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,27 +32,27 @@
 }
 
 .quote-icon {
-    font-size: 3rem;
+    font-size: 2rem;
     opacity: 0.3;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
 }
 
 .quote-text {
-    font-size: 1.25rem;
-    line-height: 1.8;
-    margin-bottom: var(--spacing-lg);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
     font-style: italic;
 }
 
 .quote-text em {
     display: block;
-    font-size: 1rem;
-    margin-top: var(--spacing-sm);
+    font-size: 0.9rem;
+    margin-top: var(--spacing-xs);
     opacity: 0.9;
 }
 
 .quote-source {
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;

@@ -246,8 +246,9 @@ function createModal(data, type) {
     let currentImageIndex = 0;
     const hasImages = data.images && data.images.length > 0;
     
-    // Format date
-    const dateObj = new Date(data.date);
+    // Format date - gérer à la fois 'date' (events) et 'createdAt' (news)
+    const dateValue = data.date || data.createdAt;
+    const dateObj = new Date(dateValue);
     const formattedDate = dateObj.toLocaleDateString('fr-FR', { 
         day: 'numeric', 
         month: 'long', 
@@ -311,7 +312,7 @@ function createModal(data, type) {
                     </div>
                     
                     <div class="modal-description">
-                        ${data.description.split('\n\n').map(p => `<p>${p}</p>`).join('')}
+                        ${(data.description || data.content || '').split('\n\n').map(p => `<p>${p}</p>`).join('')}
                     </div>
                     
                     ${data.tags && data.tags.length > 0 ? `
@@ -327,7 +328,7 @@ function createModal(data, type) {
                             S'inscrire
                         </button>
                         ` : ''}
-                        <button class="modal-action-btn secondary share-btn" data-title="${data.title}" data-text="${data.description ? data.description.substring(0, 100) + '...' : ''}" data-type="${type}" data-id="${data.id}">
+                        <button class="modal-action-btn secondary share-btn" data-title="${data.title}" data-text="${(data.description || data.content || '').substring(0, 100) + '...'}" data-type="${type}" data-id="${data.id}">
                             <i class="fas fa-share-alt"></i>
                             Partager
                         </button>
@@ -461,7 +462,7 @@ function showShareModal(title, text, url) {
             
             <div class="share-link-container">
                 <input type="text" value="${url}" readonly class="share-link-input" id="shareUrlInput">
-                <button class="btn-copy-link" onclick="copyShareLink()">
+                <button class="btn-copy-link" data-action="copy">
                     <i class="far fa-copy"></i> Copier
                 </button>
             </div>
@@ -479,7 +480,7 @@ function showShareModal(title, text, url) {
                     <i class="fab fa-whatsapp"></i>
                     <span>WhatsApp</span>
                 </a>
-                <a href="https://www.instagram.com/" target="_blank" class="share-social-btn instagram" onclick="navigator.clipboard.writeText('${url}'); showToast('Lien copié ! Collez-le dans votre story Instagram', 'success'); return false;">
+                <a href="https://www.instagram.com/" target="_blank" class="share-social-btn instagram" data-action="copy-instagram" data-url="${url}">
                     <i class="fab fa-instagram"></i>
                     <span>Instagram</span>
                 </a>
@@ -493,6 +494,25 @@ function showShareModal(title, text, url) {
     
     document.body.appendChild(shareModal);
     setTimeout(() => shareModal.classList.add('active'), 10);
+    
+    // Copy button handler
+    shareModal.querySelector('[data-action="copy"]').addEventListener('click', () => {
+        const input = shareModal.querySelector('#shareUrlInput');
+        navigator.clipboard.writeText(input.value).then(() => {
+            showToast('Lien copié !', 'success');
+        }).catch(() => {
+            showToast('Erreur lors de la copie', 'error');
+        });
+    });
+    
+    // Instagram copy handler
+    shareModal.querySelector('[data-action="copy-instagram"]').addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = e.currentTarget.dataset.url;
+        navigator.clipboard.writeText(url).then(() => {
+            showToast('Lien copié ! Collez-le dans votre story Instagram', 'success');
+        });
+    });
     
     // Close handlers
     shareModal.querySelector('.modal-close').addEventListener('click', () => {

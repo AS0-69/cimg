@@ -104,7 +104,8 @@ function parseMawaqitData(data) {
 
 // Calcul simplifié des horaires de prière
 // NOTE: Pour une précision maximale, utiliser une bibliothèque comme Adhan.js
-func
+function calculatePrayerTimes() {
+    const now = new Date();
     // Calculs simplifiés (à remplacer par une vraie bibliothèque de calcul)
     // Ces horaires sont des approximations
     return {

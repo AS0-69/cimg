@@ -7,28 +7,28 @@ const News = sequelize.define('News', {
     primaryKey: true,
     autoIncrement: true
   },
-  titre: {
+  title: {
     type: DataTypes.STRING(255),
     allowNull: false,
     comment: 'Titre de l\'actualité'
   },
-  date: {
-    type: DataTypes.STRING(50),
-    allowNull: false,
-    comment: 'Date affichée (ex: 15 janvier 2026)'
-  },
-  description: {
+  content: {
     type: DataTypes.TEXT,
     allowNull: false,
-    comment: 'Description courte'
+    comment: 'Contenu complet de l\'actualité'
   },
   image: {
     type: DataTypes.STRING(500),
-    allowNull: false,
-    defaultValue: '/images/default-news.jpg',
-    comment: 'Chemin de l\'image'
+    allowNull: true,
+    comment: 'Première image principale (legacy)'
   },
-  categorie: {
+  images: {
+    type: DataTypes.JSON,
+    allowNull: true,
+    defaultValue: [],
+    comment: 'Tableau d\'images pour l\'actualité'
+  },
+  category: {
     type: DataTypes.STRING(100),
     allowNull: false,
     comment: 'Catégorie (Annonce, Éducation, Solidarité, etc.)'

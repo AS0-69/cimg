@@ -1,0 +1,87 @@
+    <script>
+        // Gestion des champs conditionnels
+        ['type', 'location', 'category', 'pole', 'role', 'author'].forEach(field => {
+            const select = document.getElementById(field);
+            if (select) {
+                select.addEventListener('change', function() {
+                    const conditionalField = document.getElementById(`new_${field}_field`);
+                    if (conditionalField) {
+                        conditionalField.classList.toggle('show', this.value === 'autre');
+                    }
+                });
+            }
+        });
+
+        // Click sur zone upload - IMAGES MULTIPLES (events, news)
+        const uploadArea = document.getElementById('uploadArea');
+        const imagesInput = document.getElementById('images');
+        if (uploadArea && imagesInput) {
+            uploadArea.addEventListener('click', () => imagesInput.click());
+        }
+
+        // Click sur zone upload - IMAGE SIMPLE (member, donation)
+        const imageInput = document.getElementById('image');
+        if (uploadArea && imageInput) {
+            uploadArea.addEventListener('click', () => imageInput.click());
+        }
+
+        // Affichage image simple (member, donation)
+        if (imageInput) {
+            imageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const preview = document.getElementById('preview');
+                    if (preview) {
+                        preview.innerHTML = `<img src="${URL.createObjectURL(file)}" alt="Aperçu">`;
+                    }
+                }
+            });
+        }
+
+        // Affichage des nouvelles images multiples (events, news)
+        if (imagesInput) {
+            imagesInput.addEventListener('change', function(e) {
+                const imageList = document.getElementById('image-list');
+                if (imageList) {
+                    Array.from(e.target.files).forEach((file) => {
+                        const div = document.createElement('div');
+                        div.className = 'image-item';
+                        div.innerHTML = `
+                            <img src="${URL.createObjectURL(file)}" alt="Nouvelle image">
+                            <span class="image-item-name">${file.name}</span>
+                            <button type="button" class="btn btn-danger remove-new-btn">
+                                <i class="fas fa-times"></i> Retirer
+                            </button>
+                        `;
+                        imageList.appendChild(div);
+                    });
+                }
+            });
+        }
+
+        // Gestion suppression images
+        document.addEventListener('click', function(e) {
+            // Suppression nouvelles images
+            if (e.target.closest('.remove-new-btn')) {
+                e.target.closest('.image-item').remove();
+            }
+            
+            // Suppression images existantes
+            if (e.target.closest('.remove-existing-btn')) {
+                const btn = e.target.closest('.remove-existing-btn');
+                const item = btn.closest('.image-item');
+                const img = item.dataset.img;
+                
+                if (confirm('Supprimer cette image ?')) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'remove_images[]';
+                    input.value = img;
+                    document.querySelector('form').appendChild(input);
+                    item.remove();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

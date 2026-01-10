@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin-form.css">
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-shield-alt"></i> Administration - Mosquée Bleue</h1>
+        <div class="nav">
+            <a href="/admin/dashboard" <%= activeNav === 'dashboard' ? 'class="active"' : '' %>><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="/admin/events" <%= activeNav === 'events' ? 'class="active"' : '' %>><i class="fas fa-calendar-alt"></i> Événements</a>
+            <a href="/admin/news" <%= activeNav === 'news' ? 'class="active"' : '' %>><i class="fas fa-newspaper"></i> Actualités</a>
+            <a href="/admin/quotes" <%= activeNav === 'quotes' ? 'class="active"' : '' %>><i class="fas fa-quote-left"></i> Citations</a>
+            <a href="/admin/members" <%= activeNav === 'members' ? 'class="active"' : '' %>><i class="fas fa-users"></i> Membres</a>
+            <a href="/admin/donations" <%= activeNav === 'donations' ? 'class="active"' : '' %>><i class="fas fa-hand-holding-usd"></i> Dons</a>
+            <a href="/"><i class="fas fa-home"></i> Retour au site</a>
+            <a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+        </div>
+    </div>

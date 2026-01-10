@@ -109,9 +109,13 @@ app.use((req, res) => {
 // Gestion des erreurs
 app.use((err, req, res, next) => {
   console.error(err.stack);
+  const lang = req.cookies.lang || 'fr';
+  const t = require(`./src/i18n/${lang}.json`);
   res.status(500).render('error', { 
     title: 'Erreur',
-    error: process.env.NODE_ENV === 'development' ? err : {}
+    error: process.env.NODE_ENV === 'development' ? err : {},
+    currentPath: req.path,
+    t: t
   });
 });
 

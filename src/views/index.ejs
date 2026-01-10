@@ -30,267 +30,185 @@
 <section class="quotes-carousel-section">
     <div class="container">
         <div class="quotes-carousel">
-            <div class="quote-slide active">
-                <div class="quote-icon">
-                    <i class="fas fa-quote-right"></i>
-                </div>
-                <p class="quote-text">
-                    "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ"<br>
-                    <em>Certes, Allah est avec les endurants</em>
-                </p>
-                <p class="quote-source">Coran 2:153</p>
-            </div>
-            <div class="quote-slide">
-                <div class="quote-icon">
-                    <i class="fas fa-quote-right"></i>
-                </div>
-                <p class="quote-text">
-                    "وَقُلِ اعْمَلُوا فَسَيَرَى اللَّهُ عَمَلَكُمْ"<br>
-                    <em>Et dis : Œuvrez, car Allah va voir votre œuvre</em>
-                </p>
-                <p class="quote-source">Coran 9:105</p>
-            </div>
-            <div class="quote-slide">
-                <div class="quote-icon">
-                    <i class="fas fa-quote-right"></i>
-                </div>
-                <p class="quote-text">
-                    "المؤمن للمضمن كالبنيان يشد بعضه بعضا"<br>
-                    <em>Le croyant est pour le croyant comme une construction dont les parties se soutiennent mutuellement</em>
-                </p>
-                <p class="quote-source">Hadith - Bukhari</p>
-            </div>
-            <div class="quote-slide">
-                <div class="quote-icon">
-                    <i class="fas fa-quote-right"></i>
-                </div>
-                <p class="quote-text">
-                    "خير الناس أنفعهم للناس"<br>
-                    <em>Les meilleurs des gens sont ceux qui sont les plus utiles aux autres</em>
-                </p>
-                <p class="quote-source">Hadith - Tabarani</p>
-            </div>
-        </div>
-        <div class="carousel-dots">
-            <span class="dot active" data-slide="0"></span>
-            <span class="dot" data-slide="1"></span>
-            <span class="dot" data-slide="2"></span>
-            <span class="dot" data-slide="3"></span>
-        </div>
-    </div>
-</section>
-
-<!-- Section Événements à venir -->
-<section class="events-section section">
-    <div class="container">
-        <div class="section-header">
-            <h2><%= t.events.title %></h2>
-            <p><%= t.events.subtitle %></p>
-        </div>
-        
-        <div class="events-grid">
-            <% events.forEach(event => { 
-                const eventDate = new Date(event.date);
-                const day = eventDate.getDate();
-                const month = eventDate.toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'fr-FR', { month: 'short' });
-            %>
-            <div class="event-card">
-                <div class="event-date">
-                    <span class="event-day"><%= day %></span>
-                    <span class="event-month"><%= month %></span>
-                </div>
-                <div class="event-content">
-                    <h3><%= event.title %></h3>
-                    <div class="event-meta">
-                        <span><i class="far fa-clock"></i> <%= event.start_time %> - <%= event.end_time %></span>
-                        <span><i class="fas fa-map-marker-alt"></i> <%= event.location %></span>
-                    </div>
-                    <p><%= event.description %></p>
-                    <a href="#" class="btn btn-outline btn-sm" data-event-id="<%= event.id %>"><%= t.events.register %></a>
-                </div>
-            </div>
-            <% }); %>
-        </div>
-        
-        <div class="section-cta">
-            <a href="/evenements" class="btn btn-primary"><%= t.events.viewAll %></a>
-        </div>
-    </div>
-</section>
-
-<!-- Section Actualités -->
-<section class="actualites-section">
-    <div class="container">
-        <div class="section-header">
-            <h2>Actualités & Événements</h2>
-            <p>Restez informés de nos dernières nouvelles et événements</p>
-        </div>
-        
-        <div class="actualites-grid">
-            <% actualites.forEach((actu, index) => { %>
-                <article class="actualite-card">
-                    <div class="actualite-image">
-                        <img src="<%= actu.image %>" alt="<%= actu.titre %>">
-                        <span class="actualite-categorie"><%= actu.categorie %></span>
-                    </div>
-                    <div class="actualite-content">
-                        <div class="actualite-meta">
-                            <i class="far fa-calendar"></i>
-                            <span><%= actu.date %></span>
+            <% if (quotes && quotes.length > 0) { %>
+                <% quotes.forEach((quote, index) => { %>
+                    <div class="quote-slide <%= index === 0 ? 'active' : '' %>">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-right"></i>
                         </div>
-                        <h3><%= actu.titre %></h3>
-                        <p><%= actu.description %></p>
-                        <a href="#" class="btn-link" data-news-id="<%= index + 1 %>">
-                            Lire la suite
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
+                        <p class="quote-text">
+                            <%= quote.text_original %><br>
+                            <em><%= quote.text_fr %></em>
+                        </p>
+                        <p class="quote-source"><%= quote.author %></p>
                     </div>
-                </article>
-            <% }); %>
+                <% }); %>
+            <% } else { %>
+                <!-- Citation par défaut si aucune active -->
+                <div class="quote-slide active">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <p class="quote-text">
+                        "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ"<br>
+                        <em>Certes, Allah est avec les endurants</em>
+                    </p>
+                    <p class="quote-source">Coran 2:153</p>
+                </div>
+            <% } %>
         </div>
-        
-        <div class="section-cta">
-            <a href="/actualites" class="btn btn-outline">
-                Voir toutes les actualités
-            </a>
-        </div>
+        <% if (quotes && quotes.length > 1) { %>
+            <div class="carousel-dots">
+                <% quotes.forEach((quote, index) => { %>
+                    <span class="dot <%= index === 0 ? 'active' : '' %>" data-slide="<%= index %>"></span>
+                <% }); %>
+            </div>
+        <% } %>
     </div>
 </section>
 
-<!-- Section Présentation -->
-<section class="presentation-section">
-    <div class="container">
-        <div class="presentation-grid">
-            <div class="presentation-content">
-                <h2>À propos de notre mosquée</h2>
-                <p class="lead">
-                    La Mosquée Bleue de Villefranche-sur-Saône est un lieu de culte, d'apprentissage et de partage au service de toute la communauté musulmane.
-                </p>
-                <p>
-                    Affiliée au CIMG (Comité Islamique de la Mosquée de Gennevilliers), notre centre propose de nombreuses activités religieuses, éducatives et culturelles pour tous les âges.
-                </p>
-                <ul class="presentation-list">
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>5 prières quotidiennes en commun</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Cours d'arabe et d'études islamiques</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Activités pour enfants et jeunes</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Actions solidaires et caritatives</span>
-                    </li>
-                </ul>
-                <a href="/poles" class="btn btn-primary">
-                    Découvrir nos pôles
-                </a>
+<!-- Section Présentation & Pôles -->
+<section class="presentation-poles-section compact">
+    <div class="container-wide">
+        <div class="two-column-layout">
+            <!-- Colonne Présentation -->
+            <div class="column">
+                <div class="presentation-content">
+                    <h2>À propos de notre mosquée</h2>
+                    <p class="lead">
+                        La Mosquée Bleue de Villefranche-sur-Saône est un lieu de culte, d'apprentissage et de partage au service de toute la communauté musulmane.
+                    </p>
+                    
+                    <!-- Carousel d'images de la mosquée -->
+                    <div class="mosque-images-carousel" style="margin: 1.5rem 0;">
+                        <div class="carousel-container" style="position: relative; overflow: hidden; border-radius: 12px;">
+                            <div class="carousel-slide active" style="display: block;">
+                                <img src="/images/mosquee_interieur.jpg" alt="Intérieur de la mosquée" style="width: 100%; height: 300px; object-fit: cover;">
+                            </div>
+                            <div class="carousel-slide" style="display: none;">
+                                <img src="/images/mosquee_exterieur.jpg" alt="Extérieur de la mosquée" style="width: 100%; height: 300px; object-fit: cover;">
+                            </div>
+                            <div class="carousel-slide" style="display: none;">
+                                <img src="/images/mosquee_minaret.jpg" alt="Minaret" style="width: 100%; height: 300px; object-fit: cover;">
+                            </div>
+                            <button class="carousel-prev" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer; z-index: 10;">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="carousel-next" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer; z-index: 10;">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <ul class="presentation-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>5 prières quotidiennes en commun</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Cours d'arabe et d'études islamiques</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Activités pour enfants et jeunes</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Actions solidaires et caritatives</span>
+                        </li>
+                    </ul>
+                    
+                    <!-- Contact Cards -->
+                    <div class="contact-info-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0;">
+                        <div class="quick-contact-item compact">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h4>Adresse</h4>
+                            <p style="font-size: 0.875rem;">123 Rue de la Mosquée<br>69400 Villefranche</p>
+                        </div>
+                        <div class="quick-contact-item compact">
+                            <i class="fas fa-phone"></i>
+                            <h4>Téléphone</h4>
+                            <p style="font-size: 0.875rem;"><a href="tel:+33474680000">04 74 68 00 00</a></p>
+                        </div>
+                        <div class="quick-contact-item compact">
+                            <i class="fas fa-envelope"></i>
+                            <h4>Email</h4>
+                            <p style="font-size: 0.875rem;"><a href="mailto:contact@mosquee-bleue.fr">contact@mosquee-bleue.fr</a></p>
+                        </div>
+                        <div class="quick-contact-item compact">
+                            <i class="fas fa-clock"></i>
+                            <h4>Horaires</h4>
+                            <p style="font-size: 0.875rem;">Ouvert tous les jours</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="presentation-image">
-                <img src="/images/mosquee_interieur.jpg" alt="Intérieur de la mosquée">
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Section Pôles -->
-<section class="poles-section">
-    <div class="container">
-        <div class="section-header">
-            <h2>Nos Pôles d'activités</h2>
-            <p>Découvrez les différents pôles qui structurent notre mosquée</p>
-        </div>
-        
-        <div class="poles-grid">
-            <div class="pole-card">
-                <div class="pole-icon">
-                    <i class="fas fa-mosque"></i>
+            <!-- Colonne Pôles -->
+            <div class="column">
+                <h2 style="margin-bottom: 1.5rem;">Nos Pôles d'activités</h2>
+                <div class="poles-list">
+                    <div class="pole-card compact">
+                        <div class="pole-icon">
+                            <i class="fas fa-mosque"></i>
+                        </div>
+                        <div class="pole-content">
+                            <h3>Pôle Principal (AT)</h3>
+                            <p>Gestion des prières quotidiennes et activités religieuses principales.</p>
+                            <a href="/poles/at" class="btn-link">
+                                En savoir plus
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="pole-card compact">
+                        <div class="pole-icon">
+                            <i class="fas fa-book-quran"></i>
+                        </div>
+                        <div class="pole-content">
+                            <h3>Pôle KT</h3>
+                            <p>Enseignement du Coran et de la langue arabe pour tous les niveaux.</p>
+                            <a href="/poles/kt" class="btn-link">
+                                En savoir plus
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="pole-card compact">
+                        <div class="pole-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="pole-content">
+                            <h3>Pôle Jeunesse</h3>
+                            <p>Activités dédiées aux jeunes : sport, culture et spiritualité.</p>
+                            <a href="/poles/jeunesse" class="btn-link">
+                                En savoir plus
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="pole-card compact">
+                        <div class="pole-icon">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <div class="pole-content">
+                            <h3>Pôle KGT</h3>
+                            <p>Actions culturelles, événements communautaires et solidarité.</p>
+                            <a href="/poles/kgt" class="btn-link">
+                                En savoir plus
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <h3>Pôle Principal (AT)</h3>
-                <p>Gestion des prières quotidiennes et activités religieuses principales de la mosquée.</p>
-                <a href="/poles/at" class="btn-link">
-                    En savoir plus
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-            
-            <div class="pole-card">
-                <div class="pole-icon">
-                    <i class="fas fa-book-quran"></i>
-                </div>
-                <h3>Pôle KT</h3>
-                <p>Enseignement du Coran et de la langue arabe pour tous les niveaux.</p>
-                <a href="/poles/kt" class="btn-link">
-                    En savoir plus
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-            
-            <div class="pole-card">
-                <div class="pole-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h3>Pôle Jeunesse</h3>
-                <p>Activités dédiées aux jeunes : sport, culture et spiritualité.</p>
-                <a href="/poles/jeunesse" class="btn-link">
-                    En savoir plus
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-            
-            <div class="pole-card">
-                <div class="pole-icon">
-                    <i class="fas fa-hands-helping"></i>
-                </div>
-                <h3>Pôle KGT</h3>
-                <p>Actions culturelles, événements communautaires et solidarité.</p>
-                <a href="/poles/kgt" class="btn-link">
-                    En savoir plus
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Section Appel aux dons -->
-<section class="donation-cta-section">
-    <div class="container">
-        <div class="donation-cta-content">
-            <div class="donation-cta-text">
-                <h2>Soutenez votre mosquée</h2>
-                <p>
-                    Votre générosité permet à notre mosquée de continuer ses missions : 
-                    accueillir les fidèles, enseigner, accompagner et soutenir notre communauté.
-                </p>
-                <ul class="donation-benefits">
-                    <li>
-                        <i class="fas fa-check"></i>
-                        <span>Entretien et fonctionnement de la mosquée</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check"></i>
-                        <span>Programmes éducatifs pour enfants et adultes</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check"></i>
-                        <span>Actions caritatives et solidaires</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="donation-cta-action">
-                <div class="donation-box">
-                    <i class="fas fa-hand-holding-heart"></i>
-                    <h3>Faire un don</h3>
-                    <p>Chaque contribution compte</p>
-                    <a href="/don" class="btn btn-primary btn-lg">
-                        Je fais un don
-                        <i class="fas fa-arrow-right"></i>
+                
+                <div class="section-cta" style="margin-top: 2rem; text-align: center;">
+                    <a href="/poles" class="btn btn-primary">
+                        Découvrir nos pôles
                     </a>
                 </div>
             </div>
@@ -298,33 +216,131 @@
     </div>
 </section>
 
-<!-- Section Contact rapide -->
-<section class="quick-contact-section">
-    <div class="container">
-        <div class="quick-contact-grid">
-            <div class="quick-contact-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <h3>Adresse</h3>
-                <p>123 Rue de la Mosquée<br>69400 Villefranche-sur-Saône</p>
+<!-- Section Présentation & Pôles côte à côte -->
+<section class="events-news-section section compact">
+    <div class="container-wide">
+        <div class="two-column-layout">
+            <!-- Colonne Événements -->
+            <div class="column">
+                <div class="section-header">
+                    <h2><%= t.events.title %></h2>
+                    <p><%= t.events.subtitle %></p>
+                </div>
+                
+                <div class="events-list">
+                    <% events.slice(0, 3).forEach(event => { 
+                        const eventDate = new Date(event.date);
+                        const day = eventDate.getDate();
+                        const month = eventDate.toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'fr-FR', { month: 'short' });
+                    %>
+                    <div class="event-card compact">
+                        <div class="event-date">
+                            <span class="event-day"><%= day %></span>
+                            <span class="event-month"><%= month %></span>
+                        </div>
+                        <div class="event-content">
+                            <h3><%= event.title %></h3>
+                            <div class="event-meta">
+                                <span><i class="far fa-clock"></i> <%= event.start_time %></span>
+                                <span><i class="fas fa-map-marker-alt"></i> <%= event.location %></span>
+                            </div>
+                            <a href="#" class="btn btn-outline btn-sm" data-event-id="<%= event.id %>"><%= t.events.register %></a>
+                        </div>
+                    </div>
+                    <% }); %>
+                </div>
+                
+                <div class="section-cta">
+                    <a href="/evenements" class="btn btn-primary"><%= t.events.viewAll %></a>
+                </div>
             </div>
-            <div class="quick-contact-item">
-                <i class="fas fa-phone"></i>
-                <h3>Téléphone</h3>
-                <p><a href="tel:+33474680000">04 74 68 00 00</a></p>
-            </div>
-            <div class="quick-contact-item">
-                <i class="fas fa-envelope"></i>
-                <h3>Email</h3>
-                <p><a href="mailto:contact@mosquee-bleue.fr">contact@mosquee-bleue.fr</a></p>
-            </div>
-            <div class="quick-contact-item">
-                <i class="fas fa-clock"></i>
-                <h3>Horaires</h3>
-                <p>Ouvert tous les jours<br>Voir les horaires de prière</p>
+
+            <!-- Colonne Actualités -->
+            <div class="column">
+                <div class="section-header">
+                    <h2>Actualités</h2>
+                    <p>Nos dernières nouvelles</p>
+                </div>
+                
+                <div class="actualites-list">
+                    <% actualites.slice(0, 3).forEach((actu, index) => { %>
+                        <article class="actualite-card compact">
+                            <div class="actualite-image-small">
+                                <img src="<%= actu.image %>" alt="<%= actu.titre %>">
+                            </div>
+                            <div class="actualite-content">
+                                <span class="actualite-categorie-badge"><%= actu.categorie %></span>
+                                <h3><%= actu.titre %></h3>
+                                <div class="actualite-meta">
+                                    <i class="far fa-calendar"></i>
+                                    <span><%= actu.date %></span>
+                                </div>
+                                <a href="#" class="btn-link" data-news-id="<%= index + 1 %>">
+                                    Lire la suite
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </article>
+                    <% }); %>
+                </div>
+                
+                <div class="section-cta">
+                    <a href="/actualites" class="btn btn-outline">Toutes les actualités</a>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
+<!-- Section Campagnes & Dons (Compacte) -->
+<% if (donations && donations.length > 0) { %>
+<section class="donation-campaigns-compact" style="background: var(--color-gray-50); padding: 3rem 0;">
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 2rem;">Soutenez nos campagnes</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+            <% donations.slice(0, 3).forEach(donation => { 
+                const percentage = Math.round((donation.current_amount / donation.goal_amount) * 100);
+                let images = [];
+                if (donation.images) {
+                    images = typeof donation.images === 'string' ? JSON.parse(donation.images) : donation.images;
+                }
+                const mainImage = images.length > 0 ? images[0] : '/images/default-event.jpg';
+            %>
+                <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.3s;">
+                    <div style="position: relative; height: 160px; overflow: hidden;">
+                        <img src="<%= mainImage %>" alt="<%= donation.title %>" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.95); padding: 5px 12px; border-radius: 20px; font-weight: 600; color: var(--color-primary);">
+                            <i class="fas fa-heart"></i> <%= percentage %>%
+                        </div>
+                    </div>
+                    <div style="padding: 1.25rem;">
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem; color: var(--color-text-primary);"><%= donation.title %></h3>
+                        <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-bottom: 1rem; line-height: 1.4;"><%= donation.description.substring(0, 80) %>...</p>
+                        
+                        <div style="background: var(--color-gray-100); height: 6px; border-radius: 3px; margin-bottom: 0.75rem; overflow: hidden;">
+                            <div style="background: linear-gradient(90deg, var(--color-primary), var(--color-secondary)); height: 100%; width: <%= percentage %>%; border-radius: 3px;"></div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8125rem; margin-bottom: 0.5rem;">
+                            <span style="color: var(--color-text-secondary);"><strong style="color: var(--color-primary);"><%= donation.current_amount.toLocaleString('fr-FR') %>€</strong> collectés</span>
+                            <span style="color: var(--color-text-secondary);">sur <strong><%= donation.goal_amount.toLocaleString('fr-FR') %>€</strong></span>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="/don" class="btn btn-primary btn-lg">
+                <i class="fas fa-hand-holding-heart"></i>
+                Faire un don
+            </a>
+        </div>
+    </div>
+</section>
+<% } %>
+
 <%- include('partials/footer.ejs') %>
 <%- include('partials/foot.ejs') %>
+

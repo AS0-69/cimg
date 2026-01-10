@@ -296,8 +296,27 @@ router.post('/events/:id', isAuthenticated, uploadMultiple, async (req, res) => 
             eventCategory = newCat.name;
         }
         
-        // Gérer images : garder anciennes + nouvelles
-        let images = event.images || [];
+        // Gérer images : garder anciennes + nouvelles - supprimer celles demandées
+        let images = [];
+        if (event.images) {
+            // Si images est une chaîne JSON, la parser
+            images = typeof event.images === 'string' ? JSON.parse(event.images) : event.images;
+        }
+        
+        // Supprimer les images demandées
+        if (req.body.remove_images) {
+            const toRemove = Array.isArray(req.body.remove_images) ? req.body.remove_images : [req.body.remove_images];
+            toRemove.forEach(img => {
+                const imagePath = path.join(__dirname, '../../public', img);
+                if (fs.existsSync(imagePath)) {
+                    fs.unlinkSync(imagePath);
+                    console.log('Image supprimée:', imagePath);
+                }
+            });
+            images = images.filter(img => !toRemove.includes(img));
+        }
+        
+        // Ajouter nouvelles images
         if (req.files && req.files.length > 0) {
             const newImages = req.files.map(f => '/images/events/' + f.filename);
             images = [...images, ...newImages];
@@ -320,7 +339,15 @@ router.post('/events/:id', isAuthenticated, uploadMultiple, async (req, res) => 
         res.redirect('/admin/events');
     } catch (error) {
         console.error('Erreur modification événement:', error);
-        res.status(500).send('Erreur lors de la modification');
+        console.error('Stack:', error.stack);
+        const lang = req.cookies.lang || 'fr';
+        const t = require(`../i18n/${lang}.json`);
+        res.status(500).render('error', {
+            title: 'Erreur',
+            error: process.env.NODE_ENV === 'development' ? error : {},
+            currentPath: req.path,
+            t: t
+        });
     }
 });
 
@@ -356,11 +383,15 @@ router.get('/news/new', isAuthenticated, async (req, res) => {
     }
 });
 
-router.post('/news', isAuthenticated, uploadSingle, async (req, res) => {
+router.post('/news', isAuthenticated, uploadMultiple, async (req, res) => {
     try {
-        let newsCategory = req.body.categorie;
+        console.log('=== NEWS CREATE ===');
+        console.log('req.files:', req.files);
+        console.log('req.body:', req.body);
         
-        if (req.body.categorie === 'autre' && req.body.new_category) {
+        let newsCategory = req.body.category || req.body.categorie;
+        
+        if ((req.body.category === 'autre' || req.body.categorie === 'autre') && req.body.new_category) {
             const newCat = await createCategory({
                 name: req.body.new_category,
                 is_system: false
@@ -368,16 +399,21 @@ router.post('/news', isAuthenticated, uploadSingle, async (req, res) => {
             newsCategory = newCat.name;
         }
         
-        const image = req.file ? '/images/news/' + req.file.filename : null;
+        let images = [];
+        if (req.files && req.files.length > 0) {
+            images = req.files.map(f => '/images/news/' + f.filename);
+            console.log('Images créées:', images);
+        }
         
         const newsData = {
-            titre: req.body.titre,
-            date: req.body.date,
-            description: req.body.description,
-            image: image,
-            categorie: newsCategory
+            title: req.body.title || req.body.titre,
+            content: req.body.content || req.body.description,
+            images: images,
+            image: images.length > 0 ? images[0] : null,
+            category: newsCategory
         };
         
+        console.log('newsData:', newsData);
         await createNews(newsData);
         res.redirect('/admin/news');
     } catch (error) {
@@ -397,12 +433,16 @@ router.get('/news/:id/edit', isAuthenticated, async (req, res) => {
     }
 });
 
-router.post('/news/:id', isAuthenticated, uploadSingle, async (req, res) => {
+router.post('/news/:id', isAuthenticated, uploadMultiple, async (req, res) => {
     try {
-        const news = await getNewsById(parseInt(req.params.id));
-        let newsCategory = req.body.categorie;
+        console.log('=== NEWS UPDATE ===');
+        console.log('req.files:', req.files);
+        console.log('req.body:', req.body);
         
-        if (req.body.categorie === 'autre' && req.body.new_category) {
+        const news = await getNewsById(parseInt(req.params.id));
+        let newsCategory = req.body.category || req.body.categorie;
+        
+        if ((req.body.category === 'autre' || req.body.categorie === 'autre') && req.body.new_category) {
             const newCat = await createCategory({
                 name: req.body.new_category,
                 is_system: false
@@ -410,16 +450,41 @@ router.post('/news/:id', isAuthenticated, uploadSingle, async (req, res) => {
             newsCategory = newCat.name;
         }
         
-        const image = req.file ? '/images/news/' + req.file.filename : news.image;
+        // Gérer images : garder anciennes + nouvelles - supprimer celles demandées
+        let images = [];
+        if (news.images) {
+            images = typeof news.images === 'string' ? JSON.parse(news.images) : news.images;
+        }
+        
+        // Supprimer les images demandées
+        if (req.body.remove_images) {
+            const toRemove = Array.isArray(req.body.remove_images) ? req.body.remove_images : [req.body.remove_images];
+            toRemove.forEach(img => {
+                const imagePath = path.join(__dirname, '../../public', img);
+                if (fs.existsSync(imagePath)) {
+                    fs.unlinkSync(imagePath);
+                    console.log('Image supprimée:', imagePath);
+                }
+            });
+            images = images.filter(img => !toRemove.includes(img));
+        }
+        
+        // Ajouter nouvelles images
+        if (req.files && req.files.length > 0) {
+            const newImages = req.files.map(f => '/images/news/' + f.filename);
+            images = [...images, ...newImages];
+            console.log('Nouvelles images ajoutées:', newImages);
+        }
         
         const newsData = {
-            titre: req.body.titre,
-            date: req.body.date,
-            description: req.body.description,
-            image: image,
-            categorie: newsCategory
+            title: req.body.title || req.body.titre,
+            content: req.body.content || req.body.description,
+            images: images,
+            image: images.length > 0 ? images[0] : news.image,
+            category: newsCategory
         };
         
+        console.log('newsData final:', newsData);
         await updateNews(parseInt(req.params.id), newsData);
         res.redirect('/admin/news');
     } catch (error) {
@@ -461,20 +526,22 @@ router.get('/quotes/new', isAuthenticated, async (req, res) => {
 
 router.post('/quotes', isAuthenticated, async (req, res) => {
     try {
-        let quoteAuthor = req.body.author;
-        
-        if (req.body.author === 'autre' && req.body.new_author) {
-            const newAuthor = await createAuthor({
-                name: req.body.new_author,
-                is_system: false
-            });
-            quoteAuthor = newAuthor.name;
+        // Vérifier la limite de 4 citations actives
+        if (req.body.active) {
+            const { getAllQuotes } = require('../data/quotes');
+            const allQuotes = await getAllQuotes();
+            const activeQuotes = allQuotes.filter(q => q.active);
+            
+            if (activeQuotes.length >= 4) {
+                return res.status(400).send('❌ Erreur: Vous avez déjà 4 citations actives. Désactivez-en une avant d\'en activer une nouvelle.');
+            }
         }
         
         const quoteData = {
+            text_original: req.body.text_original,
             text_fr: req.body.text_fr,
-            text_tr: req.body.text_tr,
-            author: quoteAuthor,
+            text_tr: req.body.text_tr || null,
+            author: req.body.author,
             active: req.body.active ? true : false
         };
         
@@ -499,20 +566,22 @@ router.get('/quotes/:id/edit', isAuthenticated, async (req, res) => {
 
 router.post('/quotes/:id', isAuthenticated, async (req, res) => {
     try {
-        let quoteAuthor = req.body.author;
-        
-        if (req.body.author === 'autre' && req.body.new_author) {
-            const newAuthor = await createAuthor({
-                name: req.body.new_author,
-                is_system: false
-            });
-            quoteAuthor = newAuthor.name;
+        // Vérifier la limite de 4 citations actives
+        if (req.body.active) {
+            const { getAllQuotes } = require('../data/quotes');
+            const allQuotes = await getAllQuotes();
+            const activeQuotes = allQuotes.filter(q => q.active && q.id !== parseInt(req.params.id));
+            
+            if (activeQuotes.length >= 4) {
+                return res.status(400).send('❌ Erreur: Vous avez déjà 4 citations actives. Désactivez-en une avant d\'en activer une nouvelle.');
+            }
         }
         
         const quoteData = {
+            text_original: req.body.text_original,
             text_fr: req.body.text_fr,
-            text_tr: req.body.text_tr,
-            author: quoteAuthor,
+            text_tr: req.body.text_tr || null,
+            author: req.body.author,
             active: req.body.active ? true : false
         };
         
@@ -681,17 +750,23 @@ router.get('/donations/new', isAuthenticated, (req, res) => {
     res.render('admin/donation-form', { title: 'Nouvelle campagne', donation: null });
 });
 
-router.post('/donations', isAuthenticated, async (req, res) => {
+router.post('/donations', isAuthenticated, uploadMultiple, async (req, res) => {
     try {
+        // Gérer les images uploadées
+        const images = req.files ? req.files.map(f => '/images/donations/' + f.filename) : [];
+        
         const donationData = {
             title: req.body.title,
             description: req.body.description,
             goal_amount: parseFloat(req.body.goal_amount),
             current_amount: parseFloat(req.body.current_amount) || 0,
             end_date: req.body.end_date || null,
-            active: req.body.active ? true : false
+            active: req.body.active ? true : false,
+            images: images,
+            image: images.length > 0 ? images[0] : null
         };
         
+        console.log('✅ Donation créée avec images:', images);
         await createDonation(donationData);
         res.redirect('/admin/donations');
     } catch (error) {
@@ -710,15 +785,45 @@ router.get('/donations/:id/edit', isAuthenticated, async (req, res) => {
     }
 });
 
-router.post('/donations/:id', isAuthenticated, async (req, res) => {
+router.post('/donations/:id', isAuthenticated, uploadMultiple, async (req, res) => {
     try {
+        const donation = await getDonationById(parseInt(req.params.id));
+        
+        // Gérer images : garder anciennes + nouvelles - supprimer celles demandées
+        let images = [];
+        if (donation.images) {
+            images = typeof donation.images === 'string' ? JSON.parse(donation.images) : donation.images;
+        }
+        
+        // Supprimer les images demandées
+        if (req.body.remove_images) {
+            const toRemove = Array.isArray(req.body.remove_images) ? req.body.remove_images : [req.body.remove_images];
+            toRemove.forEach(img => {
+                const imagePath = path.join(__dirname, '../../public', img);
+                if (fs.existsSync(imagePath)) {
+                    fs.unlinkSync(imagePath);
+                    console.log('Image supprimée:', imagePath);
+                }
+            });
+            images = images.filter(img => !toRemove.includes(img));
+        }
+        
+        // Ajouter nouvelles images
+        if (req.files && req.files.length > 0) {
+            const newImages = req.files.map(f => '/images/donations/' + f.filename);
+            images = [...images, ...newImages];
+            console.log('Nouvelles images ajoutées:', newImages);
+        }
+        
         const donationData = {
             title: req.body.title,
             description: req.body.description,
             goal_amount: parseFloat(req.body.goal_amount),
             current_amount: parseFloat(req.body.current_amount) || 0,
             end_date: req.body.end_date || null,
-            active: req.body.active ? true : false
+            active: req.body.active ? true : false,
+            images: images,
+            image: images.length > 0 ? images[0] : donation.image
         };
         
         await updateDonation(parseInt(req.params.id), donationData);
