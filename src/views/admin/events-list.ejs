@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des événements - Admin</title>
+    <title><%= title %></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
@@ -16,29 +16,29 @@
             background: #f5f7fa;
             color: #2d3748;
         }
-        .admin-header {
+        .header {
             background: #009972;
             color: white;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .admin-header h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        .admin-nav {
+            padding: 1rem 2rem;
             display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
+            justify-content: space-between;
+            align-items: center;
         }
-        .admin-nav a {
+        .header h1 {
+            font-size: 1.5rem;
+        }
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav a {
             color: white;
             text-decoration: none;
             padding: 0.5rem 1rem;
-            border-radius: 6px;
+            border-radius: 4px;
             transition: background 0.2s;
         }
-        .admin-nav a:hover, .admin-nav a.active {
+        .nav a:hover, .nav a.active {
             background: rgba(255,255,255,0.2);
         }
         .container {
@@ -154,9 +154,9 @@
     </style>
 </head>
 <body>
-    <div class="admin-header">
-        <h1><i class="fas fa-shield-alt"></i> Administration - Mosquée Bleue</h1>
-        <div class="admin-nav">
+    <div class="header">
+        <h1><i class="fas fa-calendar-alt"></i> Événements</h1>
+        <div class="nav">
             <a href="/admin/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             <a href="/admin/events" class="active"><i class="fas fa-calendar-alt"></i> Événements</a>
             <a href="/admin/news"><i class="fas fa-newspaper"></i> Actualités</a>
@@ -197,8 +197,8 @@
                                     <% if (event.images && event.images.length > 0) { %>
                                         <img src="<%= event.images[0] %>" alt="<%= event.title %>" class="img-thumb">
                                     <% } else { %>
-                                        <div class="img-thumb" style="background: #e2e8f0; display: flex; align-items: center; justify-content: center;">
-                                            <i class="fas fa-image" style="color: #a0aec0;"></i>
+                                        <div class="img-thumb img-placeholder">
+                                            <i class="fas fa-image"></i>
                                         </div>
                                     <% } %>
                                 </td>
@@ -208,14 +208,14 @@
                                     </span>
                                 </td>
                                 <td><strong><%= event.title %></strong></td>
-                                <td><%= new Date(event.date).toLocaleDateString('fr-FR') %></td>
+                                <td><%= formatDateFR(event.date) %></td>
                                 <td><%= event.category %></td>
                                 <td><%= event.location %></td>
                                 <td>
                                     <a href="/admin/events/<%= event.id %>/edit" class="btn btn-edit">
                                         <i class="fas fa-edit"></i> Modifier
                                     </a>
-                                    <form method="POST" action="/admin/events/<%= event.id %>/delete" style="display:inline;">
+                                    <form method="POST" action="/admin/events/<%= event.id %>/delete" class="form-inline">
                                         <button type="submit" class="btn btn-danger delete-btn" data-message="Supprimer cet événement ?">
                                             <i class="fas fa-trash"></i> Supprimer
                                         </button>

@@ -5,7 +5,7 @@ const router = express.Router();
 router.get('/mentions-legales', (req, res) => {
     res.render('mentions-legales', {
         title: 'Mentions Légales - Mosquée Bleue',
-        currentPath: req.path
+        currentPath: '/mentions-legales'
     });
 });
 
@@ -13,7 +13,7 @@ router.get('/mentions-legales', (req, res) => {
 router.get('/confidentialite', (req, res) => {
     res.render('confidentialite', {
         title: 'Politique de Confidentialité - Mosquée Bleue',
-        currentPath: req.path
+        currentPath: '/confidentialite'
     });
 });
 

@@ -228,7 +228,7 @@ section.compact {
     background-repeat: repeat, no-repeat;
     background-position: center, center;
     background-blend-mode: overlay;
-    opacity: 0.3;
+    opacity: 0.15;
     z-index: 1;
 }
 
@@ -314,7 +314,7 @@ section.compact {
     background-repeat: repeat, no-repeat;
     background-position: center, center;
     background-blend-mode: overlay;
-    opacity: 0.6;
+    opacity: 0.3;
 }
 
 .page-header .container {

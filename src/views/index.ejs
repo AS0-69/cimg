@@ -7,7 +7,7 @@
         <div class="container">
             <h1 class="hero-title">Bienvenue à la Mosquée Bleue</h1>
             <p class="hero-subtitle">
-                Centre islamique de Villefranche-sur-Saône
+                Confédération islamique Millî Görüş de Villefranche-sur-Saône
             </p>
             <p class="hero-description">
                 Ensemble pour un avenir solidaire. Soutenez votre mosquée et participez au développement de notre communauté.
@@ -80,66 +80,47 @@
                     </p>
                     
                     <!-- Carousel d'images de la mosquée -->
-                    <div class="mosque-images-carousel" style="margin: 1.5rem 0;">
-                        <div class="carousel-container" style="position: relative; overflow: hidden; border-radius: 12px;">
-                            <div class="carousel-slide active" style="display: block;">
-                                <img src="/images/mosquee_interieur.jpg" alt="Intérieur de la mosquée" style="width: 100%; height: 300px; object-fit: cover;">
+                    <div class="mosque-images-carousel">
+                        <div class="carousel-container">
+                            <div class="carousel-slide active">
+                                <img src="/images/mosquee_interieur.jpg" alt="Intérieur de la mosquée">
                             </div>
-                            <div class="carousel-slide" style="display: none;">
-                                <img src="/images/mosquee_exterieur.jpg" alt="Extérieur de la mosquée" style="width: 100%; height: 300px; object-fit: cover;">
+                            <div class="carousel-slide">
+                                <img src="/images/angle_gauche_interieur_mosquee.jpg" alt="Angle gauche intérieur de la mosquée">
                             </div>
-                            <div class="carousel-slide" style="display: none;">
-                                <img src="/images/mosquee_minaret.jpg" alt="Minaret" style="width: 100%; height: 300px; object-fit: cover;">
+                            <div class="carousel-slide">
+                                <img src="/images/exterieur_mosquee.jpg" alt="Extérieur de la mosquée">
                             </div>
-                            <button class="carousel-prev" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer; z-index: 10;">
+                            <button class="carousel-prev">
                                 <i class="fas fa-chevron-left"></i>
                             </button>
-                            <button class="carousel-next" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer; z-index: 10;">
+                            <button class="carousel-next">
                                 <i class="fas fa-chevron-right"></i>
                             </button>
                         </div>
                     </div>
                     
-                    <ul class="presentation-list">
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span>5 prières quotidiennes en commun</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span>Cours d'arabe et d'études islamiques</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span>Activités pour enfants et jeunes</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span>Actions solidaires et caritatives</span>
-                        </li>
-                    </ul>
-                    
                     <!-- Contact Cards -->
-                    <div class="contact-info-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0;">
+                    <div class="contact-info-grid">
                         <div class="quick-contact-item compact">
                             <i class="fas fa-map-marker-alt"></i>
                             <h4>Adresse</h4>
-                            <p style="font-size: 0.875rem;">123 Rue de la Mosquée<br>69400 Villefranche</p>
+                            <p>123 Rue de la Mosquée<br>69400 Villefranche</p>
                         </div>
                         <div class="quick-contact-item compact">
                             <i class="fas fa-phone"></i>
                             <h4>Téléphone</h4>
-                            <p style="font-size: 0.875rem;"><a href="tel:+33474680000">04 74 68 00 00</a></p>
+                            <p><a href="tel:+33474680000">04 74 68 00 00</a></p>
                         </div>
                         <div class="quick-contact-item compact">
                             <i class="fas fa-envelope"></i>
                             <h4>Email</h4>
-                            <p style="font-size: 0.875rem;"><a href="mailto:contact@mosquee-bleue.fr">contact@mosquee-bleue.fr</a></p>
+                            <p><a href="mailto:contact@mosquee-bleue.fr">contact@mosquee-bleue.fr</a></p>
                         </div>
                         <div class="quick-contact-item compact">
                             <i class="fas fa-clock"></i>
                             <h4>Horaires</h4>
-                            <p style="font-size: 0.875rem;">Ouvert tous les jours</p>
+                            <p>Ouvert tous les jours</p>
                         </div>
                     </div>
                 </div>
@@ -147,7 +128,7 @@
 
             <!-- Colonne Pôles -->
             <div class="column">
-                <h2 style="margin-bottom: 1.5rem;">Nos Pôles d'activités</h2>
+                <h2 class="page-section-title">Nos Pôles d'activités</h2>
                 <div class="poles-list">
                     <div class="pole-card compact">
                         <div class="pole-icon">
@@ -206,7 +187,7 @@
                     </div>
                 </div>
                 
-                <div class="section-cta" style="margin-top: 2rem; text-align: center;">
+                <div class="section-cta">
                     <a href="/poles" class="btn btn-primary">
                         Découvrir nos pôles
                     </a>
@@ -232,21 +213,24 @@
                         const eventDate = new Date(event.date);
                         const day = eventDate.getDate();
                         const month = eventDate.toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'fr-FR', { month: 'short' });
+                        const eventImage = event.images && event.images.length > 0 ? event.images[0] : '/images/Logo_CIMG_VF_GT_MOSAIQUE.png';
                     %>
-                    <div class="event-card compact">
-                        <div class="event-date">
-                            <span class="event-day"><%= day %></span>
-                            <span class="event-month"><%= month %></span>
+                    <article class="home-card">
+                        <div class="home-card-image">
+                            <img src="<%= eventImage %>" alt="<%= event.title %>">
+                            <div class="home-card-category">Événement</div>
                         </div>
-                        <div class="event-content">
+                        <div class="home-card-content">
                             <h3><%= event.title %></h3>
-                            <div class="event-meta">
+                            <p class="home-card-excerpt"><%= event.description ? event.description.substring(0, 100) : '' %>...</p>
+                            <div class="home-card-meta">
+                                <span><i class="far fa-calendar"></i> <%= day %> <%= month %></span>
                                 <span><i class="far fa-clock"></i> <%= event.start_time %></span>
                                 <span><i class="fas fa-map-marker-alt"></i> <%= event.location %></span>
                             </div>
-                            <a href="#" class="btn btn-outline btn-sm" data-event-id="<%= event.id %>"><%= t.events.register %></a>
+                            <button class="btn btn-primary btn-sm" data-event-id="<%= event.id %>">Voir détails</button>
                         </div>
-                    </div>
+                    </article>
                     <% }); %>
                 </div>
                 
@@ -263,29 +247,31 @@
                 </div>
                 
                 <div class="actualites-list">
-                    <% actualites.slice(0, 3).forEach((actu, index) => { %>
-                        <article class="actualite-card compact">
-                            <div class="actualite-image-small">
-                                <img src="<%= actu.image %>" alt="<%= actu.titre %>">
+                    <% actualites.slice(0, 3).forEach((actu, index) => { 
+                        const newsImage = actu.images && actu.images.length > 0 ? actu.images[0] : (actu.image || '/images/Logo_CIMG_VF_GT_MOSAIQUE.png');
+                        const newsDate = new Date(actu.createdAt);
+                        const day = newsDate.getDate();
+                        const month = newsDate.toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'fr-FR', { month: 'short' });
+                    %>
+                        <article class="home-card">
+                            <div class="home-card-image">
+                                <img src="<%= newsImage %>" alt="<%= actu.title %>">
+                                <div class="home-card-category"><%= actu.category %></div>
                             </div>
-                            <div class="actualite-content">
-                                <span class="actualite-categorie-badge"><%= actu.categorie %></span>
-                                <h3><%= actu.titre %></h3>
-                                <div class="actualite-meta">
-                                    <i class="far fa-calendar"></i>
-                                    <span><%= actu.date %></span>
+                            <div class="home-card-content">
+                                <h3><%= actu.title %></h3>
+                                <p class="home-card-excerpt"><%= actu.content ? actu.content.substring(0, 100) : '' %>...</p>
+                                <div class="home-card-meta">
+                                    <span><i class="far fa-calendar"></i> <%= day %> <%= month %></span>
                                 </div>
-                                <a href="#" class="btn-link" data-news-id="<%= index + 1 %>">
-                                    Lire la suite
-                                    <i class="fas fa-arrow-right"></i>
-                                </a>
+                                <button class="btn btn-primary btn-sm" data-news-id="<%= actu.id %>">Lire la suite</button>
                             </div>
                         </article>
                     <% }); %>
                 </div>
                 
                 <div class="section-cta">
-                    <a href="/actualites" class="btn btn-outline">Toutes les actualités</a>
+                    <a href="/evenements#actualites" class="btn btn-primary">Toutes les actualités</a>
                 </div>
             </div>
         </div>
@@ -294,44 +280,44 @@
 
 <!-- Section Campagnes & Dons (Compacte) -->
 <% if (donations && donations.length > 0) { %>
-<section class="donation-campaigns-compact" style="background: var(--color-gray-50); padding: 3rem 0;">
+<section class="donation-campaigns-compact">
     <div class="container">
-        <h2 style="text-align: center; margin-bottom: 2rem;">Soutenez nos campagnes</h2>
+        <h2>Soutenez nos campagnes</h2>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+        <div class="donation-campaigns-grid">
             <% donations.slice(0, 3).forEach(donation => { 
                 const percentage = Math.round((donation.current_amount / donation.goal_amount) * 100);
                 let images = [];
                 if (donation.images) {
                     images = typeof donation.images === 'string' ? JSON.parse(donation.images) : donation.images;
                 }
-                const mainImage = images.length > 0 ? images[0] : '/images/default-event.jpg';
+                const mainImage = images.length > 0 ? images[0] : '/images/Logo_CIMG_VF_GT_MOSAIQUE.png';
             %>
-                <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.3s;">
-                    <div style="position: relative; height: 160px; overflow: hidden;">
-                        <img src="<%= mainImage %>" alt="<%= donation.title %>" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.95); padding: 5px 12px; border-radius: 20px; font-weight: 600; color: var(--color-primary);">
+                <div class="donation-campaign-card">
+                    <div class="donation-campaign-image">
+                        <img src="<%= mainImage %>" alt="<%= donation.title %>">
+                        <div class="donation-campaign-badge">
                             <i class="fas fa-heart"></i> <%= percentage %>%
                         </div>
                     </div>
-                    <div style="padding: 1.25rem;">
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem; color: var(--color-text-primary);"><%= donation.title %></h3>
-                        <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-bottom: 1rem; line-height: 1.4;"><%= donation.description.substring(0, 80) %>...</p>
+                    <div class="donation-campaign-content">
+                        <h3><%= donation.title %></h3>
+                        <p><%= donation.description.substring(0, 80) %>...</p>
                         
-                        <div style="background: var(--color-gray-100); height: 6px; border-radius: 3px; margin-bottom: 0.75rem; overflow: hidden;">
-                            <div style="background: linear-gradient(90deg, var(--color-primary), var(--color-secondary)); height: 100%; width: <%= percentage %>%; border-radius: 3px;"></div>
+                        <div class="progress-container">
+                            <div class="progress-fill" style="width: <%= percentage %>%"></div>
                         </div>
                         
-                        <div style="display: flex; justify-content: space-between; font-size: 0.8125rem; margin-bottom: 0.5rem;">
-                            <span style="color: var(--color-text-secondary);"><strong style="color: var(--color-primary);"><%= donation.current_amount.toLocaleString('fr-FR') %>€</strong> collectés</span>
-                            <span style="color: var(--color-text-secondary);">sur <strong><%= donation.goal_amount.toLocaleString('fr-FR') %>€</strong></span>
+                        <div class="donation-stats">
+                            <span class="amount-collected"><strong><%= donation.current_amount.toLocaleString('fr-FR') %>€</strong> collectés</span>
+                            <span class="amount-goal">sur <strong><%= donation.goal_amount.toLocaleString('fr-FR') %>€</strong></span>
                         </div>
                     </div>
                 </div>
             <% }); %>
         </div>
         
-        <div style="text-align: center;">
+        <div class="section-cta">
             <a href="/don" class="btn btn-primary btn-lg">
                 <i class="fas fa-hand-holding-heart"></i>
                 Faire un don

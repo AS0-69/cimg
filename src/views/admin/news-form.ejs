@@ -1,13 +1,18 @@
-<%- include('../partials/admin-header', { title, activeNav: 'news' }) %>
+<%- include('../partials/admin-head', { 
+    title, 
+    headerTitle: news ? 'Modifier actualité' : 'Nouvelle actualité',
+    headerIcon: 'newspaper',
+    activeNav: 'news' 
+}) %>
 
     <div class="container">
-        <h2 style="margin-bottom: 2rem; color: #2d3748;"><i class="fas fa-newspaper"></i> <%= news ? 'Modifier' : 'Nouvelle' %> actualité</h2>
+        <h2 class="page-title"><i class="fas fa-newspaper"></i> <%= news ? 'Modifier' : 'Nouvelle' %> actualité</h2>
         <div class="form-card">
             <form method="POST" action="<%= news ? `/admin/news/${news.id}` : '/admin/news' %>" enctype="multipart/form-data">
                 
                 <div class="form-group">
                     <label>Titre <span class="required">*</span></label>
-                    <input type="text" name="title" value="<%= news ? news.title : '' %>" required>
+                    <input type="text" name="title" id="title" value="<%= news ? news.title : '' %>" required maxlength="50" data-maxlength="50">
                 </div>
 
                 <div class="form-group">
@@ -28,7 +33,7 @@
 
                 <div class="form-group">
                     <label>Contenu <span class="required">*</span></label>
-                    <textarea name="content" required><%= news ? news.content : '' %></textarea>
+                    <textarea name="content" id="content" required maxlength="300" data-maxlength="300"><%= news ? news.content : '' %></textarea>
                 </div>
 
                 <div class="form-group">
@@ -38,7 +43,7 @@
                         <p><strong>Cliquez pour téléverser des images</strong></p>
                         <p class="hint">JPG, PNG, WEBP - Max 20MB par image</p>
                     </div>
-                    <input type="file" name="images" id="images" accept="image/*" multiple style="display:none">
+                    <input type="file" name="images" id="images" accept="image/*" multiple class="hidden-input">
                     
                     <div class="image-list" id="image-list">
                         <% if (news && news.images && news.images.length > 0) { %>

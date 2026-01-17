@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 
     res.render('evenements', {
       title: 'Événements & Activités - Mosquée Bleue',
-      currentPath: req.path,
+      currentPath: '/evenements',
       upcomingEvents: upcomingEvents,
       pastEvents: pastEvents,
       news: news,
@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
     res.status(500).render('error', { 
       title: 'Erreur',
       error: process.env.NODE_ENV === 'development' ? error : {},
-      currentPath: req.path,
+      currentPath: '/evenements',
       t: t
     });
   }

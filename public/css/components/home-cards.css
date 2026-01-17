@@ -1,0 +1,174 @@
+/* ========================================
+   HOME CARDS - Événements & Actualités
+   Style uniforme pour l'accueil
+   ======================================== */
+
+.home-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.home-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Image de la carte */
+.home-card-image {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.home-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.home-card:hover .home-card-image img {
+    transform: scale(1.05);
+}
+
+/* Badge catégorie */
+.home-card-category {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--color-primary);
+    color: white;
+    padding: 0.35rem 0.85rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Contenu de la carte */
+.home-card-content {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.home-card-content h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0 0 0.75rem 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.8em;
+}
+
+/* Extrait pour actualités ET événements */
+.home-card-excerpt {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-gray-600);
+    margin: 0 0 0.875rem 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.625em;
+    flex-shrink: 0;
+}
+
+/* Meta informations */
+.home-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    margin-bottom: auto;
+    padding-bottom: 1rem;
+    font-size: 0.8125rem;
+    color: var(--color-gray-600);
+}
+
+.home-card-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+}
+
+.home-card-meta i {
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+/* Bouton */
+.home-card-content .btn {
+    width: 100%;
+    justify-content: center;
+    margin-top: auto;
+}
+
+/* Listes */
+.events-list,
+.actualites-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .home-card-image {
+        height: 160px;
+    }
+    
+    .home-card-content {
+        padding: 1rem;
+    }
+    
+    .home-card-content h3 {
+        font-size: 1rem;
+        min-height: 2.5em;
+    }
+    
+    .home-card-excerpt {
+        font-size: 0.8125rem;
+        -webkit-line-clamp: 2;
+    }
+    
+    .home-card-meta {
+        font-size: 0.75rem;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-card-image {
+        height: 140px;
+    }
+    
+    .home-card-category {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.7rem;
+    }
+    
+    .home-card-content h3 {
+        font-size: 0.95rem;
+    }
+}
+

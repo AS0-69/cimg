@@ -3,7 +3,7 @@ const router = express.Router();
 const { getRecentEvents } = require('../data/events');
 const { getRecentNews } = require('../data/news');
 const { getAllDonations } = require('../data/donations');
-const { getAllQuotes } = require('../data/quotes');
+const { getRandomActiveQuotes } = require('../data/quotes');
 
 // Page d'accueil
 router.get('/', async (req, res) => {
@@ -18,9 +18,8 @@ router.get('/', async (req, res) => {
     const allDonations = await getAllDonations();
     const activeDonations = allDonations.filter(d => d.active).slice(0, 2);
     
-    // Récupérer les citations actives (max 4)
-    const allQuotes = await getAllQuotes();
-    const activeQuotes = allQuotes.filter(q => q.active).slice(0, 4);
+    // Récupérer 4 citations actives au hasard (change à chaque chargement)
+    const activeQuotes = await getRandomActiveQuotes(4);
 
     res.render('index', { 
       title: 'Accueil - Mosquée Bleue',
@@ -28,7 +27,7 @@ router.get('/', async (req, res) => {
       events: recentEvents,
       donations: activeDonations,
       quotes: activeQuotes,
-      currentPath: req.path
+      currentPath: '/'
     });
   } catch (error) {
     console.error('Erreur accueil:', error);

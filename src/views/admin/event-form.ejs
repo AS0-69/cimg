@@ -1,7 +1,12 @@
-<%- include('../partials/admin-header', { title, activeNav: 'events' }) %>
+<%- include('../partials/admin-head', { 
+    title, 
+    headerTitle: event ? 'Modifier événement' : 'Nouvel événement',
+    headerIcon: 'calendar-alt',
+    activeNav: 'events' 
+}) %>
 
     <div class="container">
-        <h2 style="margin-bottom: 2rem; color: #2d3748;"><i class="fas fa-calendar-plus"></i> <%= event ? 'Modifier' : 'Nouvel' %> événement</h2>
+        <h2 class="page-title"><i class="fas fa-calendar-plus"></i> <%= event ? 'Modifier' : 'Nouvel' %> événement</h2>
         <div class="form-card">
 
             <form method="POST" action="<%= event ? `/admin/events/${event.id}` : '/admin/events' %>" enctype="multipart/form-data">
@@ -26,7 +31,7 @@
                 <!-- Titre -->
                 <div class="form-group">
                     <label>Titre <span class="required">*</span></label>
-                    <input type="text" name="title" value="<%= event ? event.title : '' %>" required>
+                    <input type="text" name="title" id="title" value="<%= event ? event.title : '' %>" required maxlength="50" data-maxlength="50">
                 </div>
 
                 <!-- Date et Heures -->
@@ -82,7 +87,7 @@
                 <!-- Description -->
                 <div class="form-group">
                     <label>Description <span class="required">*</span></label>
-                    <textarea name="description" required><%= event ? event.description : '' %></textarea>
+                    <textarea name="description" id="description" required maxlength="300" data-maxlength="300"><%= event ? event.description : '' %></textarea>
                 </div>
 
                 <!-- Images -->
@@ -93,7 +98,7 @@
                         <p><strong>Cliquez pour téléverser des images</strong></p>
                         <p class="hint">JPG, PNG, WEBP - Max 20MB par image</p>
                     </div>
-                    <input type="file" name="images" id="images" accept="image/*" multiple style="display:none">
+                    <input type="file" name="images" id="images" accept="image/*" multiple class="hidden-input">
                     
                     <div class="image-list" id="image-list">
                         <% if (event && event.images && event.images.length > 0) { %>

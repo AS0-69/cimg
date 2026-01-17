@@ -1,6 +1,7 @@
 // Module pour gérer les données d'événements avec MySQL
 const Event = require('../models/Event');
 const { Op } = require('sequelize');
+const { parseImages } = require('../helpers/viewHelpers');
 
 /**
  * Récupère tous les événements
@@ -12,7 +13,7 @@ async function getAllEvents() {
   // Parser les images JSON
   return events.map(e => {
     const event = e.toJSON();
-    event.images = event.images ? JSON.parse(event.images) : [];
+    event.images = parseImages(event.images);
     return event;
   });
 }
@@ -26,7 +27,7 @@ async function getEventsSortedByDate() {
   });
   return events.map(e => {
     const event = e.toJSON();
-    event.images = event.images ? JSON.parse(event.images) : [];
+    event.images = parseImages(event.images);
     return event;
   });
 }
@@ -41,7 +42,7 @@ async function getRecentEvents(count = 3) {
   });
   return events.map(e => {
     const event = e.toJSON();
-    event.images = event.images ? JSON.parse(event.images) : [];
+    event.images = parseImages(event.images);
     return event;
   });
 }
@@ -53,7 +54,7 @@ async function getEventById(id) {
   const event = await Event.findByPk(id);
   if (event) {
     const eventData = event.toJSON();
-    eventData.images = eventData.images ? JSON.parse(eventData.images) : [];
+    eventData.images = parseImages(eventData.images);
     return eventData;
   }
   return null;
@@ -69,7 +70,7 @@ async function getEventsByType(type) {
   });
   return events.map(e => {
     const event = e.toJSON();
-    event.images = event.images ? JSON.parse(event.images) : [];
+    event.images = parseImages(event.images);
     return event;
   });
 }

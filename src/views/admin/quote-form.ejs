@@ -1,38 +1,61 @@
-<%- include('../partials/admin-header', { title, activeNav: 'quotes' }) %>
+<%- include('../partials/admin-head', { 
+    title, 
+    headerTitle: quote ? 'Modifier citation' : 'Nouvelle citation',
+    headerIcon: 'quote-right',
+    activeNav: 'quotes' 
+}) %>
 
     <div class="container">
-        <h2 style="margin-bottom: 2rem; color: #2d3748;"><i class="fas fa-quote-right"></i> <%= quote ? 'Modifier' : 'Nouvelle' %> citation</h2>
+        <h2 class="page-title"><i class="fas fa-quote-right"></i> <%= quote ? 'Modifier' : 'Nouvelle' %> citation</h2>
         <div class="form-card">
             <form method="POST" action="<%= quote ? `/admin/quotes/${quote.id}` : '/admin/quotes' %>">
                 
                 <div class="form-group">
                     <label>Texte original (Arabe) <span class="required">*</span></label>
-                    <textarea name="text_original" required style="direction: rtl; text-align: right;"><%= quote ? quote.text_original : '' %></textarea>
-                    <small style="color: #718096;">Le texte en arabe (Coran, Hadith, etc.)</small>
+                    <textarea name="text_original" id="text_original" required class="text-rtl" maxlength="60" data-maxlength="60"><%= quote ? quote.text_original : '' %></textarea>
+                    <small class="text-muted">Le texte en arabe (Coran, Hadith, etc.)</small>
                 </div>
 
                 <div class="form-group">
-                    <label>Traduction (Français) <span class="required">*</span></label>
-                    <textarea name="text_fr" required><%= quote ? quote.text_fr : '' %></textarea>
-                    <small style="color: #718096;">La traduction française du texte</small>
+                    <label>Traduction / Interprétation <span class="required">*</span></label>
+                    <textarea name="text_fr" id="text_fr" required maxlength="60" data-maxlength="60"><%= quote ? quote.text_fr : '' %></textarea>
+                    <small class="text-muted">La traduction ou interprétation du texte</small>
                 </div>
 
                 <div class="form-group">
-                    <label>Traduction (Turc)</label>
-                    <textarea name="text_tr"><%= quote ? quote.text_tr : '' %></textarea>
-                    <small style="color: #718096;">La traduction turque du texte (optionnel)</small>
-                </div>
-
-                <div class="form-group">
-                    <label>Auteur / Source <span class="required">*</span></label>
-                    <input type="text" name="author" value="<%= quote ? quote.author : '' %>" required placeholder="Ex: Coran 2:153, Hadith - Bukhari">
-                    <small style="color: #718096;">La source de la citation (sourate, hadith, etc.)</small>
+                    <label>Source <span class="required">*</span></label>
+                    <select name="author" id="author" required>
+                        <option value="">-- Sélectionner une source --</option>
+                        <% 
+                        if (quote && quote.author) { 
+                            const sourceExists = sources && sources.some(s => s.name === quote.author);
+                            if (!sourceExists) {
+                        %>
+                                <option value="<%= quote.author %>" selected><%= quote.author %> (actuel)</option>
+                        <%
+                            }
+                        }
+                        %>
+                        <% if (sources && sources.length > 0) { %>
+                            <% sources.forEach(source => { %>
+                                <option value="<%= source.name %>" 
+                                        <%= quote && quote.author === source.name ? 'selected' : '' %>>
+                                    <%= source.name %>
+                                </option>
+                            <% }); %>
+                        <% } %>
+                        <option value="autre">➕ Autre source (nouvelle)</option>
+                    </select>
+                    <div class="conditional-field" id="new_author_field">
+                        <input type="text" name="new_author" placeholder="Ex: Coran 2:153, Prophète Muhammad (ﷺ), Imam Muslim">
+                    </div>
+                    <small class="text-muted">Sélectionnez une source existante ou créez-en une nouvelle</small>
                 </div>
 
                 <div class="form-group">
                     <div class="checkbox-group">
-                        <input type="checkbox" id="active" name="active" <%= quote && quote.active ? 'checked' : '' %>>
-                        <label for="active" style="margin-bottom: 0;">Afficher dans le carousel (max 4 actives)</label>
+                        <input type="checkbox" id="active" name="active" <%= quote ? (quote.active ? 'checked' : '') : 'checked' %>>
+                        <label for="active" class="mb-0">Afficher dans le carousel d'accueil</label>
                     </div>
                 </div>
 

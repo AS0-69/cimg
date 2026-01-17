@@ -19,7 +19,7 @@ const polesData = {
     nom: "Pôle KT",
     slug: "kt",
     description: "Le pôle KT se concentre sur l'enseignement et l'éducation islamique.",
-    image: "/images/image-exemple1.jpg",
+    image: "/images/Logo_CIMG_VF_GT_MOSAIQUE.png",
     activites: [
       "Cours de Coran pour enfants",
       "Enseignement de la langue arabe",
@@ -31,7 +31,7 @@ const polesData = {
     nom: "Pôle Jeunesse",
     slug: "jeunesse",
     description: "Un espace dédié aux jeunes pour leur épanouissement spirituel et social.",
-    image: "/images/image-exemple2.jpg",
+    image: "/images/Logo_CIMG_VF_GT_MOSAIQUE.png",
     activites: [
       "Activités sportives",
       "Ateliers créatifs",
@@ -43,7 +43,7 @@ const polesData = {
     nom: "Pôle KGT",
     slug: "kgt",
     description: "Le pôle KGT gère les aspects culturels et communautaires.",
-    image: "/images/image-exemple3.jpg",
+    image: "/images/Logo_CIMG_VF_GT_MOSAIQUE.png",
     activites: [
       "Événements culturels",
       "Célébrations religieuses",
@@ -58,7 +58,7 @@ router.get('/', (req, res) => {
   res.render('poles', { 
     title: 'Nos Pôles - Mosquée Bleue',
     poles: Object.values(polesData),
-    currentPath: req.path
+    currentPath: '/poles'
   });
 });
 
@@ -69,14 +69,14 @@ router.get('/:slug', (req, res) => {
   if (!pole) {
     return res.status(404).render('404', { 
       title: 'Pôle non trouvé',
-      currentPath: req.path
+      currentPath: '/poles'
     });
   }
 
   res.render('pole-details', { 
     title: `${pole.nom} - Mosquée Bleue`,
     pole,
-    currentPath: req.path
+    currentPath: '/poles/' + req.params.slug
   });
 });
 

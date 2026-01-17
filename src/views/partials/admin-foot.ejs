@@ -1,0 +1,14 @@
+    <script>
+        // Confirmation de suppression
+        document.querySelectorAll('.delete-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                const message = this.dataset.message || 'Êtes-vous sûr de vouloir supprimer cet élément ?';
+                if (!confirm(message)) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

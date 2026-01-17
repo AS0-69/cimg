@@ -23,8 +23,7 @@ Intervenant: Sheikh Ahmed Ben Salah, imam et conférencier reconnu.
 
 Places limitées, inscription recommandée.`,
         images: [
-            '/images/image-exemple1.jpg',
-            '/images/image-exemple2.jpg'
+            '/images/Logo_CIMG_VF_GT_MOSAIQUE.png'
         ],
         tags: ['Conférence', 'Valeurs', 'Formation']
     },
@@ -49,7 +48,7 @@ Matériel pédagogique fourni
 
 Les cours sont dispensés par des enseignants qualifiés avec une méthode progressive et adaptée.`,
         images: [
-            '/images/image-exemple3.jpg'
+            '/images/Logo_CIMG_VF_GT_MOSAIQUE.png'
         ],
         tags: ['Cours', 'Arabe', 'Débutant', 'Langue']
     },
@@ -75,9 +74,7 @@ Autorisation parentale obligatoire pour les mineurs.
 
 Prix : 15€ par personne (incluant transport et repas)`,
         images: [
-            '/images/image-exemple4.jpg',
-            '/images/image-exemple1.jpg',
-            '/images/image-exemple2.jpg'
+            '/images/Logo_CIMG_VF_GT_MOSAIQUE.png'
         ],
         tags: ['Jeunesse', 'Sortie', 'Éducatif', 'Sport']
     }
@@ -103,8 +100,7 @@ Nos enseignants sont tous diplômés et expérimentés dans l'enseignement de la
 
 Pour plus d'informations ou pour vous inscrire, contactez-nous au 04 74 68 00 00 ou passez au secrétariat de la mosquée.`,
         images: [
-            '/images/image-exemple1.jpg',
-            '/images/image-exemple2.jpg'
+            '/images/Logo_CIMG_VF_GT_MOSAIQUE.png'
         ],
         tags: ['Éducation', 'Arabe', 'Cours', 'Nouveau']
     },
@@ -127,7 +123,7 @@ Le calendrier détaillé des horaires de prière et d'iftar sera publié prochai
 
 Des bénévoles sont recherchés pour l'organisation des iftars collectifs. Si vous souhaitez participer, merci de vous manifester auprès du comité d'organisation.`,
         images: [
-            '/images/image-exemple3.jpg'
+            '/images/Logo_CIMG_VF_GT_MOSAIQUE.png'
         ],
         tags: ['Ramadan', 'Horaires', 'Annonce']
     },
@@ -154,8 +150,7 @@ La distribution aura lieu le 15 janvier 2026.
 
 Votre générosité fera la différence pour de nombreuses familles. Qu'Allah vous récompense pour votre bienfaisance.`,
         images: [
-            '/images/image-exemple4.jpg',
-            '/images/image-exemple1.jpg'
+            '/images/Logo_CIMG_VF_GT_MOSAIQUE.png'
         ],
         tags: ['Solidarité', 'Collecte', 'Aide', 'Charité']
     }

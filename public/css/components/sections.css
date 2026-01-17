@@ -135,37 +135,6 @@ select.form-control {
     color: var(--color-primary);
 }
 
-/* Amount Options */
-.amount-options {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-lg);
-}
-
-.amount-btn {
-    padding: var(--spacing-lg);
-    background: var(--color-white);
-    border: 2px solid var(--color-gray-300);
-    border-radius: var(--radius-md);
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--color-gray-700);
-    cursor: pointer;
-    transition: all var(--transition-base);
-}
-
-.amount-btn:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-}
-
-.amount-btn.active {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
-    color: var(--color-white);
-}
-
 /* Alerts */
 .alert {
     padding: var(--spacing-lg);
@@ -245,23 +214,6 @@ select.form-control {
 
 .presentation-content h2 {
     margin-bottom: var(--spacing-lg);
-}
-
-.presentation-list {
-    list-style: none;
-    margin: var(--spacing-xl) 0;
-}
-
-.presentation-list li {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-}
-
-.presentation-list i {
-    color: var(--color-primary);
-    font-size: 1.25rem;
 }
 
 .presentation-image {
@@ -400,7 +352,12 @@ select.form-control {
 }
 
 /* Contact & Donation Grids */
-.contact-grid,
+.contact-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--spacing-3xl);
+}
+
 .donation-grid {
     display: grid;
     grid-template-columns: 1.5fr 1fr;
@@ -649,7 +606,10 @@ select.form-control {
 @media (max-width: 992px) {
     .presentation-grid,
     .donation-cta-content,
-    .contact-grid,
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    
     .donation-grid,
     .pole-details-grid {
         grid-template-columns: 1fr;
@@ -657,6 +617,17 @@ select.form-control {
     
     .quick-contact-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .contact-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-2xl);
+    }
+    
+    .contact-form-container {
+        grid-column: 1 / -1;
     }
 }
 

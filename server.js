@@ -10,6 +10,7 @@ const { sequelize, testConnection } = require('./src/config/database');
 require('./src/models/Event');
 require('./src/models/News');
 require('./src/models/Quote');
+require('./src/models/QuoteSource');
 require('./src/models/Member');
 require('./src/models/EventType');
 require('./src/models/Location');
@@ -50,6 +51,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware pour cookies
 app.use(require('cookie-parser')());
+
+// Middleware pour les helpers de vues
+app.use(require('./src/middleware/viewHelpers'));
 
 // Middleware pour la langue
 app.use((req, res, next) => {
@@ -102,7 +106,7 @@ app.use('/api', apiRouter);
 app.use((req, res) => {
   res.status(404).render('404', { 
     title: 'Page non trouvée',
-    currentPath: req.path
+    currentPath: req.originalUrl || req.path
   });
 });
 
@@ -114,7 +118,7 @@ app.use((err, req, res, next) => {
   res.status(500).render('error', { 
     title: 'Erreur',
     error: process.env.NODE_ENV === 'development' ? err : {},
-    currentPath: req.path,
+    currentPath: req.originalUrl || req.path,
     t: t
   });
 });

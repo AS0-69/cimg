@@ -78,40 +78,37 @@
                             <th>Titre</th>
                             <th>Progression</th>
                             <th>Montants</th>
-                            <th style="text-align: center;">Statut</th>
-                            <th style="text-align: right;">Actions</th>
+                            <th class="text-center">Statut</th>
+                            <th class="text-right">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <% donations.forEach(donation => { 
                             const percentage = Math.round((donation.current_amount / donation.goal_amount) * 100);
-                            let images = [];
-                            if (donation.images) {
-                                images = typeof donation.images === 'string' ? JSON.parse(donation.images) : donation.images;
-                            }
+                            const images = parseImages(donation.images);
                         %>
                             <tr>
                                 <td>
                                     <% if (images && images.length > 0) { %>
-                                        <div style="display: flex; gap: 0.25rem; flex-wrap: wrap;">
+                                        <div class="image-gallery">
                                             <% images.slice(0, 3).forEach(img => { %>
                                                 <img src="<%= img %>" alt="Image" class="img-thumb">
                                             <% }); %>
                                             <% if (images.length > 3) { %>
-                                                <div style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: #e2e8f0; border-radius: 8px; font-size: 0.75rem; color: #718096;">
+                                                <div class="image-count">
                                                     +<%= images.length - 3 %>
                                                 </div>
                                             <% } %>
                                         </div>
                                     <% } else { %>
-                                        <span style="color: #cbd5e0; font-size: 0.875rem;">Aucune image</span>
+                                        <span class="no-image">Aucune image</span>
                                     <% } %>
                                 </td>
                                 <td>
                                     <strong><%= donation.title %></strong>
                                     <% if (donation.end_date) { %>
-                                        <div style="font-size: 0.875rem; color: #718096;">
-                                            <i class="fas fa-calendar"></i> Fin: <%= new Date(donation.end_date).toLocaleDateString('fr-FR') %>
+                                        <div class="text-sm text-muted">
+                                            <i class="fas fa-calendar"></i> Fin: <%= formatDateFR(donation.end_date) %>
                                         </div>
                                     <% } %>
                                 </td>
@@ -119,23 +116,23 @@
                                     <div class="progress-bar">
                                         <div class="progress-fill" style="width: <%= percentage %>%"></div>
                                     </div>
-                                    <div style="font-size: 0.875rem; margin-top: 0.25rem;"><%= percentage %>%</div>
+                                    <div class="text-sm mt-sm"><%= percentage %>%</div>
                                 </td>
                                 <td>
-                                    <div class="amount"><%= donation.current_amount.toLocaleString('fr-FR') %>€</div>
-                                    <div style="font-size: 0.875rem; color: #718096;">sur <%= donation.goal_amount.toLocaleString('fr-FR') %>€</div>
+                                    <div class="amount"><%= formatEuro(donation.current_amount) %></div>
+                                    <div class="text-sm text-muted">sur <%= formatEuro(donation.goal_amount) %></div>
                                 </td>
-                                <td style="text-align: center;">
+                                <td class="text-center">
                                     <span class="badge <%= donation.active ? 'badge-success' : 'badge-danger' %>">
                                         <%= donation.active ? 'Active' : 'Inactive' %>
                                     </span>
                                 </td>
                                 <td>
-                                    <div class="actions" style="justify-content: flex-end;">
+                                    <div class="actions flex-end">
                                         <a href="/admin/donations/<%= donation.id %>/edit" class="btn btn-secondary">
                                             <i class="fas fa-edit"></i> Modifier
                                         </a>
-                                        <form method="POST" action="/admin/donations/<%= donation.id %>/delete" style="display: inline;" class="delete-form" data-message="Supprimer cette campagne ?">
+                                        <form method="POST" action="/admin/donations/<%= donation.id %>/delete" class="form-inline delete-form" data-message="Supprimer cette campagne ?">
                                             <button type="submit" class="btn btn-danger">
                                                 <i class="fas fa-trash"></i> Supprimer
                                             </button>

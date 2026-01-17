@@ -4,7 +4,7 @@
 
 .quotes-carousel-section {
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-    padding: 2rem 0;
+    padding: 1rem 0;
     color: var(--color-white);
     overflow: hidden;
 }

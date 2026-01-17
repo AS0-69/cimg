@@ -1,0 +1,12 @@
+/* ========================================
+   IMAGE FALLBACK - Fallback uniquement pour les cartes événements/actualités
+======================================== */
+
+/* Fallback pour les images dans les cartes qui ne chargent pas */
+.home-card-image img,
+.event-card img,
+.news-card img {
+    object-fit: cover;
+}
+
+/* Script JavaScript gère le fallback avec addEventListener('error') */

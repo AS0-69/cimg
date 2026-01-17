@@ -5,7 +5,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   res.render('adhesion', { 
     title: 'Adhésion - Mosquée Bleue',
-    currentPath: req.path
+    currentPath: '/adhesion'
   });
 });
 

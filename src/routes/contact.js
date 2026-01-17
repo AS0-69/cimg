@@ -6,7 +6,7 @@ const { body, validationResult } = require('express-validator');
 router.get('/', (req, res) => {
   res.render('contact', { 
     title: 'Contact - Mosquée Bleue',
-    currentPath: req.path,
+    currentPath: '/contact',
     errors: null,
     formData: {}
   });
@@ -24,7 +24,7 @@ router.post('/', [
   if (!errors.isEmpty()) {
     return res.render('contact', {
       title: 'Contact - Mosquée Bleue',
-      currentPath: req.path,
+      currentPath: '/contact',
       errors: errors.array(),
       formData: req.body
     });
@@ -35,7 +35,7 @@ router.post('/', [
 
   res.render('contact', {
     title: 'Contact - Mosquée Bleue',
-    currentPath: req.path,
+    currentPath: '/contact',
     success: true,
     errors: null,
     formData: {}

@@ -1,0 +1,45 @@
+/* Page Transition - Fade In/Out subtile */
+body {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+body.page-transition {
+    opacity: 0;
+}
+
+/* Prevent layout shift during transition */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Optional: Add subtle scale animation */
+.page-content {
+    animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ensure smooth page load */
+.hero,
+.section {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

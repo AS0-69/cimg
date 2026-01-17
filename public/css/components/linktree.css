@@ -2,25 +2,39 @@
    STYLES ADDITIONNELS POUR LINKTREE
 ======================================== */
 
-.linktree-link svg {
-    transition: all var(--transition-base);
+.linktree-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.linktree-link:hover svg {
+.linktree-link img {
+    transition: all var(--transition-base);
+    display: block;
+}
+
+.linktree-link:hover img {
     transform: scale(1.1);
 }
 
-.header-social .linktree-link svg {
-    width: 18px;
-    height: 18px;
+.header-social .linktree-link img {
+    width: 28px;
+    height: 28px;
+    padding: 5px;
+    box-sizing: content-box;
 }
 
-.footer-social .linktree-link svg {
-    width: 20px;
-    height: 20px;
+.footer-social .linktree-link img {
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+    box-sizing: content-box;
 }
 
-.social-links-large .linktree-link svg {
+.social-links-large .linktree-link img {
     margin-right: var(--spacing-sm);
-    vertical-align: middle;
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    box-sizing: content-box;
 }

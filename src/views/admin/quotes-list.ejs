@@ -1,134 +1,87 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; }
-        .header { background: #009972; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .header h1 { font-size: 1.5rem; }
-        .nav { display: flex; gap: 2rem; }
-        .nav a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: background 0.2s; }
-        .nav a:hover, .nav a.active { background: rgba(255,255,255,0.2); }
-        .container { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
-        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; }
-        .btn-primary { background: #009972; color: white; }
-        .btn-primary:hover { background: #007d5e; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,153,114,0.3); }
-        .btn-danger { background: #e53e3e; color: white; padding: 0.5rem 1rem; font-size: 0.875rem; }
-        .btn-danger:hover { background: #c53030; }
-        .btn-secondary { background: #4299e1; color: white; padding: 0.5rem 1rem; font-size: 0.875rem; }
-        .btn-secondary:hover { background: #3182ce; }
-        .card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
-        table { width: 100%; border-collapse: collapse; }
-        thead { background: #f7fafc; }
-        th { padding: 1rem; text-align: left; font-weight: 600; color: #2d3748; border-bottom: 2px solid #e2e8f0; }
-        td { padding: 1rem; border-bottom: 1px solid #e2e8f0; }
-        tbody tr:hover { background: #f7fafc; }
-        .actions { display: flex; gap: 0.5rem; }
-        .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.875rem; font-weight: 600; }
-        .badge-success { background: #c6f6d5; color: #22543d; }
-        .badge-danger { background: #fed7d7; color: #742a2a; }
-        .empty-state { text-align: center; padding: 4rem 2rem; color: #718096; }
-        .empty-state i { font-size: 4rem; margin-bottom: 1rem; opacity: 0.3; }
-        .quote-text { font-style: italic; color: #4a5568; max-width: 600px; }
-        .quote-original { direction: rtl; text-align: right; color: #2d3748; font-size: 0.9rem; margin-bottom: 0.5rem; }
-        .quote-translation { font-style: italic; color: #4a5568; font-size: 0.85rem; }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1><i class="fas fa-quote-right"></i> <%= title %></h1>
-        <div class="nav">
-            <a href="/admin/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <a href="/admin/events"><i class="fas fa-calendar-alt"></i> Événements</a>
-            <a href="/admin/news"><i class="fas fa-newspaper"></i> Actualités</a>
-            <a href="/admin/quotes" class="active"><i class="fas fa-quote-left"></i> Citations</a>
-            <a href="/admin/members"><i class="fas fa-users"></i> Membres</a>
-            <a href="/admin/donations"><i class="fas fa-hand-holding-usd"></i> Dons</a>
-            <a href="/"><i class="fas fa-home"></i> Retour au site</a>
-            <a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
-        </div>
+<%- include('../partials/admin-head', { 
+    title: 'Citations',
+    headerTitle: 'Citations', 
+    headerIcon: 'quote-right',
+    activeNav: 'quotes' 
+}) %>
+
+<style>
+    .quote-original {
+        direction: rtl;
+        text-align: right;
+        color: #2d3748;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+    .quote-translation {
+        font-style: italic;
+        color: #4a5568;
+        font-size: 0.85rem;
+    }
+</style>
+
+<div class="container">
+    <div class="toolbar">
+        <h2>Toutes les citations (<%= quotes.length %>)</h2>
+        <a href="/admin/quotes/new" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nouvelle citation
+        </a>
     </div>
 
-    <div class="container">
-        <div class="toolbar">
-            <h2>Toutes les citations (<%= quotes.length %>)</h2>
-            <a href="/admin/quotes/new" class="btn btn-primary">
-                <i class="fas fa-plus"></i> Nouvelle citation
-            </a>
-        </div>
-
-        <div class="card">
-            <% if (quotes.length === 0) { %>
-                <div class="empty-state">
-                    <i class="fas fa-quote-right"></i>
-                    <h3>Aucune citation</h3>
-                    <p>Créez votre première citation pour commencer</p>
-                </div>
-            <% } else { %>
-                <table>
-                    <thead>
+    <div class="card">
+        <% if (quotes.length === 0) { %>
+            <div class="empty-state">
+                <i class="fas fa-quote-right"></i>
+                <h3>Aucune citation</h3>
+                <p>Créez votre première citation pour commencer</p>
+            </div>
+        <% } else { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Citation</th>
+                        <th>Source</th>
+                        <th class="text-center">Statut</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% quotes.forEach(quote => { %>
                         <tr>
-                            <th>Citation</th>
-                            <th>Auteur</th>
-                            <th style="text-align: center;">Statut</th>
-                            <th style="text-align: right;">Actions</th>
+                            <td>
+                                <% if (quote.text_original) { %>
+                                    <div class="quote-original">
+                                        <%= truncate(quote.text_original, 80) %>
+                                    </div>
+                                <% } %>
+                                <div class="quote-translation">
+                                    "<%= truncate(quote.text_fr, 100) %>"
+                                </div>
+                            </td>
+                            <td><strong><%= quote.author %></strong></td>
+                            <td class="text-center">
+                                <span class="badge <%= quote.active ? 'badge-success' : 'badge-danger' %>">
+                                    <%= quote.active ? 'Actif' : 'Inactif' %>
+                                </span>
+                            </td>
+                            <td>
+                                <div class="actions flex-end">
+                                    <a href="/admin/quotes/<%= quote.id %>/edit" class="btn btn-secondary">
+                                        <i class="fas fa-edit"></i> Modifier
+                                    </a>
+                                    <form method="POST" action="/admin/quotes/<%= quote.id %>/delete" class="form-inline delete-form" data-message="Supprimer cette citation ?">
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fas fa-trash"></i> Supprimer
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <% quotes.forEach(quote => { %>
-                            <tr>
-                                <td>
-                                    <% if (quote.text_original) { %>
-                                        <div class="quote-original">
-                                            <%= quote.text_original.substring(0, 80) %><%= quote.text_original.length > 80 ? '...' : '' %>
-                                        </div>
-                                    <% } %>
-                                    <div class="quote-translation">
-                                        <em>"<%= quote.text_fr.substring(0, 100) %><%= quote.text_fr.length > 100 ? '...' : '' %>"</em>
-                                    </div>
-                                </td>
-                                <td><strong><%= quote.author %></strong></td>
-                                <td style="text-align: center;">
-                                    <span class="badge <%= quote.active ? 'badge-success' : 'badge-danger' %>">
-                                        <%= quote.active ? 'Actif' : 'Inactif' %>
-                                    </span>
-                                </td>
-                                <td>
-                                    <div class="actions" style="justify-content: flex-end;">
-                                        <a href="/admin/quotes/<%= quote.id %>/edit" class="btn btn-secondary">
-                                            <i class="fas fa-edit"></i> Modifier
-                                        </a>
-                                        <form method="POST" action="/admin/quotes/<%= quote.id %>/delete" style="display: inline;" class="delete-form" data-message="Supprimer cette citation ?">
-                                            <button type="submit" class="btn btn-danger">
-                                                <i class="fas fa-trash"></i> Supprimer
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
-            <% } %>
-        </div>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } %>
     </div>
-    
-    <script>
-        // Confirmation de suppression
-        document.querySelectorAll('.delete-form').forEach(form => {
-            form.addEventListener('submit', function(e) {
-                const message = this.dataset.message || 'Êtes-vous sûr de vouloir supprimer cet élément ?';
-                if (!confirm(message)) {
-                    e.preventDefault();
-                    return false;
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+</div>
+
+<%- include('../partials/admin-foot') %>

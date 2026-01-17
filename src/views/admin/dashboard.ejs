@@ -167,7 +167,7 @@
                     <i class="fas fa-calendar-alt"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>12</h3>
+                    <h3><%= stats.events %></h3>
                     <p>Événements actifs</p>
                 </div>
             </div>
@@ -177,7 +177,7 @@
                     <i class="fas fa-newspaper"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>8</h3>
+                    <h3><%= stats.news %></h3>
                     <p>Actualités publiées</p>
                 </div>
             </div>
@@ -187,18 +187,18 @@
                     <i class="fas fa-quote-right"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>24</h3>
+                    <h3><%= stats.quotes %></h3>
                     <p>Hadiths & Citations</p>
                 </div>
             </div>
             
             <div class="stat-card">
                 <div class="stat-icon">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-hand-holding-heart"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>156</h3>
-                    <p>Membres inscrits</p>
+                    <h3><%= stats.donations %></h3>
+                    <p>Dons et campagnes</p>
                 </div>
             </div>
         </div>
@@ -272,11 +272,11 @@
                 <div class="admin-actions">
                     <a href="/admin/members" class="admin-btn admin-btn-primary">
                         <i class="fas fa-list"></i>
-                        Voir
+                        Gérer
                     </a>
-                    <a href="/admin/members/export" class="admin-btn admin-btn-secondary">
-                        <i class="fas fa-download"></i>
-                        Exporter
+                    <a href="/admin/members/new" class="admin-btn admin-btn-secondary">
+                        <i class="fas fa-plus"></i>
+                        Ajouter
                     </a>
                 </div>
             </div>
@@ -285,17 +285,17 @@
             <div class="admin-section-card">
                 <h3>
                     <i class="fas fa-hand-holding-heart"></i>
-                    Dons & Objectifs
+                    Dons & Campagnes
                 </h3>
-                <p>Suivez les dons et gérez les objectifs de collecte.</p>
+                <p>Suivez les dons et gérez les campagnes de collecte.</p>
                 <div class="admin-actions">
                     <a href="/admin/donations" class="admin-btn admin-btn-primary">
-                        <i class="fas fa-chart-line"></i>
-                        Statistiques
+                        <i class="fas fa-list"></i>
+                        Gérer
                     </a>
-                    <a href="/admin/donations/goals" class="admin-btn admin-btn-secondary">
-                        <i class="fas fa-bullseye"></i>
-                        Objectifs
+                    <a href="/admin/donations/new" class="admin-btn admin-btn-secondary">
+                        <i class="fas fa-plus"></i>
+                        Ajouter
                     </a>
                 </div>
             </div>

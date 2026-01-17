@@ -12,9 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Smooth Scroll
     initSmoothScroll();
     
-    // Donation Form
-    initDonationForm();
-    
     // Animations on Scroll
     initScrollAnimations();
     
@@ -110,56 +107,6 @@ function initSmoothScroll() {
 }
 
 // ========================================
-// DONATION FORM
-// ========================================
-function initDonationForm() {
-    const form = document.getElementById('donationForm');
-    if (!form) return;
-    
-    const amountBtns = document.querySelectorAll('.amount-btn');
-    const customAmountInput = document.getElementById('customAmount');
-    
-    // Handle predefined amounts
-    amountBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            // Remove active class from all buttons
-            amountBtns.forEach(b => b.classList.remove('active'));
-            
-            // Add active class to clicked button
-            btn.classList.add('active');
-            
-            // Set amount value
-            const amount = btn.getAttribute('data-amount');
-            customAmountInput.value = amount;
-        });
-    });
-    
-    // Handle custom amount input
-    customAmountInput.addEventListener('input', () => {
-        // Remove active class from all buttons
-        amountBtns.forEach(btn => btn.classList.remove('active'));
-    });
-    
-    // Handle form submission
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const amount = customAmountInput.value;
-        
-        if (!amount || amount < 5) {
-            alert('Le montant minimum est de 5€');
-            return;
-        }
-        
-        // TODO: Intégrer Stripe ici
-        console.log('Montant du don:', amount);
-        alert('Le système de paiement sera intégré prochainement avec Stripe.');
-    });
-}
-
-// ========================================
 // SCROLL ANIMATIONS
 // ========================================
 function initScrollAnimations() {
@@ -199,38 +146,6 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
-
-// ========================================
-// UTILITY FUNCTIONS
-// ========================================
-
-// Debounce function for performance
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Format date to French locale
-function formatDate(date) {
-    return new Date(date).toLocaleDateString('fr-FR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
-}
-
-// Export functions for use in other modules
-window.mosqueeBlue = {
-    debounce,
-    formatDate
-};
 
 // ========================================
 // QUOTES CAROUSEL
@@ -422,33 +337,39 @@ function initMosqueCarousel() {
     
     let currentSlide = 0;
     
+    // Image error handling
+    slides.forEach(slide => {
+        const img = slide.querySelector('img');
+        if (img) {
+            img.addEventListener('error', function() {
+                this.src = '/images/Logo_CIMG_VF_GT_MOSAIQUE.png';
+            });
+        }
+    });
+    
     function showSlide(index) {
         slides.forEach((slide, i) => {
-            if (i === index) {
-                slide.style.display = 'block';
-                slide.classList.add('active');
-            } else {
-                slide.style.display = 'none';
-                slide.classList.remove('active');
-            }
+            slide.classList.remove('active');
         });
+        slides[index].classList.add('active');
+        currentSlide = index;
     }
     
     function nextSlide() {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
+        const next = (currentSlide + 1) % slides.length;
+        showSlide(next);
     }
     
     function prevSlide() {
-        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-        showSlide(currentSlide);
+        const prev = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(prev);
     }
     
     if (prevBtn) prevBtn.addEventListener('click', prevSlide);
     if (nextBtn) nextBtn.addEventListener('click', nextSlide);
     
-    // Auto-advance every 5 seconds
-    setInterval(nextSlide, 5000);
+    // Auto-advance every 6 seconds
+    setInterval(nextSlide, 6000);
     
     // Initialize first slide
     showSlide(0);

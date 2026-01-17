@@ -506,7 +506,8 @@ router.post('/news/:id/delete', isAuthenticated, async (req, res) => {
 // ==================== QUOTES ROUTES ====================
 router.get('/quotes', isAuthenticated, async (req, res) => {
     try {
-        const quotes = await getAllQuotes();
+        const { getAllQuotesAdmin } = require('../data/quotes');
+        const quotes = await getAllQuotesAdmin();
         res.render('admin/quotes-list', { title: 'Citations', quotes });
     } catch (error) {
         console.error('Erreur:', error);
@@ -516,8 +517,9 @@ router.get('/quotes', isAuthenticated, async (req, res) => {
 
 router.get('/quotes/new', isAuthenticated, async (req, res) => {
     try {
-        const authors = await getAllAuthors();
-        res.render('admin/quote-form', { title: 'Nouvelle citation', quote: null, authors });
+        const { getAllQuoteSources } = require('../data/quoteSources');
+        const sources = await getAllQuoteSources();
+        res.render('admin/quote-form', { title: 'Nouvelle citation', quote: null, sources });
     } catch (error) {
         console.error('Erreur:', error);
         res.status(500).send('Erreur');
@@ -526,22 +528,20 @@ router.get('/quotes/new', isAuthenticated, async (req, res) => {
 
 router.post('/quotes', isAuthenticated, async (req, res) => {
     try {
-        // Vérifier la limite de 4 citations actives
-        if (req.body.active) {
-            const { getAllQuotes } = require('../data/quotes');
-            const allQuotes = await getAllQuotes();
-            const activeQuotes = allQuotes.filter(q => q.active);
-            
-            if (activeQuotes.length >= 4) {
-                return res.status(400).send('❌ Erreur: Vous avez déjà 4 citations actives. Désactivez-en une avant d\'en activer une nouvelle.');
-            }
+        const { getOrCreateQuoteSource } = require('../data/quoteSources');
+        
+        // Gérer la source (créer si nouvelle)
+        let authorName = req.body.author;
+        if (req.body.author === 'autre' && req.body.new_author) {
+            const newSource = await getOrCreateQuoteSource(req.body.new_author.trim());
+            authorName = newSource.name;
         }
         
         const quoteData = {
             text_original: req.body.text_original,
             text_fr: req.body.text_fr,
             text_tr: req.body.text_tr || null,
-            author: req.body.author,
+            author: authorName,
             active: req.body.active ? true : false
         };
         
@@ -555,9 +555,10 @@ router.post('/quotes', isAuthenticated, async (req, res) => {
 
 router.get('/quotes/:id/edit', isAuthenticated, async (req, res) => {
     try {
+        const { getAllQuoteSources } = require('../data/quoteSources');
         const quote = await getQuoteById(parseInt(req.params.id));
-        const authors = await getAllAuthors();
-        res.render('admin/quote-form', { title: 'Modifier citation', quote, authors });
+        const sources = await getAllQuoteSources();
+        res.render('admin/quote-form', { title: 'Modifier citation', quote, sources });
     } catch (error) {
         console.error('Erreur:', error);
         res.status(500).send('Erreur');
@@ -566,22 +567,20 @@ router.get('/quotes/:id/edit', isAuthenticated, async (req, res) => {
 
 router.post('/quotes/:id', isAuthenticated, async (req, res) => {
     try {
-        // Vérifier la limite de 4 citations actives
-        if (req.body.active) {
-            const { getAllQuotes } = require('../data/quotes');
-            const allQuotes = await getAllQuotes();
-            const activeQuotes = allQuotes.filter(q => q.active && q.id !== parseInt(req.params.id));
-            
-            if (activeQuotes.length >= 4) {
-                return res.status(400).send('❌ Erreur: Vous avez déjà 4 citations actives. Désactivez-en une avant d\'en activer une nouvelle.');
-            }
+        const { getOrCreateQuoteSource } = require('../data/quoteSources');
+        
+        // Gérer la source (créer si nouvelle)
+        let authorName = req.body.author;
+        if (req.body.author === 'autre' && req.body.new_author) {
+            const newSource = await getOrCreateQuoteSource(req.body.new_author.trim());
+            authorName = newSource.name;
         }
         
         const quoteData = {
             text_original: req.body.text_original,
             text_fr: req.body.text_fr,
             text_tr: req.body.text_tr || null,
-            author: req.body.author,
+            author: authorName,
             active: req.body.active ? true : false
         };
         

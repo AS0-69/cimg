@@ -140,7 +140,8 @@ function displayPrayerTimes(times) {
     // Mise à jour des horaires
     const prayerTimesContainer = document.getElementById('prayer-times');
     if (!prayerTimesContainer) return;
-    chourouk', 'dhuhr', 'asr', 'maghrib', 'isha', 'jumaa'];
+    
+    const prayers = ['fajr', 'chourouk', 'dhuhr', 'asr', 'maghrib', 'isha', 'jumaa'];
     const items = prayerTimesContainer.querySelectorAll('.prayer-time-item');
     
     items.forEach((item, index) => {
@@ -153,9 +154,10 @@ function displayPrayerTimes(times) {
             hourElement.textContent = times[prayer] || '--:--';
             
             // Highlight la prière actuelle ou prochaine (sauf Chourouk et Jumaa)
-            if (prayer !== 'chourouk' && prayer !== 'jumaa' && ighlight la prière actuelle ou prochaine
-            if (isCurrentPrayer(times[prayer])) {
-                item.classList.add('current-prayer');
+            if (prayer !== 'chourouk' && prayer !== 'jumaa') {
+                if (isCurrentPrayer(times[prayer])) {
+                    item.classList.add('current-prayer');
+                }
             }
         }
     });
@@ -283,14 +285,12 @@ window.mawaqit = {
 // ========================================
 // INSTRUCTIONS POUR LA CONFIGURATION
 // ========================================
-console.log(`
-🕌 Configuration des horaires de prière Mawaqit:
-
-1. Visitez: https://mawaqit.net/fr/mosquee-search
-2. Recherchez "Mosquée Bleue Villefranche-sur-Saône"
-3. Copiez l'UUID de votre mosquée
-4. Collez-le dans le fichier mawaqit.js à la ligne:
-   mosqueUUID: 'VOTRE-UUID-MOSQUEE'
-
-Alternative: Les horaires sont calculés localement en attendant la configuration.
-`);
+// 🕌 Configuration des horaires de prière Mawaqit:
+//
+// 1. Visitez: https://mawaqit.net/fr/mosquee-search
+// 2. Recherchez "Mosquée Bleue Villefranche-sur-Saône"
+// 3. Copiez l'UUID de votre mosquée
+// 4. Collez-le dans le fichier mawaqit.js à la ligne:
+//    mosqueUUID: 'VOTRE-UUID-MOSQUEE'
+//
+// Alternative: Les horaires sont calculés localement en attendant la configuration.);

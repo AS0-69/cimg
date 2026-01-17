@@ -5,20 +5,20 @@ const { getAllDonations } = require('../data/donations');
 // Page de don
 router.get('/', async (req, res) => {
   try {
-    // Récupérer les campagnes actives
+    // Récupérer les 3 campagnes actives les plus récentes
     const allDonations = await getAllDonations();
-    const activeDonations = allDonations.filter(d => d.active);
+    const activeDonations = allDonations.filter(d => d.active).slice(0, 3);
     
     res.render('don', { 
       title: 'Faire un don - Mosquée Bleue',
-      currentPath: req.path,
+      currentPath: '/don',
       donations: activeDonations
     });
   } catch (error) {
     console.error('Erreur chargement donations:', error);
     res.render('don', { 
       title: 'Faire un don - Mosquée Bleue',
-      currentPath: req.path,
+      currentPath: '/don',
       donations: []
     });
   }

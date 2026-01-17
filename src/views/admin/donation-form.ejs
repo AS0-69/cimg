@@ -1,18 +1,23 @@
-<%- include('../partials/admin-header', { title, activeNav: 'donations' }) %>
+<%- include('../partials/admin-head', { 
+    title, 
+    headerTitle: donation ? 'Modifier don' : 'Nouveau don',
+    headerIcon: 'hand-holding-heart',
+    activeNav: 'donations' 
+}) %>
 
     <div class="container">
-        <h2 style="margin-bottom: 2rem; color: #2d3748;"><i class="fas fa-hand-holding-heart"></i> <%= donation ? 'Modifier' : 'Nouvelle' %> campagne</h2>
+        <h2 class="page-title"><i class="fas fa-hand-holding-heart"></i> <%= donation ? 'Modifier' : 'Nouvelle' %> campagne</h2>
         <div class="form-card">
             <form method="POST" action="<%= donation ? `/admin/donations/${donation.id}` : '/admin/donations' %>" enctype="multipart/form-data">
                 
                 <div class="form-group">
                     <label>Titre de la campagne <span class="required">*</span></label>
-                    <input type="text" name="title" value="<%= donation ? donation.title : '' %>" required>
+                    <input type="text" name="title" id="title" value="<%= donation ? donation.title : '' %>" required maxlength="50" data-maxlength="50">
                 </div>
 
                 <div class="form-group">
                     <label>Description <span class="required">*</span></label>
-                    <textarea name="description" required><%= donation ? donation.description : '' %></textarea>
+                    <textarea name="description" id="description" required maxlength="300" data-maxlength="300"><%= donation ? donation.description : '' %></textarea>
                 </div>
 
                 <div class="form-row-3">
@@ -35,9 +40,9 @@
                     <div class="image-upload-area" id="uploadArea">
                         <i class="fas fa-images"></i>
                         <p><strong>Cliquez pour ajouter des images</strong></p>
-                        <p style="font-size: 0.875rem; color: #718096;">Vous pouvez téléverser plusieurs images</p>
+                        <p class="text-sm text-muted">Vous pouvez téléverser plusieurs images</p>
                     </div>
-                    <input type="file" name="images" id="images" accept="image/*" multiple style="display:none">
+                    <input type="file" name="images" id="images" accept="image/*" multiple class="hidden-input">
                     
                     <div class="image-list" id="image-list">
                         <% if (donation && donation.images && donation.images.length > 0) { %>
@@ -57,7 +62,7 @@
                 <div class="form-group">
                     <div class="checkbox-group">
                         <input type="checkbox" id="active" name="active" <%= donation && donation.active ? 'checked' : '' %>>
-                        <label for="active" style="margin-bottom: 0;">Campagne active (afficher sur le site)</label>
+                        <label for="active" class="mb-0">Campagne active (afficher sur le site)</label>
                     </div>
                 </div>
 

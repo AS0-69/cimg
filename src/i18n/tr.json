@@ -25,12 +25,12 @@
     "title": "İlham Verici Sözler"
   },
   "events": {
-    "title": "Yaklaşan Etkinlikler",
+    "title": "Etkinlikler ve Haberler",
     "subtitle": "Gelecek faaliyetlerimize katılın",
     "viewAll": "Tüm etkinlikleri görün",
     "register": "Kayıt Ol",
-    "page_title": "Etkinlikler ve Faaliyetler",
-    "page_subtitle": "Yaklaşan etkinliklerimizi ve faaliyetlerimizi keşfedin",
+    "page_title": "Etkinlikler ve Haberler",
+    "page_subtitle": "Yaklaşan etkinliklerimizi ve son haberleri keşfedin",
     "upcoming_events": "Yaklaşan Etkinlikler",
     "upcoming_events_desc": "Konferanslar, törenler ve özel etkinlikler",
     "activities": "Düzenli Faaliyetler",

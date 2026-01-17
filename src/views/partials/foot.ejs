@@ -13,5 +13,82 @@
     <script src="/js/modal.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/mawaqit.js"></script>
+    <script>
+        // Page transition subtile
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ajouter transition sur les liens internes
+            const links = document.querySelectorAll('a[href^="/"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Ignorer si lien externe ou ancre
+                    if (this.hostname !== window.location.hostname || this.hash) return;
+                    // Ignorer si ouvre dans nouvel onglet
+                    if (this.target === '_blank') return;
+                    
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    
+                    document.body.style.opacity = '0';
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 200);
+                });
+            });
+        });
+
+        // Load More Buttons - Événements Page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Upcoming Events (3 par 3)
+            const loadMoreUpcoming = document.getElementById('loadMoreUpcoming');
+            if (loadMoreUpcoming) {
+                let upcomingVisible = 3;
+                loadMoreUpcoming.addEventListener('click', function() {
+                    const upcomingEvents = document.querySelectorAll('#upcomingEventsGrid .event-card');
+                    const upcomingToShow = Array.from(upcomingEvents).slice(upcomingVisible, upcomingVisible + 3);
+                    upcomingToShow.forEach(event => {
+                        event.classList.remove('hidden-event');
+                    });
+                    upcomingVisible += 3;
+                    if (upcomingVisible >= upcomingEvents.length) {
+                        loadMoreUpcoming.style.display = 'none';
+                    }
+                });
+            }
+
+            // News (3 par 3)
+            const loadMoreNews = document.getElementById('loadMoreNews');
+            if (loadMoreNews) {
+                let newsVisible = 3;
+                loadMoreNews.addEventListener('click', function() {
+                    const newsArticles = document.querySelectorAll('#newsGrid .event-card');
+                    const newsToShow = Array.from(newsArticles).slice(newsVisible, newsVisible + 3);
+                    newsToShow.forEach(article => {
+                        article.classList.remove('hidden-event');
+                    });
+                    newsVisible += 3;
+                    if (newsVisible >= newsArticles.length) {
+                        loadMoreNews.style.display = 'none';
+                    }
+                });
+            }
+
+            // Past Events (3 par 3)
+            const loadMorePast = document.getElementById('loadMorePast');
+            if (loadMorePast) {
+                let pastVisible = 3;
+                loadMorePast.addEventListener('click', function() {
+                    const pastEvents = document.querySelectorAll('#pastEventsGrid .event-card');
+                    const pastToShow = Array.from(pastEvents).slice(pastVisible, pastVisible + 3);
+                    pastToShow.forEach(event => {
+                        event.classList.remove('hidden-event');
+                    });
+                    pastVisible += 3;
+                    if (pastVisible >= pastEvents.length) {
+                        loadMorePast.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

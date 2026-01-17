@@ -25,12 +25,12 @@
     "title": "Paroles inspirantes"
   },
   "events": {
-    "title": "Événements à venir",
+    "title": "Événements & Actualités",
     "subtitle": "Rejoignez-nous pour nos prochaines activités",
     "viewAll": "Voir tous les événements",
     "register": "S'inscrire",
-    "page_title": "Événements & Activités",
-    "page_subtitle": "Découvrez nos prochains événements et activités",
+    "page_title": "Événements & Actualités",
+    "page_subtitle": "Découvrez nos prochains événements et les dernières actualités",
     "upcoming_events": "Événements à venir",
     "upcoming_events_desc": "Conférences, cérémonies et événements spéciaux",
     "activities": "Activités régulières",

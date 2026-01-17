@@ -86,7 +86,7 @@
                                         <th>Fonction</th>
                                         <th>Contact</th>
                                         <th>Ordre</th>
-                                        <th style="text-align: right;">Actions</th>
+                                        <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -96,8 +96,8 @@
                                                 <% if (member.image) { %>
                                                     <img src="<%= member.image %>" alt="<%= member.first_name %>" class="img-thumb">
                                                 <% } else { %>
-                                                    <div class="img-thumb" style="background: #e2e8f0; display: flex; align-items: center; justify-content: center;">
-                                                        <i class="fas fa-user" style="color: #a0aec0;"></i>
+                                                    <div class="img-thumb img-placeholder">
+                                                        <i class="fas fa-user"></i>
                                                     </div>
                                                 <% } %>
                                             </td>
@@ -105,19 +105,19 @@
                                             <td><%= member.role %></td>
                                             <td>
                                                 <% if (member.email) { %>
-                                                    <div style="font-size: 0.875rem;"><i class="fas fa-envelope"></i> <%= member.email %></div>
+                                                    <div class="text-sm"><i class="fas fa-envelope"></i> <%= member.email %></div>
                                                 <% } %>
                                                 <% if (member.phone) { %>
-                                                    <div style="font-size: 0.875rem;"><i class="fas fa-phone"></i> <%= member.phone %></div>
+                                                    <div class="text-sm"><i class="fas fa-phone"></i> <%= member.phone %></div>
                                                 <% } %>
                                             </td>
                                             <td><span class="badge badge-primary"><%= member.order %></span></td>
                                             <td>
-                                                <div class="actions" style="justify-content: flex-end;">
+                                                <div class="actions flex-end">
                                                     <a href="/admin/members/<%= member.id %>/edit" class="btn btn-secondary">
                                                         <i class="fas fa-edit"></i> Modifier
                                                     </a>
-                                                    <form method="POST" action="/admin/members/<%= member.id %>/delete" style="display: inline;" class="delete-form" data-message="Supprimer ce membre ?">
+                                                    <form method="POST" action="/admin/members/<%= member.id %>/delete" class="form-inline delete-form" data-message="Supprimer ce membre ?">
                                                         <button type="submit" class="btn btn-danger">
                                                             <i class="fas fa-trash"></i> Supprimer
                                                         </button>
