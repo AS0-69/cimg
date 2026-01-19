@@ -1,30 +1,23 @@
-<%- include('../partials/admin-head', { 
-    title, 
-    headerTitle: event ? 'Modifier événement' : 'Nouvel événement',
-    headerIcon: 'calendar-alt',
-    activeNav: 'events' 
-}) %>
+<%- include('../partials/admin-form-head') %>
 
     <div class="container">
-        <h2 class="page-title"><i class="fas fa-calendar-plus"></i> <%= event ? 'Modifier' : 'Nouvel' %> événement</h2>
         <div class="form-card">
 
             <form method="POST" action="<%= event ? `/admin/events/${event.id}` : '/admin/events' %>" enctype="multipart/form-data">
                 
-                <!-- Type -->
+                <!-- Pôle -->
                 <div class="form-group">
-                    <label>Type <span class="required">*</span></label>
-                    <select name="type" id="type" required>
+                    <label>Pôle organisateur <span class="required">*</span></label>
+                    <select name="pole" id="pole" required>
                         <option value="">-- Sélectionner --</option>
-                        <% types.forEach(type => { %>
-                            <option value="<%= type.name %>" <%= event && event.type === type.name ? 'selected' : '' %>>
-                                <%= type.label_fr %>
-                            </option>
-                        <% }); %>
-                        <option value="autre">➕ Autre (nouveau type)</option>
+                        <option value="AT" <%= event && event.pole === 'AT' ? 'selected' : '' %>>AT - Ana Teşkilat (Hommes adultes)</option>
+                        <option value="GT" <%= event && event.pole === 'GT' ? 'selected' : '' %>>GT - Gençlik Teşkilatı (Jeunes hommes)</option>
+                        <option value="KT" <%= event && event.pole === 'KT' ? 'selected' : '' %>>KT - Kadın Teşkilatı (Femmes adultes)</option>
+                        <option value="KGT" <%= event && event.pole === 'KGT' ? 'selected' : '' %>>KGT - Kadın Gençlik Teşkilatı (Jeunes femmes)</option>
+                        <option value="autre">➕ Autre</option>
                     </select>
-                    <div class="conditional-field" id="new_type_field">
-                        <input type="text" name="new_type" placeholder="Nom du nouveau type">
+                    <div class="conditional-field" id="new_pole_field">
+                        <input type="text" name="new_pole" placeholder="Nom du nouveau pôle">
                     </div>
                 </div>
 
@@ -87,7 +80,7 @@
                 <!-- Description -->
                 <div class="form-group">
                     <label>Description <span class="required">*</span></label>
-                    <textarea name="description" id="description" required maxlength="300" data-maxlength="300"><%= event ? event.description : '' %></textarea>
+                    <textarea name="description" id="description" required maxlength="500" data-maxlength="500"><%= event ? event.description : '' %></textarea>
                 </div>
 
                 <!-- Images -->
@@ -101,8 +94,12 @@
                     <input type="file" name="images" id="images" accept="image/*" multiple class="hidden-input">
                     
                     <div class="image-list" id="image-list">
-                        <% if (event && event.images && event.images.length > 0) { %>
-                            <% event.images.forEach((img, idx) => { %>
+                        <% if (event && event.images) { %>
+                            <% 
+                            const imageArray = typeof event.images === 'string' ? JSON.parse(event.images) : event.images;
+                            if (imageArray && imageArray.length > 0) {
+                                imageArray.forEach((img, idx) => { 
+                            %>
                                 <div class="image-item" data-img="<%= img %>">
                                     <img src="<%= img %>" alt="Image <%= idx + 1 %>">
                                     <span class="image-item-name"><%= img.split('/').pop() %></span>
@@ -110,7 +107,10 @@
                                         <i class="fas fa-trash"></i> Supprimer
                                     </button>
                                 </div>
-                            <% }); %>
+                            <% 
+                                });
+                            }
+                            %>
                         <% } %>
                     </div>
                 </div>

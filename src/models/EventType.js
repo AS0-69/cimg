@@ -10,7 +10,6 @@ const EventType = sequelize.define('EventType', {
   name: {
     type: DataTypes.STRING(100),
     allowNull: false,
-    unique: true,
     comment: 'Nom du type (event, activity, ou personnalisé)'
   },
   label_fr: {

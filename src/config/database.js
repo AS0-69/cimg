@@ -18,7 +18,9 @@ const sequelize = new Sequelize(
     define: {
       charset: 'utf8mb4',
       collate: 'utf8mb4_unicode_ci'
-    }
+    },
+    // Désactiver la synchronisation automatique pour éviter les conflits d'index
+    sync: { alter: false, force: false }
   }
 );
 

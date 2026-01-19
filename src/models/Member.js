@@ -37,16 +37,6 @@ const Member = sequelize.define('Member', {
     allowNull: true,
     comment: 'Photo du membre'
   },
-  email: {
-    type: DataTypes.STRING(255),
-    allowNull: true,
-    comment: 'Email de contact'
-  },
-  phone: {
-    type: DataTypes.STRING(50),
-    allowNull: true,
-    comment: 'Téléphone'
-  },
   order: {
     type: DataTypes.INTEGER,
     defaultValue: 0,

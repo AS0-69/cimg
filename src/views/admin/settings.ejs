@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            color: #2d3748;
+        }
+        .header {
+            background: #009972;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+        }
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .nav a:hover, .nav a.active {
+            background: rgba(255,255,255,0.2);
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .page-header h2 {
+            font-size: 2rem;
+            color: #1a202c;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: #009972;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #007d5e;
+            transform: translateY(-1px);
+        }
+        .btn-success {
+            background: #38a169;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #2f855a;
+        }
+        .btn-danger {
+            background: #e53e3e;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        .btn-danger:hover {
+            background: #c53030;
+        }
+        .btn-edit {
+            background: #3182ce;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+        }
+        .btn-edit:hover {
+            background: #2c5aa0;
+        }
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        thead {
+            background: #f7fafc;
+        }
+        th {
+            text-align: left;
+            padding: 1rem;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.875rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.875rem;
+        }
+        tbody tr:hover {
+            background: #f7fafc;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .badge-success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .badge-danger {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        .badge-warning {
+            background: #feebc8;
+            color: #7c2d12;
+        }
+        .badge-primary {
+            background: #bee3f8;
+            color: #2c5282;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #718096;
+        }
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <%- include('../partials/admin-nav.ejs') %>
+
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h2><i class="fas fa-cog"></i> Paramètres</h2>
+                <p style="color: #718096; margin-top: 0.5rem;">Gérez les utilisateurs, les permissions et les tags</p>
+            </div>
+            <a href="/admin/users/new" class="btn btn-primary">
+                <i class="fas fa-user-plus"></i>
+                Nouvel utilisateur
+            </a>
+        </div>
+
+        <div class="table-container">
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem; color: #2d3748;">
+                <i class="fas fa-users"></i> Utilisateurs administrateurs
+            </h3>
+            
+            <% if (users.length === 0) { %>
+                <div class="empty-state">
+                    <i class="fas fa-users"></i>
+                    <p>Aucun utilisateur trouvé</p>
+                </div>
+            <% } else { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Utilisateur</th>
+                            <th>Tag / Pôle</th>
+                            <th>Permissions</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach(user => { %>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 40px; height: 40px; border-radius: 50%; background: #009972; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
+                                            <%= user.username.substring(0, 2).toUpperCase() %>
+                                        </div>
+                                        <div>
+                                            <div style="font-weight: 600; color: #2d3748;"><%= user.username %></div>
+                                            <div style="font-size: 0.75rem; color: #718096;">ID: <%= user.id %></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <% if (user.tag) { %>
+                                        <% 
+                                        // Trouver le nom du tag
+                                        const userTag = tags.find(t => t.id === user.tag);
+                                        const tagName = userTag ? userTag.name : user.tag;
+                                        %>
+                                        <span class="badge badge-primary">
+                                            <i class="fas fa-tag"></i>
+                                            <%= tagName %>
+                                        </span>
+                                    <% } else { %>
+                                        <span style="color: #cbd5e0;">-</span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% 
+                                    const perms = user.permissions || {};
+                                    const activePerms = Object.keys(perms).filter(k => perms[k]);
+                                    const permLabels = {
+                                        events: 'Événements',
+                                        news: 'Actualités',
+                                        quotes: 'Citations',
+                                        members: 'Membres',
+                                        donations: 'Dons',
+                                        settings: 'Paramètres',
+                                        audit_logs: 'Audit',
+                                        users: 'Utilisateurs'
+                                    };
+                                    %>
+                                    <div style="display: flex; flex-wrap: wrap; gap: 0.25rem;">
+                                        <% if (activePerms.length === 8) { %>
+                                            <span class="badge badge-warning">
+                                                <i class="fas fa-crown"></i>
+                                                Super Admin
+                                            </span>
+                                        <% } else if (activePerms.length > 0) { %>
+                                            <% activePerms.slice(0, 3).forEach(perm => { %>
+                                                <span class="badge badge-success"><%= permLabels[perm] %></span>
+                                            <% }); %>
+                                            <% if (activePerms.length > 3) { %>
+                                                <span class="badge badge-success">+<%= activePerms.length - 3 %></span>
+                                            <% } %>
+                                        <% } else { %>
+                                            <span class="badge badge-danger">Aucune</span>
+                                        <% } %>
+                                    </div>
+                                </td>
+                                <td>
+                                    <% if (user.active) { %>
+                                        <span class="badge badge-success">
+                                            <i class="fas fa-check-circle"></i>
+                                            Actif
+                                        </span>
+                                    <% } else { %>
+                                        <span class="badge badge-danger">
+                                            <i class="fas fa-times-circle"></i>
+                                            Inactif
+                                        </span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <a href="/admin/users/<%= user.id %>/edit" class="btn btn-edit">
+                                        <i class="fas fa-edit"></i>
+                                        Modifier
+                                    </a>
+                                    <button class="btn btn-danger" data-user-id="<%= user.id %>" data-username="<%= user.username %>" data-action="delete">
+                                        <i class="fas fa-trash"></i>
+                                        Supprimer
+                                    </button>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            <% } %>
+        </div>
+
+        <!-- Section Journal d'Audit -->
+        <div class="table-container" style="margin-top: 3rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border-bottom: 1px solid #e2e8f0;">
+                <div>
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem; color: #1a202c;">
+                        <i class="fas fa-history"></i> Journal d'Audit
+                    </h3>
+                    <p style="color: #718096; font-size: 0.875rem;">Dernières activités administratives</p>
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <select id="auditFilter" style="padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.875rem;">
+                        <option value="all">Toutes les actions</option>
+                        <option value="CREATE">Créations</option>
+                        <option value="UPDATE">Modifications</option>
+                        <option value="DELETE">Suppressions</option>
+                        <option value="LOGIN_SUCCESS">Connexions</option>
+                    </select>
+                    <button class="btn btn-secondary" id="refreshAudit" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+                        <i class="fas fa-sync-alt"></i> Actualiser
+                    </button>
+                </div>
+            </div>
+
+            <div id="auditLogsContainer" style="max-height: 500px; overflow-y: auto;">
+                <table style="width: 100%;">
+                    <thead style="position: sticky; top: 0; background: #f7fafc; z-index: 1;">
+                        <tr>
+                            <th style="width: 140px;">Date & Heure</th>
+                            <th style="width: 120px;">Utilisateur</th>
+                            <th style="width: 100px;">Action</th>
+                            <th style="width: 120px;">Ressource</th>
+                            <th>Description</th>
+                            <th style="width: 80px;">Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody id="auditLogsBody">
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 2rem; color: #718096;">
+                                <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                                <div>Chargement des logs...</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="padding: 1rem; border-top: 1px solid #e2e8f0; background: #f7fafc; display: flex; justify-content: space-between; align-items: center;">
+                <div style="color: #718096; font-size: 0.875rem;">
+                    <i class="fas fa-info-circle"></i> Page <span id="currentPageDisplay">1</span> - 50 entrées par page
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-secondary" id="prevPage" style="padding: 0.5rem 1rem; font-size: 0.875rem;" disabled>
+                        <i class="fas fa-chevron-left"></i> Précédent
+                    </button>
+                    <button class="btn btn-secondary" id="nextPage" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+                        Suivant <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<%- include('../partials/admin-modals.ejs') %>
+
+<script>
+// Utiliser addEventListener au lieu de onclick inline pour éviter les problèmes CSP
+document.addEventListener('DOMContentLoaded', function() {
+    // Gestion des boutons de suppression
+    document.querySelectorAll('[data-action="delete"]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const userId = this.getAttribute('data-user-id');
+            const username = this.getAttribute('data-username');
+            
+            showDeleteModal(
+                `⚠️ Êtes-vous sûr de vouloir supprimer l'utilisateur "${username}" ?\n\nCette action est irréversible !`,
+                function() {
+                    fetch(`/admin/users/${userId}/delete`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showNotification('Utilisateur supprimé avec succès', 'success');
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1500);
+                        } else {
+                            showNotification(data.message || 'Erreur lors de la suppression', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur:', error);
+                        showNotification('Erreur lors de la suppression', 'error');
+                    });
+                }
+            );
+        });
+    });
+
+    // Charger les logs d'audit
+    loadAuditLogs();
+    
+    // Actualiser les logs
+    document.getElementById('refreshAudit').addEventListener('click', () => {
+        currentPage = 0;
+        loadAuditLogs();
+    });
+    
+    // Filtrer les logs
+    document.getElementById('auditFilter').addEventListener('change', () => {
+        currentPage = 0;
+        loadAuditLogs();
+    });
+    
+    // Pagination
+    document.getElementById('prevPage').addEventListener('click', () => {
+        if (currentPage > 0) {
+            currentPage--;
+            loadAuditLogs();
+        }
+    });
+    
+    document.getElementById('nextPage').addEventListener('click', () => {
+        currentPage++;
+        loadAuditLogs();
+    });
+});
+
+function toggleUserStatus(userId, isActive) {
+    const action = isActive ? 'désactiver' : 'activer';
+    
+    showDeleteModal(
+        `Voulez-vous vraiment ${action} cet utilisateur ?`,
+        function() {
+            fetch(`/admin/users/${userId}/toggle-status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification('Statut modifié avec succès', 'success');
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showNotification(data.message || 'Erreur lors de la modification', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                showNotification('Une erreur est survenue', 'error');
+            });
+        }
+    );
+}
+
+// Chargement des logs d'audit
+let currentPage = 0;
+const logsPerPage = 50;
+
+function loadAuditLogs() {
+    const filter = document.getElementById('auditFilter').value;
+    const tbody = document.getElementById('auditLogsBody');
+    
+    tbody.innerHTML = `
+        <tr>
+            <td colspan="6" style="text-align: center; padding: 2rem; color: #718096;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                <div>Chargement des logs...</div>
+            </td>
+        </tr>
+    `;
+    
+    // Simuler le chargement des logs (en production, faire un fetch vers l'API)
+    fetch(`/admin/api/audit-logs?filter=${filter}&page=${currentPage}&limit=${logsPerPage}`)
+        .then(response => response.json())
+        .then(data => {
+            displayAuditLogs(data.logs || []);
+            updatePaginationButtons(data.logs || []);
+        })
+        .catch(error => {
+            console.error('Erreur chargement logs:', error);
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 2rem; color: #e53e3e;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <div>Erreur lors du chargement des logs</div>
+                        <div style="font-size: 0.875rem; margin-top: 0.5rem; color: #718096;">
+                            ${error.message}
+                        </div>
+                    </td>
+                </tr>
+            `;
+        });
+}
+
+function updatePaginationButtons(logs) {
+    const prevBtn = document.getElementById('prevPage');
+    const nextBtn = document.getElementById('nextPage');
+    const pageDisplay = document.getElementById('currentPageDisplay');
+    
+    // Mettre à jour l'affichage de la page
+    pageDisplay.textContent = currentPage + 1;
+    
+    // Activer/désactiver le bouton précédent
+    prevBtn.disabled = currentPage === 0;
+    
+    // Désactiver le bouton suivant s'il y a moins de 50 entrées (dernière page)
+    nextBtn.disabled = logs.length < logsPerPage;
+}
+
+function displayAuditLogs(logs) {
+    const tbody = document.getElementById('auditLogsBody');
+    
+    if (!logs || logs.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 2rem; color: #718096;">
+                    <i class="far fa-clipboard" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                    <div>Aucun log disponible</div>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+    
+    const actionColors = {
+        'CREATE': '#38a169',
+        'UPDATE': '#3182ce',
+        'DELETE': '#e53e3e',
+        'LOGIN_SUCCESS': '#805ad5',
+        'LOGIN_FAILED': '#e53e3e',
+        'EXPORT': '#d69e2e'
+    };
+    
+    const actionIcons = {
+        'CREATE': 'fa-plus-circle',
+        'UPDATE': 'fa-edit',
+        'DELETE': 'fa-trash',
+        'LOGIN_SUCCESS': 'fa-sign-in-alt',
+        'LOGIN_FAILED': 'fa-exclamation-circle',
+        'EXPORT': 'fa-download'
+    };
+    
+    tbody.innerHTML = logs.map(log => {
+        // Parser la date
+        let dateStr = '-';
+        let timeStr = '-';
+        
+        if (log.createdAt) {
+            try {
+                const date = new Date(log.createdAt);
+                
+                if (!isNaN(date.getTime())) {
+                    dateStr = date.toLocaleDateString('fr-FR', { 
+                        year: 'numeric', 
+                        month: '2-digit', 
+                        day: '2-digit' 
+                    });
+                    timeStr = date.toLocaleTimeString('fr-FR', { 
+                        hour: '2-digit', 
+                        minute: '2-digit',
+                        second: '2-digit'
+                    });
+                }
+            } catch (e) {
+                console.error('Erreur parsing date:', log.createdAt, e);
+            }
+        }
+        
+        const color = actionColors[log.action] || '#718096';
+        const icon = actionIcons[log.action] || 'fa-circle';
+        
+        return `
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 0.75rem;">
+                    <div style="font-weight: 500; font-size: 0.875rem;">${dateStr}</div>
+                    <div style="color: #718096; font-size: 0.75rem;">${timeStr}</div>
+                </td>
+                <td style="padding: 0.75rem;">
+                    <span style="font-weight: 500;">${log.username || 'Système'}</span>
+                </td>
+                <td style="padding: 0.75rem;">
+                    <span style="color: ${color}; font-weight: 600; font-size: 0.875rem;">
+                        <i class="fas ${icon}"></i> ${log.action}
+                    </span>
+                </td>
+                <td style="padding: 0.75rem;">
+                    <span style="font-size: 0.875rem;">${log.resource_type || '-'}</span>
+                    ${log.resource_id ? `<br><span style="color: #718096; font-size: 0.75rem;">ID: ${log.resource_id}</span>` : ''}
+                </td>
+                <td style="padding: 0.75rem;">
+                    <div style="font-size: 0.875rem;">${log.description || log.resource_name || '-'}</div>
+                </td>
+                <td style="padding: 0.75rem; text-align: center;">
+                    ${log.status === 'SUCCESS' 
+                        ? '<span style="color: #38a169;"><i class="fas fa-check-circle"></i></span>'
+                        : '<span style="color: #e53e3e;"><i class="fas fa-times-circle"></i></span>'
+                    }
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+</script>
+
+</body>
+</html>

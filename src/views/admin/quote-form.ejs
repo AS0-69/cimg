@@ -1,24 +1,18 @@
-<%- include('../partials/admin-head', { 
-    title, 
-    headerTitle: quote ? 'Modifier citation' : 'Nouvelle citation',
-    headerIcon: 'quote-right',
-    activeNav: 'quotes' 
-}) %>
+<%- include('../partials/admin-form-head') %>
 
     <div class="container">
-        <h2 class="page-title"><i class="fas fa-quote-right"></i> <%= quote ? 'Modifier' : 'Nouvelle' %> citation</h2>
         <div class="form-card">
             <form method="POST" action="<%= quote ? `/admin/quotes/${quote.id}` : '/admin/quotes' %>">
                 
                 <div class="form-group">
                     <label>Texte original (Arabe) <span class="required">*</span></label>
-                    <textarea name="text_original" id="text_original" required class="text-rtl" maxlength="60" data-maxlength="60"><%= quote ? quote.text_original : '' %></textarea>
+                    <textarea name="text_original" id="text_original" required class="text-rtl" maxlength="120" data-maxlength="120"><%= quote ? quote.text_original : '' %></textarea>
                     <small class="text-muted">Le texte en arabe (Coran, Hadith, etc.)</small>
                 </div>
 
                 <div class="form-group">
                     <label>Traduction / Interprétation <span class="required">*</span></label>
-                    <textarea name="text_fr" id="text_fr" required maxlength="60" data-maxlength="60"><%= quote ? quote.text_fr : '' %></textarea>
+                    <textarea name="text_fr" id="text_fr" required maxlength="120" data-maxlength="120"><%= quote ? quote.text_fr : '' %></textarea>
                     <small class="text-muted">La traduction ou interprétation du texte</small>
                 </div>
 

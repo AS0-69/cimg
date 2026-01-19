@@ -1,325 +1,263 @@
-<%- include('../partials/head.ejs') %>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Admin CIMG</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            color: #2d3748;
+        }
+        .header {
+            background: #009972;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+        }
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .nav a:hover, .nav a.active {
+            background: rgba(255,255,255,0.2);
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .welcome {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .welcome h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #1a202c;
+        }
+        .welcome p {
+            color: #718096;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        .stat-icon.events {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .stat-icon.news {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .stat-icon.quotes {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .stat-icon.members {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        .stat-icon.donations {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        .stat-icon.users {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+        .stat-info h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #009972;
+        }
+        .stat-info p {
+            color: #718096;
+            font-size: 0.875rem;
+        }
+        .quick-actions {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .quick-actions h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #1a202c;
+        }
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            background: #f7fafc;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #2d3748;
+            transition: all 0.2s;
+        }
+        .action-btn:hover {
+            background: #009972;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,153,114,0.3);
+        }
+        .action-btn i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <%- include('../partials/admin-nav.ejs') %>
 
-<style>
-/* Admin specific styles */
-.admin-dashboard {
-    min-height: 100vh;
-    background: var(--color-gray-50);
-    padding: var(--spacing-2xl) 0;
-}
-
-.admin-header {
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-    color: white;
-    padding: var(--spacing-xl) 0;
-    margin-bottom: var(--spacing-2xl);
-}
-
-.admin-header h1 {
-    color: white;
-    font-size: 2rem;
-    margin-bottom: var(--spacing-sm);
-}
-
-.admin-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--spacing-xl);
-    margin-bottom: var(--spacing-2xl);
-}
-
-.stat-card {
-    background: white;
-    padding: var(--spacing-xl);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-}
-
-.stat-icon {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5rem;
-}
-
-.stat-info h3 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-secondary);
-    margin-bottom: 0.25rem;
-}
-
-.stat-info p {
-    color: var(--color-gray-600);
-    font-size: 0.95rem;
-}
-
-.admin-sections {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--spacing-xl);
-}
-
-.admin-section-card {
-    background: white;
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.admin-section-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-.admin-section-card h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--color-secondary);
-    margin-bottom: var(--spacing-md);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.admin-section-card h3 i {
-    color: var(--color-primary);
-}
-
-.admin-section-card p {
-    color: var(--color-gray-600);
-    margin-bottom: var(--spacing-lg);
-    line-height: 1.6;
-}
-
-.admin-actions {
-    display: flex;
-    gap: var(--spacing-sm);
-}
-
-.admin-btn {
-    flex: 1;
-    padding: var(--spacing-sm) var(--spacing-md);
-    border: none;
-    border-radius: var(--radius-md);
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.admin-btn-primary {
-    background: var(--color-primary);
-    color: white;
-}
-
-.admin-btn-primary:hover {
-    background: var(--color-primary-dark);
-}
-
-.admin-btn-secondary {
-    background: var(--color-gray-200);
-    color: var(--color-gray-700);
-}
-
-.admin-btn-secondary:hover {
-    background: var(--color-gray-300);
-}
-
-@media (max-width: 768px) {
-    .admin-stats {
-        grid-template-columns: 1fr;
-    }
-    
-    .admin-sections {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
-
-<div class="admin-dashboard">
-    <div class="admin-header">
-        <div class="container">
-            <h1><i class="fas fa-tachometer-alt"></i> Tableau de bord administrateur</h1>
-            <p>Gérez le contenu et les activités de la mosquée</p>
-        </div>
-    </div>
-    
     <div class="container">
-        <!-- Stats -->
-        <div class="admin-stats">
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-calendar-alt"></i>
-                </div>
-                <div class="stat-info">
-                    <h3><%= stats.events %></h3>
-                    <p>Événements actifs</p>
-                </div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-newspaper"></i>
-                </div>
-                <div class="stat-info">
-                    <h3><%= stats.news %></h3>
-                    <p>Actualités publiées</p>
-                </div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-quote-right"></i>
-                </div>
-                <div class="stat-info">
-                    <h3><%= stats.quotes %></h3>
-                    <p>Hadiths & Citations</p>
-                </div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-hand-holding-heart"></i>
-                </div>
-                <div class="stat-info">
-                    <h3><%= stats.donations %></h3>
-                    <p>Dons et campagnes</p>
-                </div>
-            </div>
+        <div class="welcome">
+            <h2><i class="fas fa-chart-line"></i> Tableau de bord</h2>
+            <p>Bienvenue dans l'espace d'administration de la CIMG Mosquée Bleu</p>
         </div>
-        
-        <!-- Admin Sections -->
-        <div class="admin-sections">
-            <!-- Événements -->
-            <div class="admin-section-card">
-                <h3>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-icon events">
                     <i class="fas fa-calendar-alt"></i>
-                    Événements
-                </h3>
-                <p>Gérez les événements, conférences et activités de la mosquée.</p>
-                <div class="admin-actions">
-                    <a href="/admin/events" class="admin-btn admin-btn-primary">
-                        <i class="fas fa-list"></i>
-                        Gérer
-                    </a>
-                    <a href="/admin/events/new" class="admin-btn admin-btn-secondary">
-                        <i class="fas fa-plus"></i>
-                        Ajouter
-                    </a>
+                </div>
+                <div class="stat-info">
+                    <h3><%= stats.events || 0 %></h3>
+                    <p>Événements</p>
                 </div>
             </div>
-            
-            <!-- Actualités -->
-            <div class="admin-section-card">
-                <h3>
+
+            <div class="stat-card">
+                <div class="stat-icon news">
                     <i class="fas fa-newspaper"></i>
-                    Actualités
-                </h3>
-                <p>Publiez et modifiez les actualités de la communauté.</p>
-                <div class="admin-actions">
-                    <a href="/admin/news" class="admin-btn admin-btn-primary">
-                        <i class="fas fa-list"></i>
-                        Gérer
-                    </a>
-                    <a href="/admin/news/new" class="admin-btn admin-btn-secondary">
-                        <i class="fas fa-plus"></i>
-                        Ajouter
-                    </a>
+                </div>
+                <div class="stat-info">
+                    <h3><%= stats.news || 0 %></h3>
+                    <p>Actualités</p>
                 </div>
             </div>
-            
-            <!-- Hadiths & Citations -->
-            <div class="admin-section-card">
-                <h3>
-                    <i class="fas fa-quote-right"></i>
-                    Hadiths & Citations
-                </h3>
-                <p>Gérez les citations du Coran et les Hadiths affichés.</p>
-                <div class="admin-actions">
-                    <a href="/admin/quotes" class="admin-btn admin-btn-primary">
-                        <i class="fas fa-list"></i>
-                        Gérer
-                    </a>
-                    <a href="/admin/quotes/new" class="admin-btn admin-btn-secondary">
-                        <i class="fas fa-plus"></i>
-                        Ajouter
-                    </a>
+
+            <div class="stat-card">
+                <div class="stat-icon quotes">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><%= stats.quotes || 0 %></h3>
+                    <p>Citations</p>
                 </div>
             </div>
-            
-            <!-- Membres -->
-            <div class="admin-section-card">
-                <h3>
+
+            <div class="stat-card">
+                <div class="stat-icon members">
                     <i class="fas fa-users"></i>
-                    Membres
-                </h3>
-                <p>Consultez et gérez les adhésions des membres.</p>
-                <div class="admin-actions">
-                    <a href="/admin/members" class="admin-btn admin-btn-primary">
-                        <i class="fas fa-list"></i>
-                        Gérer
-                    </a>
-                    <a href="/admin/members/new" class="admin-btn admin-btn-secondary">
-                        <i class="fas fa-plus"></i>
-                        Ajouter
-                    </a>
+                </div>
+                <div class="stat-info">
+                    <h3><%= stats.members || 0 %></h3>
+                    <p>Membres</p>
                 </div>
             </div>
-            
-            <!-- Dons -->
-            <div class="admin-section-card">
-                <h3>
+
+            <div class="stat-card">
+                <div class="stat-icon donations">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><%= stats.donations || 0 %></h3>
+                    <p>Dons</p>
+                </div>
+            </div>
+
+            <% if (locals.isSuperAdmin) { %>
+            <div class="stat-card">
+                <div class="stat-icon users">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><%= stats.users || 0 %></h3>
+                    <p>Utilisateurs</p>
+                </div>
+            </div>
+            <% } %>
+        </div>
+
+        <div class="quick-actions">
+            <h3><i class="fas fa-bolt"></i> Actions rapides</h3>
+            <div class="actions-grid">
+                <a href="/admin/events/new" class="action-btn">
+                    <i class="fas fa-calendar-plus"></i>
+                    <span>Nouvel événement</span>
+                </a>
+                <a href="/admin/news/new" class="action-btn">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Nouvelle actualité</span>
+                </a>
+                <a href="/admin/quotes/new" class="action-btn">
+                    <i class="fas fa-quote-right"></i>
+                    <span>Nouvelle citation</span>
+                </a>
+                <a href="/admin/members/new" class="action-btn">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Nouveau membre</span>
+                </a>
+                <a href="/admin/donations/new" class="action-btn">
                     <i class="fas fa-hand-holding-heart"></i>
-                    Dons & Campagnes
-                </h3>
-                <p>Suivez les dons et gérez les campagnes de collecte.</p>
-                <div class="admin-actions">
-                    <a href="/admin/donations" class="admin-btn admin-btn-primary">
-                        <i class="fas fa-list"></i>
-                        Gérer
-                    </a>
-                    <a href="/admin/donations/new" class="admin-btn admin-btn-secondary">
-                        <i class="fas fa-plus"></i>
-                        Ajouter
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Paramètres -->
-            <div class="admin-section-card">
-                <h3>
-                    <i class="fas fa-cog"></i>
-                    Paramètres
-                </h3>
-                <p>Configurez les informations générales du site.</p>
-                <div class="admin-actions">
-                    <a href="/admin/settings" class="admin-btn admin-btn-primary">
-                        <i class="fas fa-edit"></i>
-                        Modifier
-                    </a>
-                    <a href="/admin/logout" class="admin-btn admin-btn-secondary">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Déconnexion
-                    </a>
-                </div>
+                    <span>Nouveau don</span>
+                </a>
+                <% if (locals.isSuperAdmin) { %>
+                <a href="/admin/users/new" class="action-btn">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Nouvel utilisateur</span>
+                </a>
+                <% } %>
             </div>
         </div>
     </div>
-</div>
 
-<%- include('../partials/foot.ejs') %>
+    <%- include('../partials/admin-modals.ejs') %>
+</body>
+</html>

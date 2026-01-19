@@ -317,7 +317,7 @@ function createModal(data, type) {
                     ` : ''}
                     
                     <div class="modal-actions">
-                        ${type === 'event' ? `
+                        ${type === 'event' && new Date(data.date) >= new Date() ? `
                         <button class="modal-action-btn primary">
                             <i class="fas fa-user-plus"></i>
                             S'inscrire

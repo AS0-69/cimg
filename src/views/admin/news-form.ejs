@@ -1,12 +1,6 @@
-<%- include('../partials/admin-head', { 
-    title, 
-    headerTitle: news ? 'Modifier actualité' : 'Nouvelle actualité',
-    headerIcon: 'newspaper',
-    activeNav: 'news' 
-}) %>
+<%- include('../partials/admin-form-head') %>
 
     <div class="container">
-        <h2 class="page-title"><i class="fas fa-newspaper"></i> <%= news ? 'Modifier' : 'Nouvelle' %> actualité</h2>
         <div class="form-card">
             <form method="POST" action="<%= news ? `/admin/news/${news.id}` : '/admin/news' %>" enctype="multipart/form-data">
                 
@@ -33,7 +27,7 @@
 
                 <div class="form-group">
                     <label>Contenu <span class="required">*</span></label>
-                    <textarea name="content" id="content" required maxlength="300" data-maxlength="300"><%= news ? news.content : '' %></textarea>
+                    <textarea name="content" id="content" required maxlength="500" data-maxlength="500"><%= news ? news.content : '' %></textarea>
                 </div>
 
                 <div class="form-group">
@@ -46,8 +40,12 @@
                     <input type="file" name="images" id="images" accept="image/*" multiple class="hidden-input">
                     
                     <div class="image-list" id="image-list">
-                        <% if (news && news.images && news.images.length > 0) { %>
-                            <% news.images.forEach((img, idx) => { %>
+                        <% if (news && news.images) { %>
+                            <% 
+                            const imageArray = typeof news.images === 'string' ? JSON.parse(news.images) : news.images;
+                            if (imageArray && imageArray.length > 0) {
+                                imageArray.forEach((img, idx) => { 
+                            %>
                                 <div class="image-item" data-img="<%= img %>">
                                     <img src="<%= img %>" alt="Image <%= idx + 1 %>">
                                     <span class="image-item-name"><%= img.split('/').pop() %></span>
@@ -55,7 +53,10 @@
                                         <i class="fas fa-trash"></i> Supprimer
                                     </button>
                                 </div>
-                            <% }); %>
+                            <% 
+                                });
+                            }
+                            %>
                         <% } %>
                     </div>
                 </div>

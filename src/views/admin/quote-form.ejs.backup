@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            color: #2d3748;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .page-header h2 {
+            font-size: 1.75rem;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .page-header h2 i {
+            color: #009972;
+        }
+        <div class="form-card">
+            <form method="POST" action="<%= quote ? `/admin/quotes/${quote.id}` : '/admin/quotes' %>">
+                
+                <div class="form-group">
+                    <label>Texte original (Arabe) <span class="required">*</span></label>
+                    <textarea name="text_original" id="text_original" required class="text-rtl" maxlength="100" data-maxlength="100"><%= quote ? quote.text_original : '' %></textarea>
+                    <small class="text-muted">Le texte en arabe (Coran, Hadith, etc.)</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Traduction / Interprétation <span class="required">*</span></label>
+                    <textarea name="text_fr" id="text_fr" required maxlength="100" data-maxlength="100"><%= quote ? quote.text_fr : '' %></textarea>
+                    <small class="text-muted">La traduction ou interprétation du texte</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Source <span class="required">*</span></label>
+                    <select name="author" id="author" required>
+                        <option value="">-- Sélectionner une source --</option>
+                        <% 
+                        if (quote && quote.author) { 
+                            const sourceExists = sources && sources.some(s => s.name === quote.author);
+                            if (!sourceExists) {
+                        %>
+                                <option value="<%= quote.author %>" selected><%= quote.author %> (actuel)</option>
+                        <%
+                            }
+                        }
+                        %>
+                        <% if (sources && sources.length > 0) { %>
+                            <% sources.forEach(source => { %>
+                                <option value="<%= source.name %>" 
+                                        <%= quote && quote.author === source.name ? 'selected' : '' %>>
+                                    <%= source.name %>
+                                </option>
+                            <% }); %>
+                        <% } %>
+                        <option value="autre">➕ Autre source (nouvelle)</option>
+                    </select>
+                    <div class="conditional-field" id="new_author_field">
+                        <input type="text" name="new_author" placeholder="Ex: Coran 2:153, Prophète Muhammad (ﷺ), Imam Muslim">
+                    </div>
+                    <small class="text-muted">Sélectionnez une source existante ou créez-en une nouvelle</small>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="active" name="active" <%= quote ? (quote.active ? 'checked' : '') : 'checked' %>>
+                        <label for="active" class="mb-0">Afficher dans le carousel d'accueil</label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                    <a href="/admin/quotes" class="btn btn-secondary">Annuler</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <%- include('../partials/admin-form-scripts') %>
+</body>
+</html>

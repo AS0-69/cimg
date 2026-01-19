@@ -1,4 +1,5 @@
 <%- include('partials/head.ejs') %>
+<link rel="stylesheet" href="/css/components/pole-details.css">
 
 <!-- Hero Section -->
 <section class="hero hero-page">
@@ -25,16 +26,70 @@
             <div class="pole-details-content">
                 <h2>Présentation</h2>
                 <p class="lead"><%= pole.description %></p>
-                
-                <h3>Nos activités</h3>
-                <ul class="activities-list">
-                    <% pole.activites.forEach(activite => { %>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span><%= activite %></span>
-                        </li>
-                    <% }); %>
-                </ul>
+
+                <!-- Members Section -->
+                <div class="pole-members-section">
+                    <h3><i class="fas fa-users"></i> Membres du pôle</h3>
+                    <% if (members && members.length > 0) { %>
+                        <div class="members-grid">
+                            <% members.forEach(member => { %>
+                                <div class="member-card">
+                                    <% if (member.image) { %>
+                                        <img src="<%= member.image %>" alt="<%= member.first_name %> <%= member.last_name %>" class="member-photo">
+                                    <% } else { %>
+                                        <div class="member-photo-placeholder">
+                                            <%= member.first_name.charAt(0) + member.last_name.charAt(0) %>
+                                        </div>
+                                    <% } %>
+                                    <div class="member-name">
+                                        <%= member.first_name %> <%= member.last_name %>
+                                    </div>
+                                    <div class="member-username"><%= member.role %></div>
+                                </div>
+                            <% }); %>
+                        </div>
+                    <% } else { %>
+                        <div class="no-members-message">
+                            <i class="fas fa-user-slash"></i>
+                            <p>Aucun membre assigné à ce pôle pour le moment</p>
+                        </div>
+                    <% } %>
+                </div>
+
+                <!-- Events Section -->
+                <div class="pole-events-section">
+                    <h3><i class="fas fa-calendar-alt"></i> Événements récents</h3>
+                    <% if (events && events.length > 0) { %>
+                        <div class="pole-events-grid">
+                            <% events.forEach(event => { %>
+                                <div class="pole-event-card">
+                                    <img 
+                                        src="<%= event.images && event.images.length > 0 ? event.images[0] : '/images/Logo_CIMG_VF_GT_MOSAIQUE.png' %>" 
+                                        alt="<%= event.title %>"
+                                        class="pole-event-image"
+                                    >
+                                    <div class="pole-event-content">
+                                        <div class="pole-event-date">
+                                            <i class="far fa-calendar"></i>
+                                            <%= new Date(event.date).toLocaleDateString('fr-FR', { 
+                                                day: 'numeric', 
+                                                month: 'short', 
+                                                year: 'numeric' 
+                                            }) %>
+                                        </div>
+                                        <h4 class="pole-event-title"><%= event.title %></h4>
+                                        <span class="pole-event-category"><%= event.category %></span>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        </div>
+                    <% } else { %>
+                        <div class="no-events-message">
+                            <i class="fas fa-calendar-times"></i>
+                            <p>Aucun événement organisé par ce pôle pour le moment</p>
+                        </div>
+                    <% } %>
+                </div>
                 
                 <div class="pole-details-cta">
                     <h3>Rejoignez-nous</h3>
@@ -47,8 +102,54 @@
             </div>
             
             <div class="pole-details-sidebar">
+                <!-- Image Carousel -->
                 <div class="pole-sidebar-card">
-                    <img src="<%= pole.image %>" alt="<%= pole.nom %>">
+                    <div class="pole-images-carousel">
+                        <div class="pole-carousel-container">
+                            <% pole.images.forEach((image, index) => { %>
+                                <div class="pole-carousel-slide <%= index === 0 ? 'active' : '' %>">
+                                    <img src="<%= image %>" alt="<%= pole.nom %> - Image <%= index + 1 %>">
+                                </div>
+                            <% }); %>
+                            
+                            <% if (pole.images.length > 1) { %>
+                                <button class="pole-carousel-btn prev" aria-label="Image précédente">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="pole-carousel-btn next" aria-label="Image suivante">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                                
+                                <div class="pole-carousel-indicators">
+                                    <% pole.images.forEach((image, index) => { %>
+                                        <span class="pole-carousel-dot <%= index === 0 ? 'active' : '' %>" data-slide="<%= index %>"></span>
+                                    <% }); %>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="pole-sidebar-card">
+                    <h4>Suivez-nous</h4>
+                    <div class="pole-social-links">
+                        <% if (pole.facebook) { %>
+                            <a href="<%= pole.facebook %>" target="_blank" rel="noopener" class="social-link facebook" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        <% } %>
+                        <% if (pole.instagram) { %>
+                            <a href="<%= pole.instagram %>" target="_blank" rel="noopener" class="social-link instagram" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        <% } %>
+                        <% if (pole.tiktok) { %>
+                            <a href="<%= pole.tiktok %>" target="_blank" rel="noopener" class="social-link tiktok" aria-label="TikTok">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        <% } %>
+                    </div>
                 </div>
                 
                 <div class="pole-sidebar-card">
@@ -82,6 +183,79 @@
         </div>
     </div>
 </section>
+
+<script>
+// Image Carousel
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.querySelector('.pole-images-carousel');
+    if (!carousel) return;
+    
+    const slides = carousel.querySelectorAll('.pole-carousel-slide');
+    const dots = carousel.querySelectorAll('.pole-carousel-dot');
+    const prevBtn = carousel.querySelector('.pole-carousel-btn.prev');
+    const nextBtn = carousel.querySelector('.pole-carousel-btn.next');
+    
+    if (slides.length <= 1) return;
+    
+    let currentSlide = 0;
+    let autoplayInterval;
+    
+    function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        
+        currentSlide = (index + slides.length) % slides.length;
+        
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+    }
+    
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+    
+    function prevSlide() {
+        showSlide(currentSlide - 1);
+    }
+    
+    function startAutoplay() {
+        stopAutoplay();
+        autoplayInterval = setInterval(nextSlide, 5000);
+    }
+    
+    function stopAutoplay() {
+        if (autoplayInterval) {
+            clearInterval(autoplayInterval);
+        }
+    }
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+            prevSlide();
+            startAutoplay();
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            nextSlide();
+            startAutoplay();
+        });
+    }
+    
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', function() {
+            showSlide(index);
+            startAutoplay();
+        });
+    });
+    
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', startAutoplay);
+    
+    startAutoplay();
+});
+</script>
 
 <%- include('partials/footer.ejs') %>
 <%- include('partials/foot.ejs') %>

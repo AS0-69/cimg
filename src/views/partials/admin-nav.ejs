@@ -1,0 +1,31 @@
+<!-- Navigation Admin Commune -->
+<div class="header">
+    <h1><i class="fas fa-mosque"></i> CIMG - Administration</h1>
+    <div class="nav">
+        <a href="/admin/dashboard" <%= currentPath === '/admin/dashboard' ? 'class="active"' : '' %>>
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+        <a href="/admin/events" <%= currentPath.startsWith('/admin/events') ? 'class="active"' : '' %>>
+            <i class="fas fa-calendar-alt"></i> Événements
+        </a>
+        <a href="/admin/news-list" <%= currentPath.startsWith('/admin/news') ? 'class="active"' : '' %>>
+            <i class="fas fa-newspaper"></i> Actualités
+        </a>
+        <a href="/admin/quotes" <%= currentPath.startsWith('/admin/quotes') ? 'class="active"' : '' %>>
+            <i class="fas fa-quote-left"></i> Citations
+        </a>
+        <a href="/admin/members" <%= currentPath.startsWith('/admin/members') ? 'class="active"' : '' %>>
+            <i class="fas fa-users"></i> Membres
+        </a>
+        <a href="/admin/donations" <%= currentPath.startsWith('/admin/donations') ? 'class="active"' : '' %>>
+            <i class="fas fa-hand-holding-usd"></i> Dons
+        </a>
+        <% if (locals.isSuperAdmin) { %>
+            <a href="/admin/settings" <%= currentPath.startsWith('/admin/settings') || currentPath.startsWith('/admin/users') ? 'class="active"' : '' %>>
+                <i class="fas fa-cog"></i> Paramètres
+            </a>
+        <% } %>
+        <a href="/"><i class="fas fa-home"></i> Retour au site</a>
+        <a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+    </div>
+</div>

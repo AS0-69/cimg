@@ -3,6 +3,7 @@ const path = require('path');
 const helmet = require('helmet');
 const compression = require('compression');
 const cors = require('cors');
+const session = require('express-session');
 require('dotenv').config();
 const { sequelize, testConnection } = require('./src/config/database');
 
@@ -12,7 +13,6 @@ require('./src/models/News');
 require('./src/models/Quote');
 require('./src/models/QuoteSource');
 require('./src/models/Member');
-require('./src/models/EventType');
 require('./src/models/Location');
 require('./src/models/Category');
 require('./src/models/Setting');
@@ -20,6 +20,9 @@ require('./src/models/Donation');
 require('./src/models/Author');
 require('./src/models/Pole');
 require('./src/models/Role');
+require('./src/models/User');
+require('./src/models/AuditLog');
+require('./src/models/UserTag');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -51,6 +54,19 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware pour cookies
 app.use(require('cookie-parser')());
+
+// Configuration des sessions sécurisées
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'mosquee-bleue-secret-key-change-in-production',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production', // HTTPS uniquement en production
+    httpOnly: true, // Pas accessible via JavaScript
+    maxAge: 24 * 60 * 60 * 1000, // 24 heures
+    sameSite: 'strict' // Protection CSRF
+  }
+}));
 
 // Middleware pour les helpers de vues
 app.use(require('./src/middleware/viewHelpers'));
@@ -92,6 +108,10 @@ const adhesionRouter = require('./src/routes/adhesion');
 const evenementsRouter = require('./src/routes/evenements');
 const apiRouter = require('./src/routes/api');
 
+// Middleware pour ajouter le flag superAdmin à toutes les requêtes admin
+const { addSuperAdminFlag } = require('./src/middleware/permissions');
+app.use('/admin', addSuperAdminFlag);
+
 app.use('/', indexRouter);
 app.use('/poles', polesRouter);
 app.use('/don', donRouter);
@@ -127,9 +147,10 @@ app.use((err, req, res, next) => {
 async function initDatabase() {
   const connected = await testConnection();
   if (connected) {
-    // Synchroniser les modèles (créer les tables si elles n'existent pas)
-    await sequelize.sync({ alter: true });
-    console.log('✅ Tables synchronisées');
+    // Synchroniser les modèles SANS alter pour éviter les conflits d'index
+    // Ne crée que les tables manquantes, ne modifie pas les existantes
+    await sequelize.sync({ alter: false, force: false });
+    console.log('✅ Tables synchronisées avec succès');
   } else {
     console.log('⚠️  Le serveur démarre sans base de données');
     console.log('💡 Installez XAMPP ou démarrez MySQL pour activer la base de données');

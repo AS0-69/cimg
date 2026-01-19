@@ -15,6 +15,26 @@ const Pole = sequelize.define('Pole', {
     is_system: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+    },
+    images: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+        comment: 'JSON array of image paths for carousel'
+    },
+    facebook: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+        comment: 'Facebook page URL'
+    },
+    instagram: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+        comment: 'Instagram page URL'
+    },
+    tiktok: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+        comment: 'TikTok page URL (mainly for Jeunesse)'
     }
 }, {
     tableName: 'poles',

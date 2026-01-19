@@ -7,11 +7,10 @@ const Event = sequelize.define('Event', {
     primaryKey: true,
     autoIncrement: true
   },
-  type: {
+  pole: {
     type: DataTypes.STRING(100),
     allowNull: false,
-    defaultValue: 'event',
-    comment: 'Type personnalisable'
+    comment: 'Pôle organisateur (AT, KT, GT, Jeunesse)'
   },
   title: {
     type: DataTypes.STRING(255),
@@ -67,8 +66,8 @@ const Event = sequelize.define('Event', {
       fields: ['date']
     },
     {
-      name: 'type_index',
-      fields: ['type']
+      name: 'pole_index',
+      fields: ['pole']
     }
   ]
 });

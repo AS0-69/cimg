@@ -1,31 +1,8 @@
-const EventType = require('../models/EventType');
 const Location = require('../models/Location');
 const Category = require('../models/Category');
 const Author = require('../models/Author');
 const Pole = require('../models/Pole');
 const Role = require('../models/Role');
-
-// EVENT TYPES
-async function getAllEventTypes() {
-  return await EventType.findAll({ order: [['name', 'ASC']] });
-}
-
-async function getEventTypeById(id) {
-  return await EventType.findByPk(id);
-}
-
-async function createEventType(data) {
-  return await EventType.create(data);
-}
-
-async function deleteEventType(id) {
-  const type = await EventType.findByPk(id);
-  if (!type || type.is_system) {
-    throw new Error('Type système non supprimable');
-  }
-  await type.destroy();
-  return true;
-}
 
 // LOCATIONS
 async function getAllLocations() {
@@ -102,6 +79,10 @@ async function getPoleById(id) {
   return await Pole.findByPk(id);
 }
 
+async function getPoleByName(name) {
+  return await Pole.findOne({ where: { name } });
+}
+
 async function createPole(data) {
   return await Pole.create(data);
 }
@@ -138,10 +119,6 @@ async function deleteRole(id) {
 }
 
 module.exports = {
-  getAllEventTypes,
-  getEventTypeById,
-  createEventType,
-  deleteEventType,
   getAllLocations,
   getLocationById,
   createLocation,
@@ -156,6 +133,7 @@ module.exports = {
   deleteAuthor,
   getAllPolesList,
   getPoleById,
+  getPoleByName,
   createPole,
   deletePole,
   getAllRoles,

@@ -154,19 +154,7 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1><i class="fas fa-calendar-alt"></i> Événements</h1>
-        <div class="nav">
-            <a href="/admin/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <a href="/admin/events" class="active"><i class="fas fa-calendar-alt"></i> Événements</a>
-            <a href="/admin/news"><i class="fas fa-newspaper"></i> Actualités</a>
-            <a href="/admin/quotes"><i class="fas fa-quote-left"></i> Citations</a>
-            <a href="/admin/members"><i class="fas fa-users"></i> Membres</a>
-            <a href="/admin/donations"><i class="fas fa-hand-holding-usd"></i> Dons</a>
-            <a href="/"><i class="fas fa-home"></i> Retour au site</a>
-            <a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
-        </div>
-    </div>
+    <%- include('../partials/admin-nav.ejs') %>
 
     <div class="container">
         <div class="page-header">
@@ -215,8 +203,8 @@
                                     <a href="/admin/events/<%= event.id %>/edit" class="btn btn-edit">
                                         <i class="fas fa-edit"></i> Modifier
                                     </a>
-                                    <form method="POST" action="/admin/events/<%= event.id %>/delete" class="form-inline">
-                                        <button type="submit" class="btn btn-danger delete-btn" data-message="Supprimer cet événement ?">
+                                    <form method="POST" action="/admin/events/<%= event.id %>/delete" class="form-inline delete-form" data-item-name="<%= event.title %>">
+                                        <button type="submit" class="btn btn-danger delete-btn">
                                             <i class="fas fa-trash"></i> Supprimer
                                         </button>
                                     </form>
@@ -235,18 +223,33 @@
         </div>
     </div>
     
+    <%- include('../partials/admin-modals.ejs') %>
+    
     <script>
-        // Confirmation de suppression
-        document.querySelectorAll('.delete-btn, .delete-form').forEach(element => {
-            const isForm = element.classList.contains('delete-form');
-            const eventType = isForm ? 'submit' : 'click';
-            
-            element.addEventListener(eventType, function(e) {
-                const message = this.dataset.message || 'Êtes-vous sûr de vouloir supprimer cet élément ?';
-                if (!confirm(message)) {
+        // Confirmation de suppression avec modal personnalisé
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.delete-form').forEach(form => {
+                form.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    return false;
-                }
+                    
+                    const itemName = this.dataset.itemName || 'cet événement';
+                    const formElement = this;
+                    
+                    showDeleteModal(`Voulez-vous vraiment supprimer "${itemName}" ?`, function() {
+                        formElement.submit();
+                    });
+                });
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const form = this.closest('form');
+                    if (form) {
+                        const event = new Event('submit', { bubbles: true, cancelable: true });
+                        form.dispatchEvent(event);
+                    }
+                });
             });
         });
     </script>

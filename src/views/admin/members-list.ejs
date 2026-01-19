@@ -4,146 +4,255 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; }
-        .header { background: #009972; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .header h1 { font-size: 1.5rem; }
-        .nav { display: flex; gap: 2rem; }
-        .nav a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: background 0.2s; }
-        .nav a:hover, .nav a.active { background: rgba(255,255,255,0.2); }
-        .container { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
-        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; }
-        .btn-primary { background: #009972; color: white; }
-        .btn-primary:hover { background: #007d5e; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,153,114,0.3); }
-        .btn-danger { background: #e53e3e; color: white; padding: 0.5rem 1rem; font-size: 0.875rem; }
-        .btn-danger:hover { background: #c53030; }
-        .btn-secondary { background: #4299e1; color: white; padding: 0.5rem 1rem; font-size: 0.875rem; }
-        .btn-secondary:hover { background: #3182ce; }
-        .card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; margin-bottom: 2rem; }
-        table { width: 100%; border-collapse: collapse; }
-        thead { background: #f7fafc; }
-        th { padding: 1rem; text-align: left; font-weight: 600; color: #2d3748; border-bottom: 2px solid #e2e8f0; }
-        td { padding: 1rem; border-bottom: 1px solid #e2e8f0; }
-        tbody tr:hover { background: #f7fafc; }
-        .actions { display: flex; gap: 0.5rem; }
-        .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.875rem; font-weight: 600; }
-        .badge-primary { background: #bee3f8; color: #2c5282; }
-        .empty-state { text-align: center; padding: 4rem 2rem; color: #718096; }
-        .empty-state i { font-size: 4rem; margin-bottom: 1rem; opacity: 0.3; }
-        .img-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 50%; }
-        .pole-section { margin-bottom: 2rem; }
-        .pole-header { background: linear-gradient(135deg, #009972, #00ccaa); color: white; padding: 1rem 1.5rem; font-size: 1.25rem; font-weight: 600; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            color: #2d3748;
+        }
+        .header {
+            background: #009972;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+        }
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .nav a:hover, .nav a.active {
+            background: rgba(255,255,255,0.2);
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .page-header h2 {
+            font-size: 1.75rem;
+            color: #1a202c;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #009972;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background: #00805f;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,153,114,0.3);
+        }
+        .btn-primary {
+            background: #009972;
+        }
+        .btn-edit {
+            background: #3182ce;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        .btn-edit:hover {
+            background: #2c5aa0;
+        }
+        .btn-danger {
+            background: #e53e3e;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        .btn-danger:hover {
+            background: #c53030;
+        }
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f7fafc;
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background: #f7fafc;
+        }
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .avatar-placeholder {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #009972;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+        td {
+            vertical-align: middle;
+        }
+        td:last-child {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .form-inline {
+            display: inline;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #a0aec0;
+        }
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1><i class="fas fa-users"></i> <%= title %></h1>
-        <div class="nav">
-            <a href="/admin/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <a href="/admin/events"><i class="fas fa-calendar-alt"></i> Événements</a>
-            <a href="/admin/news"><i class="fas fa-newspaper"></i> Actualités</a>
-            <a href="/admin/quotes"><i class="fas fa-quote-left"></i> Citations</a>
-            <a href="/admin/members" class="active"><i class="fas fa-users"></i> Membres</a>
-            <a href="/admin/donations"><i class="fas fa-hand-holding-usd"></i> Dons</a>
-            <a href="/"><i class="fas fa-home"></i> Retour au site</a>
-            <a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
-        </div>
-    </div>
+    <%- include('../partials/admin-nav.ejs') %>
 
     <div class="container">
-        <div class="toolbar">
-            <h2>Tous les membres (<%= members.length %>)</h2>
+        <div class="page-header">
+            <h2>Gestion des membres</h2>
             <a href="/admin/members/new" class="btn btn-primary">
-                <i class="fas fa-user-plus"></i> Nouveau membre
+                <i class="fas fa-plus"></i> Nouveau membre
             </a>
         </div>
 
-        <% if (members.length === 0) { %>
-            <div class="card">
+        <div class="table-container">
+            <% if (members && members.length > 0) { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Photo</th>
+                            <th>Nom</th>
+                            <th>Pôle</th>
+                            <th>Rôle</th>
+                            <th>Ordre</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% members.forEach(member => { %>
+                            <tr>
+                                <td>
+                                    <% if (member.image) { %>
+                                        <img src="<%= member.image %>" alt="<%= member.first_name %> <%= member.last_name %>" class="avatar">
+                                    <% } else { %>
+                                        <div class="avatar-placeholder">
+                                            <%= member.first_name ? member.first_name.charAt(0).toUpperCase() : (member.last_name ? member.last_name.charAt(0).toUpperCase() : '?') %>
+                                        </div>
+                                    <% } %>
+                                </td>
+                                <td><strong><%= member.first_name %> <%= member.last_name %></strong></td>
+                                <td><span class="badge badge-primary"><%= member.pole || 'N/A' %></span></td>
+                                <td><%= member.role || 'N/A' %></td>
+                                <td><%= member.order || 0 %></td>
+                                <td>
+                                    <a href="/admin/members/<%= member.id %>/edit" class="btn btn-edit">
+                                        <i class="fas fa-edit"></i> Modifier
+                                    </a>
+                                    <form method="POST" action="/admin/members/<%= member.id %>/delete" class="form-inline delete-form" data-item-name="<%= member.first_name %> <%= member.last_name %>">
+                                        <button type="submit" class="btn btn-danger delete-btn">
+                                            <i class="fas fa-trash"></i> Supprimer
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            <% } else { %>
                 <div class="empty-state">
-                    <i class="fas fa-users"></i>
+                    <i class="far fa-users"></i>
                     <h3>Aucun membre</h3>
-                    <p>Ajoutez votre premier membre pour commencer</p>
+                    <p>Commencez par créer votre premier membre</p>
                 </div>
-            </div>
-        <% } else { %>
-            <% poles.forEach(pole => { 
-                const poleMembers = members.filter(m => m.pole === pole);
-                if (poleMembers.length > 0) { %>
-                    <div class="pole-section">
-                        <div class="card">
-                            <div class="pole-header">
-                                <i class="fas fa-layer-group"></i> Pôle <%= pole %> (<%= poleMembers.length %>)
-                            </div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Photo</th>
-                                        <th>Nom</th>
-                                        <th>Fonction</th>
-                                        <th>Contact</th>
-                                        <th>Ordre</th>
-                                        <th class="text-right">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% poleMembers.forEach(member => { %>
-                                        <tr>
-                                            <td>
-                                                <% if (member.image) { %>
-                                                    <img src="<%= member.image %>" alt="<%= member.first_name %>" class="img-thumb">
-                                                <% } else { %>
-                                                    <div class="img-thumb img-placeholder">
-                                                        <i class="fas fa-user"></i>
-                                                    </div>
-                                                <% } %>
-                                            </td>
-                                            <td><strong><%= member.first_name %> <%= member.last_name %></strong></td>
-                                            <td><%= member.role %></td>
-                                            <td>
-                                                <% if (member.email) { %>
-                                                    <div class="text-sm"><i class="fas fa-envelope"></i> <%= member.email %></div>
-                                                <% } %>
-                                                <% if (member.phone) { %>
-                                                    <div class="text-sm"><i class="fas fa-phone"></i> <%= member.phone %></div>
-                                                <% } %>
-                                            </td>
-                                            <td><span class="badge badge-primary"><%= member.order %></span></td>
-                                            <td>
-                                                <div class="actions flex-end">
-                                                    <a href="/admin/members/<%= member.id %>/edit" class="btn btn-secondary">
-                                                        <i class="fas fa-edit"></i> Modifier
-                                                    </a>
-                                                    <form method="POST" action="/admin/members/<%= member.id %>/delete" class="form-inline delete-form" data-message="Supprimer ce membre ?">
-                                                        <button type="submit" class="btn btn-danger">
-                                                            <i class="fas fa-trash"></i> Supprimer
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <% }); %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                <% } %>
-            <% }); %>
-        <% } %>
+            <% } %>
+        </div>
     </div>
     
+    <%- include('../partials/admin-modals.ejs') %>
+    
     <script>
-        // Confirmation de suppression
-        document.querySelectorAll('.delete-form').forEach(form => {
-            form.addEventListener('submit', function(e) {
-                const message = this.dataset.message || 'Êtes-vous sûr de vouloir supprimer cet élément ?';
-                if (!confirm(message)) {
+        // Confirmation de suppression avec modal personnalisé
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.delete-form').forEach(form => {
+                form.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    return false;
-                }
+                    
+                    const itemName = this.dataset.itemName || 'ce membre';
+                    const formElement = this;
+                    
+                    showDeleteModal(`Voulez-vous vraiment supprimer "${itemName}" ?`, function() {
+                        formElement.submit();
+                    });
+                });
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const form = this.closest('form');
+                    if (form) {
+                        const event = new Event('submit', { bubbles: true, cancelable: true });
+                        form.dispatchEvent(event);
+                    }
+                });
             });
         });
     </script>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            color: #2d3748;
+        }
+        .header {
+            background: #009972;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+        }
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .nav a:hover, .nav a.active {
+            background: rgba(255,255,255,0.2);
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .form-header {
+            margin-bottom: 2rem;
+        }
+        .form-header h2 {
+            font-size: 1.75rem;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+        .form-header p {
+            color: #718096;
+        }
+        .form-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .required {
+            color: #e53e3e;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #009972;
+            box-shadow: 0 0 0 3px rgba(0,153,114,0.1);
+        }
+        .form-group small {
+            display: block;
+            margin-top: 0.5rem;
+            color: #718096;
+            font-size: 0.875rem;
+        }
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+        }
+        .alert i {
+            margin-top: 0.125rem;
+        }
+        .alert-info {
+            background: #e3f2fd;
+            color: #1565c0;
+            border-left: 4px solid #1976d2;
+        }
+        .alert-warning {
+            background: #fff3e0;
+            color: #e65100;
+            border-left: 4px solid #f57c00;
+        }
+        .permissions-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+        .permissions-section h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #1a202c;
+        }
+        .permissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .permission-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+        .permission-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        .permission-item label {
+            cursor: pointer;
+            margin: 0;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: #009972;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #00805f;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,153,114,0.3);
+        }
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #2d3748;
+        }
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        .btn-danger {
+            background: #e53e3e;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #c53030;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        .checkbox-group label {
+            cursor: pointer;
+            margin: 0;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <%- include('../partials/admin-nav.ejs') %>
+
+    <div class="container">
+        <div class="form-header">
+            <h2><i class="fas fa-<%= user ? 'user-edit' : 'user-plus' %>"></i> <%= user ? 'Modifier' : 'Nouvel' %> utilisateur</h2>
+            <p>Configurez les accès et permissions de l'utilisateur</p>
+        </div>
+
+        <div class="form-card">
+            <form method="POST" action="<%= user ? `/admin/users/${user.id}` : '/admin/users' %>" id="userForm">
+                
+                <% if (!user) { %>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>Exigences du mot de passe :</strong><br>
+                        • Minimum 8 caractères<br>
+                        • Au moins 1 majuscule<br>
+                        • Au moins 1 chiffre
+                    </div>
+                </div>
+                <% } %>
+
+                <% if (user) { %>
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <strong>Modification d'un utilisateur existant</strong><br>
+                        Laissez les champs mot de passe vides si vous ne souhaitez pas les modifier.
+                    </div>
+                </div>
+                <% } %>
+
+                <!-- Nom d'utilisateur -->
+                <div class="form-group">
+                    <label for="username">
+                        Nom d'utilisateur <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        value="<%= user ? user.username : '' %>" 
+                        required
+                        minlength="3"
+                        maxlength="50"
+                        placeholder="Ex: ahmed.benali"
+                    >
+                    <small>Lettres, chiffres, tirets et underscores uniquement (3-50 caractères)</small>
+                </div>
+
+                <!-- Mot de passe -->
+                <div class="form-group">
+                    <label for="password">
+                        Mot de passe <%= user ? '' : '*' %>
+                    </label>
+                    <div style="position: relative;">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            <%= user ? '' : 'required' %>
+                            minlength="8"
+                            placeholder="<%= user ? 'Laisser vide pour ne pas modifier' : 'Minimum 8 caractères, 1 maj, 1 chiffre' %>"
+                            style="padding-right: 2.5rem;"
+                        >
+                        <i class="fas fa-eye" id="togglePassword" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #718096;"></i>
+                    </div>
+                    <small>Minimum 8 caractères avec 1 majuscule et 1 chiffre. <%= user ? 'Laisser vide pour conserver l\'actuel.' : '' %></small>
+                </div>
+
+                <!-- Confirmer mot de passe -->
+                <div class="form-group">
+                    <label for="password_confirm">
+                        Confirmer le mot de passe <%= user ? '' : '*' %>
+                    </label>
+                    <div style="position: relative;">
+                        <input 
+                            type="password" 
+                            id="password_confirm" 
+                            name="password_confirm" 
+                            <%= user ? '' : 'required' %>
+                            placeholder="<%= user ? 'Confirmer si vous modifiez' : 'Retapez le mot de passe' %>"
+                            style="padding-right: 2.5rem;"
+                        >
+                        <i class="fas fa-eye" id="togglePasswordConfirm" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #718096;"></i>
+                    </div>
+                    <small>Doit correspondre au mot de passe ci-dessus</small>
+                </div>
+
+                <!-- Tag -->
+                <div class="form-group">
+                    <label for="tag">
+                        Tag (optionnel)
+                    </label>
+                    <div style="display: flex; gap: 0.5rem; align-items: flex-start;">
+                        <select id="tag" name="tag" style="flex: 1;">
+                            <option value="">-- Aucun tag --</option>
+                            <% if (tags && tags.length > 0) { %>
+                                <% tags.forEach(tag => { %>
+                                    <option value="<%= tag.id %>" <%= user && user.tag === tag.id ? 'selected' : '' %>>
+                                        <%= tag.name %>
+                                    </option>
+                                <% }); %>
+                            <% } %>
+                            <option value="__custom__">➕ Autre (nouveau tag)</option>
+                        </select>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="custom_tag" 
+                        name="custom_tag" 
+                        placeholder="Nom du nouveau tag"
+                        style="display: none; margin-top: 0.5rem;"
+                        maxlength="50"
+                    >
+                    <small>Associer l'utilisateur à un tag pour filtrer ses actions</small>
+                </div>
+
+                <!-- Permissions -->
+                <div class="permissions-section">
+                    <h3><i class="fas fa-shield-alt"></i> Permissions</h3>
+                    
+                    <!-- Super Admin -->
+                    <div class="alert" style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 1rem; margin-bottom: 1.5rem; border-radius: 6px;">
+                        <div class="checkbox-group" style="margin-bottom: 0.5rem;">
+                            <input 
+                                type="checkbox" 
+                                id="super_admin" 
+                                name="super_admin"
+                                value="1"
+                                <%= user && user.permissions && Object.values(user.permissions).every(v => v === true) ? 'checked' : '' %>
+                            >
+                            <label for="super_admin" style="font-weight: 600; color: #856404;">
+                                <i class="fas fa-crown"></i> Super Administrateur
+                            </label>
+                        </div>
+                        <small style="color: #856404; display: block; margin-left: 1.75rem;">
+                            <strong>⚠️ Accès total :</strong> Cocher cette case donnera automatiquement <strong>toutes les permissions</strong> ci-dessous + accès aux paramètres et gestion des utilisateurs. À réserver aux administrateurs de confiance uniquement.
+                        </small>
+                    </div>
+                    
+                    <div class="permissions-grid">
+                        <div class="permission-item">
+                            <input 
+                                type="checkbox" 
+                                id="perm_events" 
+                                name="permissions[]" 
+                                value="events"
+                                <%= user && user.permissions && user.permissions.events ? 'checked' : '' %>
+                            >
+                            <label for="perm_events">
+                                <i class="fas fa-calendar-alt"></i> Événements
+                            </label>
+                        </div>
+
+                        <div class="permission-item">
+                            <input 
+                                type="checkbox" 
+                                id="perm_news" 
+                                name="permissions[]" 
+                                value="news"
+                                <%= user && user.permissions && user.permissions.news ? 'checked' : '' %>
+                            >
+                            <label for="perm_news">
+                                <i class="fas fa-newspaper"></i> Actualités
+                            </label>
+                        </div>
+
+                        <div class="permission-item">
+                            <input 
+                                type="checkbox" 
+                                id="perm_quotes" 
+                                name="permissions[]" 
+                                value="quotes"
+                                <%= user && user.permissions && user.permissions.quotes ? 'checked' : '' %>
+                            >
+                            <label for="perm_quotes">
+                                <i class="fas fa-quote-left"></i> Citations
+                            </label>
+                        </div>
+
+                        <div class="permission-item">
+                            <input 
+                                type="checkbox" 
+                                id="perm_members" 
+                                name="permissions[]" 
+                                value="members"
+                                <%= user && user.permissions && user.permissions.members ? 'checked' : '' %>
+                            >
+                            <label for="perm_members">
+                                <i class="fas fa-users"></i> Membres
+                            </label>
+                        </div>
+
+                        <div class="permission-item">
+                            <input 
+                                type="checkbox" 
+                                id="perm_donations" 
+                                name="permissions[]" 
+                                value="donations"
+                                <%= user && user.permissions && user.permissions.donations ? 'checked' : '' %>
+                            >
+                            <label for="perm_donations">
+                                <i class="fas fa-hand-holding-usd"></i> Dons
+                            </label>
+                        </div>
+
+                        <div class="permission-item">
+                            <input 
+                                type="checkbox" 
+                                id="perm_settings" 
+                                name="permissions[]" 
+                                value="settings"
+                                <%= user && user.permissions && user.permissions.settings ? 'checked' : '' %>
+                            >
+                            <label for="perm_settings">
+                                <i class="fas fa-cog"></i> Paramètres
+                            </label>
+                        </div>
+
+                        <div class="permission-item">
+                            <input 
+                                type="checkbox" 
+                                id="perm_users" 
+                                name="permissions[]" 
+                                value="users"
+                                <%= user && user.permissions && user.permissions.users ? 'checked' : '' %>
+                            >
+                            <label for="perm_users">
+                                <i class="fas fa-user-shield"></i> Utilisateurs
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input 
+                            type="checkbox" 
+                            id="active" 
+                            name="active"
+                            value="true"
+                            <%= !user || user.active ? 'checked' : '' %>
+                        >
+                        <label for="active">
+                            <i class="fas fa-check-circle"></i> Compte actif
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="form-actions">
+                    <a href="/admin/settings" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Annuler
+                    </a>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <% if (user) { %>
+                            <button type="button" class="btn btn-danger" data-user-id="<%= user.id %>" data-username="<%= user.username %>" id="deleteBtn">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>
+                        <% } %>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> <%= user ? 'Mettre à jour' : 'Créer' %>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <%- include('../partials/admin-modals.ejs') %>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('userForm');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const isEditMode = <%= user ? 'true' : 'false' %>;
+
+        // Validation du formulaire
+        form.addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const passwordConfirm = document.getElementById('password_confirm').value;
+            
+            // Vérifier si admin a au moins une permission
+            if (isEditMode && !password && !passwordConfirm) {
+                // Mode édition sans changement de mot de passe - OK
+                return true;
+            }
+            
+            if (password.length > 0 && password.length < 8) {
+                e.preventDefault();
+                showNotification('Le mot de passe doit contenir au moins 8 caractères', 'error');
+                return false;
+            }
+            
+            // Vérifier majuscule et chiffre
+            if (password.length > 0) {
+                const hasUpperCase = /[A-Z]/.test(password);
+                const hasNumber = /[0-9]/.test(password);
+                
+                if (!hasUpperCase) {
+                    e.preventDefault();
+                    showNotification('Le mot de passe doit contenir au moins une majuscule', 'error');
+                    return false;
+                }
+                
+                if (!hasNumber) {
+                    e.preventDefault();
+                    showNotification('Le mot de passe doit contenir au moins un chiffre', 'error');
+                    return false;
+                }
+            }
+            
+            if (password !== passwordConfirm) {
+                e.preventDefault();
+                showNotification('Les mots de passe ne correspondent pas', 'error');
+                return false;
+            }
+
+            // Vérifier qu'au moins une permission est cochée (sauf si super admin)
+            const superAdminCheckbox = document.getElementById('super_admin');
+            const checkboxes = document.querySelectorAll('input[name="permissions[]"]');
+            const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            
+            if (!superAdminCheckbox.checked && checkedCount === 0) {
+                e.preventDefault();
+                showNotification('Vous devez cocher Super Admin ou sélectionner au moins une permission.', 'error');
+                return false;
+            }
+        });
+
+        // Gestion Super Admin - coche/décoche toutes les permissions
+        const superAdminCheckbox = document.getElementById('super_admin');
+        const permissionCheckboxes = document.querySelectorAll('input[name="permissions[]"]');
+        
+        if (superAdminCheckbox) {
+            superAdminCheckbox.addEventListener('change', function() {
+                permissionCheckboxes.forEach(cb => {
+                    cb.checked = this.checked;
+                    cb.disabled = this.checked;
+                });
+            });
+            
+            // Si super admin coché au chargement, désactiver les checkboxes
+            if (superAdminCheckbox.checked) {
+                permissionCheckboxes.forEach(cb => {
+                    cb.checked = true;
+                    cb.disabled = true;
+                });
+            }
+        }
+
+        // Gestion du tag personnalisé
+        const tagSelect = document.getElementById('tag');
+        const customTagInput = document.getElementById('custom_tag');
+        
+        if (tagSelect && customTagInput) {
+            tagSelect.addEventListener('change', function() {
+                if (this.value === '__custom__') {
+                    customTagInput.style.display = 'block';
+                    customTagInput.required = true;
+                } else {
+                    customTagInput.style.display = 'none';
+                    customTagInput.required = false;
+                    customTagInput.value = '';
+                }
+            });
+        }
+        
+        // Toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.type === 'password' ? 'text' : 'password';
+                passwordInput.type = type;
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
+        
+        const togglePasswordConfirm = document.getElementById('togglePasswordConfirm');
+        const passwordConfirmInput = document.getElementById('password_confirm');
+        
+        if (togglePasswordConfirm && passwordConfirmInput) {
+            togglePasswordConfirm.addEventListener('click', function() {
+                const type = passwordConfirmInput.type === 'password' ? 'text' : 'password';
+                passwordConfirmInput.type = type;
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
+                } else {
+                    customTagInput.style.display = 'none';
+                    customTagInput.required = false;
+                    customTagInput.value = '';
+                }
+            });
+        }
+        
+        // Suppression utilisateur
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', function() {
+                const userId = this.getAttribute('data-user-id');
+                const username = this.getAttribute('data-username');
+                
+                showDeleteModal(
+                    `⚠️ Êtes-vous sûr de vouloir supprimer l'utilisateur "${username}" ?\n\nCette action est irréversible !`,
+                    function() {
+                        fetch(`/admin/users/${userId}/delete`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showNotification('Utilisateur supprimé avec succès', 'success');
+                                setTimeout(() => {
+                                    window.location.href = '/admin/settings';
+                                }, 1500);
+                            } else {
+                                showNotification(data.message || 'Erreur lors de la suppression', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erreur:', error);
+                            showNotification('Erreur lors de la suppression', 'error');
+                        });
+                    }
+                );
+            });
+        }
+    });
+    </script>
+</body>
+</html>
