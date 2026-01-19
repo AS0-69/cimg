@@ -34,8 +34,8 @@ Le site sera accessible sur : **http://localhost:3000**
 
 ### 🔐 Administration
 - **Connexion admin** : http://localhost:3000/admin/login
-  - Identifiant : `admin`
-  - Mot de passe : `mosquee2024`
+  - Identifiant : x
+  - Mot de passe : x
 - **Dashboard** : http://localhost:3000/admin/dashboard
 - **Gestion des événements** : http://localhost:3000/admin/events
 - **Gestion des membres** : http://localhost:3000/admin/members
